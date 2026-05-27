@@ -25,6 +25,20 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
 
+/* Password gate */
+.pw-gate{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.pw-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px;width:100%;max-width:380px;text-align:center;}
+.pw-icon{font-size:36px;margin-bottom:16px;}
+.pw-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
+.pw-sub{font-size:13px;color:var(--muted2);margin-bottom:28px;}
+.pw-input{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 16px;border-radius:10px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:12px;transition:border-color .2s;}
+.pw-input:focus{border-color:var(--purple);}
+.pw-btn{width:100%;background:var(--gold);color:#09090f;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;padding:13px;border:none;border-radius:10px;cursor:pointer;transition:all .2s;}
+.pw-btn:hover{background:#e5aa1a;}
+.pw-error{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+.pw-error.show{display:block;}
+#adminContent{display:none;}
+
 /* Top bar */
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;}
 .topbar-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);}
@@ -209,6 +223,19 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
   </div>
 </div>
 
+<!-- Password Gate -->
+<div class="pw-gate" id="pwGate">
+  <div class="pw-box">
+    <div class="pw-icon">&#128274;</div>
+    <div class="pw-title">Admin Access</div>
+    <div class="pw-sub">Enter the password to continue</div>
+    <input class="pw-input" type="password" id="pwInput" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')checkPw()"/>
+    <button class="pw-btn" onclick="checkPw()">Enter</button>
+    <div class="pw-error" id="pwError">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<div id="adminContent">
 <!-- Top Bar -->
 <div class="topbar">
   <div>
@@ -456,6 +483,26 @@ document.getElementById('editModal').addEventListener('click',function(e){ if(e.
 
 renderTable();
 updateSummary();
+
+function checkPw(){
+  const val = document.getElementById('pwInput').value;
+  if(val === 'Gem211533'){
+    document.getElementById('pwGate').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+    sessionStorage.setItem('pefl_admin','1');
+  } else {
+    document.getElementById('pwError').classList.add('show');
+    document.getElementById('pwInput').value='';
+  }
+}
+
+// Auto-unlock if already authenticated this session
+if(sessionStorage.getItem('pefl_admin')==='1'){
+  document.getElementById('pwGate').style.display='none';
+  document.getElementById('adminContent').style.display='block';
+}
+
 </script>
+</div>
 </body>
 </html>
