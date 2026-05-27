@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PEFL S16 · Leaderboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d0d1a;--bg2:#13132a;--bg3:#1a1a35;--card:#16162e;--border:#2a2a50;--gold:#f0c040;--purple:#7c5cbf;--purple2:#9b7de0;--teal:#38c9b0;--red:#e05555;--green:#4caf7d;--text:#e8e8f0;--muted:#7878a0;--pfc:#5b9cf6;--efc:#e07830;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(124,92,191,.1) 0%,transparent 60%);pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
+header{text-align:center;padding:40px 20px 24px;}
+.league-label{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:4px;padding:5px 16px;margin-bottom:16px;text-transform:uppercase;}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,10vw,100px);color:var(--gold);letter-spacing:4px;}
+.sub{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:4px;color:var(--muted);margin-top:8px;text-transform:uppercase;}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:24px 0;}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;text-decoration:none;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;margin-bottom:28px;}
+.back-link:hover{color:var(--purple2);}
+
+/* Controls */
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:32px;}
+.ctrl-group{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.ctrl-select{background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;padding:8px 14px;border-radius:8px;cursor:pointer;outline:none;}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;}
+.tab{background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:2px;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s;text-transform:uppercase;}
+.tab:hover{border-color:var(--purple);color:var(--purple2);}
+.tab.active{background:var(--gold);border-color:var(--gold);color:#0d0d1a;font-weight:700;}
+
+/* Leaderboard table */
+.lb-section{margin-bottom:40px;}
+.lb-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);letter-spacing:2px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.lb-title-sub{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);letter-spacing:2px;font-weight:400;}
+.lb-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.lb-table th{text-align:left;padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg3);}
+.lb-table th.num{text-align:right;}
+.lb-table td{padding:12px 16px;border-bottom:1px solid rgba(42,42,80,.4);font-size:14px;}
+.lb-table tr:last-child td{border-bottom:none;}
+.lb-table tr:hover td{background:rgba(255,255,255,.02);}
+.rank-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--muted);width:32px;}
+.rank-1{color:var(--gold);}
+.rank-2{color:#c0c0c0;}
+.rank-3{color:#cd7f32;}
+.player-cell{display:flex;flex-direction:column;}
+.player-nm{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;letter-spacing:.5px;}
+.player-team{font-size:11px;color:var(--muted);margin-top:1px;}
+.player-team.pfc{color:var(--pfc);}
+.player-team.efc{color:var(--efc);}
+.stat-val{text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;}
+.stat-val.gold{color:var(--gold);}
+.stat-bar-cell{width:120px;}
+.stat-bar-wrap{background:var(--border);border-radius:4px;height:6px;overflow:hidden;}
+.stat-bar{height:6px;border-radius:4px;background:var(--gold);transition:width .6s ease;}
+
+/* Empty */
+.empty{text-align:center;padding:48px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;}
+
+/* Team stats */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.team-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.team-card-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;}
+.team-card-conf{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.team-card-conf.pfc{color:var(--pfc);}
+.team-card-conf.efc{color:var(--efc);}
+.team-stat-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(42,42,80,.4);font-size:13px;}
+.team-stat-row:last-child{border-bottom:none;}
+.team-stat-label{color:var(--muted);}
+.team-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="league-label">Pro Era Football League</div>
+  <h1>PEFL Leaderboard</h1>
+  <div class="sub">Season 16 · Player & Team Stats</div>
+</header>
+<div class="divider"></div>
+<a href="index.html" class="back-link">← Back to Schedule</a>
+
+<div class="controls">
+  <div class="ctrl-group">View:<select class="ctrl-select" id="viewMode" onchange="render()">
+    <option value="players">Player Leaders</option>
+    <option value="teams">Team Stats</option>
+  </select></div>
+  <div class="ctrl-group">Team:<select class="ctrl-select" id="teamFilter" onchange="render()">
+    <option value="all">All Teams</option>
+    <optgroup label="PFC – Lebron"><option value="Ravens">Ravens</option><option value="Jags">Jags</option><option value="Browns">Browns</option></optgroup>
+    <optgroup label="PFC – Curry"><option value="49ers">49ers</option><option value="Broncos">Broncos</option><option value="Eagles">Eagles</option></optgroup>
+    <optgroup label="EFC – Wemby"><option value="Bucs">Bucs</option><option value="Texans">Texans</option><option value="Raiders">Raiders</option></optgroup>
+    <optgroup label="EFC – Jordan"><option value="Commanders">Commanders</option><option value="Vikings">Vikings</option><option value="Bengals">Bengals</option></optgroup>
+  </select></div>
+</div>
+
+<div class="tab-bar" id="tabBar"></div>
+<div id="content"></div>
+</div>
+<script>
+const TEAMS={Ravens:{conf:"PFC",div:"Lebron"},Jags:{conf:"PFC",div:"Lebron"},Browns:{conf:"PFC",div:"Lebron"},"49ers":{conf:"PFC",div:"Curry"},Broncos:{conf:"PFC",div:"Curry"},Eagles:{conf:"PFC",div:"Curry"},Bucs:{conf:"EFC",div:"Wemby"},Texans:{conf:"EFC",div:"Wemby"},Raiders:{conf:"EFC",div:"Wemby"},Commanders:{conf:"EFC",div:"Jordan"},Vikings:{conf:"EFC",div:"Jordan"},Bengals:{conf:"EFC",div:"Jordan"}};
+const SK='pefl_s16_stats';
+function getData(){try{return JSON.parse(localStorage.getItem(SK)||'[]');}catch(e){return[];}}
+function getApproved(){return getData().filter(s=>s.status==='approved');}
+
+const STAT_CATS=[
+  {key:'pass_tds',label:'Pass TDs',icon:'🎯'},
+  {key:'rush_tds',label:'Rush TDs',icon:'🏃'},
+  {key:'rec_tds',label:'Rec TDs',icon:'🙌'},
+  {key:'total_tds',label:'Total TDs',icon:'🏆',computed:true},
+  {key:'receptions',label:'Receptions',icon:'🤲'},
+  {key:'targets',label:'Targets',icon:'📍'},
+  {key:'rushes',label:'Rushes',icon:'👟'},
+  {key:'pass_att',label:'Pass Att',icon:'💪'},
+  {key:'pass_comp',label:'Completions',icon:'✅'},
+  {key:'ints_thrown',label:'INTs Thrown',icon:'⚠️',asc:true},
+  {key:'ints_caught',label:'INTs Caught',icon:'🛡️'},
+  {key:'tackles',label:'Tackles',icon:'💥'},
+  {key:'swats',label:'Swats',icon:'✋'},
+];
+
+let currentCat='total_tds';
+
+function getPlayerStats(){
+  const approved=getApproved();
+  const players={};
+  approved.forEach(s=>{
+    const key=s.player_name+'|'+s.team;
+    if(!players[key]) players[key]={name:s.player_name,team:s.team,games:0,pass_tds:0,rush_tds:0,rec_tds:0,receptions:0,targets:0,rushes:0,pass_att:0,pass_comp:0,ints_thrown:0,ints_caught:0,tackles:0,swats:0};
+    players[key].games++;
+    ['pass_tds','rush_tds','rec_tds','receptions','targets','rushes','pass_att','pass_comp','ints_thrown','ints_caught','tackles','swats'].forEach(f=>{players[key][f]+=parseInt(s[f])||0;});
+  });
+  Object.values(players).forEach(p=>{p.total_tds=(p.pass_tds||0)+(p.rush_tds||0)+(p.rec_tds||0);});
+  return Object.values(players);
+}
+
+function buildTabs(){
+  const mode=document.getElementById('viewMode').value;
+  const bar=document.getElementById('tabBar');
+  if(mode==='teams'){bar.innerHTML='';return;}
+  bar.innerHTML=STAT_CATS.map(c=>`<button class="tab ${c.key===currentCat?'active':''}" onclick="setCat('${c.key}')">${c.icon} ${c.label}</button>`).join('');
+}
+function setCat(k){currentCat=k;buildTabs();renderPlayers();}
+
+function rankLabel(i){
+  if(i===0) return `<span class="rank-num rank-1">1</span>`;
+  if(i===1) return `<span class="rank-num rank-2">2</span>`;
+  if(i===2) return `<span class="rank-num rank-3">3</span>`;
+  return `<span class="rank-num">${i+1}</span>`;
+}
+
+function renderPlayers(){
+  const teamF=document.getElementById('teamFilter').value;
+  let players=getPlayerStats();
+  if(teamF!=='all') players=players.filter(p=>p.team===teamF);
+  const cat=STAT_CATS.find(c=>c.key===currentCat)||STAT_CATS[0];
+  players.sort((a,b)=>cat.asc?(a[cat.key]||0)-(b[cat.key]||0):(b[cat.key]||0)-(a[cat.key]||0));
+  const maxVal=players.length?Math.max(...players.map(p=>p[cat.key]||0)):1;
+  if(!players.length){
+    document.getElementById('content').innerHTML=`<div class="empty">No stats submitted yet. Check back after games are played!</div>`;
+    return;
+  }
+  let html=`<div class="lb-section"><div class="lb-title">${cat.icon} ${cat.label} Leaders</div>
+  <table class="lb-table">
+  <thead><tr><th style="width:40px">#</th><th>Player</th><th class="num">${cat.label}</th><th>Games</th><th class="stat-bar-cell"></th></tr></thead><tbody>`;
+  players.forEach((p,i)=>{
+    const val=p[cat.key]||0;
+    const pct=maxVal?Math.round(val/maxVal*100):0;
+    const conf=(TEAMS[p.team]?.conf||'PFC').toLowerCase();
+    html+=`<tr>
+      <td>${rankLabel(i)}</td>
+      <td><div class="player-cell"><div class="player-nm">${p.name}</div><div class="player-team ${conf}">${p.team} · ${TEAMS[p.team]?.conf||''}</div></div></td>
+      <td class="stat-val gold">${val}</td>
+      <td class="stat-val" style="color:var(--muted);font-size:14px">${p.games}</td>
+      <td class="stat-bar-cell"><div class="stat-bar-wrap"><div class="stat-bar" style="width:${pct}%"></div></div></td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>`;
+  document.getElementById('content').innerHTML=html;
+}
+
+function renderTeams(){
+  const teamF=document.getElementById('teamFilter').value;
+  const players=getPlayerStats();
+  const teamStats={};
+  Object.keys(TEAMS).forEach(t=>{teamStats[t]={pass_tds:0,rush_tds:0,rec_tds:0,total_tds:0,receptions:0,targets:0,rushes:0,ints_caught:0,tackles:0,swats:0,players:0};});
+  players.forEach(p=>{
+    if(!teamStats[p.team]) return;
+    teamStats[p.team].players++;
+    ['pass_tds','rush_tds','rec_tds','receptions','targets','rushes','ints_caught','tackles','swats'].forEach(f=>{teamStats[p.team][f]+=p[f]||0;});
+    teamStats[p.team].total_tds+=(p.pass_tds||0)+(p.rush_tds||0)+(p.rec_tds||0);
+  });
+  const teams=teamF==='all'?Object.keys(TEAMS):[teamF];
+  let html=`<div class="team-grid">`;
+  teams.forEach(t=>{
+    const s=teamStats[t];
+    const conf=(TEAMS[t]?.conf||'PFC').toLowerCase();
+    html+=`<div class="team-card">
+      <div class="team-card-head">
+        <div class="team-card-name">${t}</div>
+        <div class="team-card-conf ${conf}">${TEAMS[t]?.conf} · ${TEAMS[t]?.div}</div>
+      </div>
+      <div class="team-stat-row"><span class="team-stat-label">Total TDs</span><span class="team-stat-val">${s.total_tds}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Pass TDs</span><span class="team-stat-val">${s.pass_tds}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Rush TDs</span><span class="team-stat-val">${s.rush_tds}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Rec TDs</span><span class="team-stat-val">${s.rec_tds}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Tackles</span><span class="team-stat-val">${s.tackles}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">INTs Caught</span><span class="team-stat-val">${s.ints_caught}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Swats</span><span class="team-stat-val">${s.swats}</span></div>
+      <div class="team-stat-row"><span class="team-stat-label">Players Tracked</span><span class="team-stat-val">${s.players}</span></div>
+    </div>`;
+  });
+  html+=`</div>`;
+  document.getElementById('content').innerHTML=html;
+}
+
+function render(){
+  buildTabs();
+  const mode=document.getElementById('viewMode').value;
+  if(mode==='teams') renderTeams();
+  else renderPlayers();
+}
+render();
+</script>
+</body>
+</html>
