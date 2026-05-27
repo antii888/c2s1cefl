@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PEFL S16 · Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#09090f;
+  --bg2:#111118;
+  --card:#14141f;
+  --card2:#1a1a28;
+  --border:#222235;
+  --border2:#2e2e48;
+  --gold:#fbbf24;
+  --purple:#818cf8;
+  --teal:#34d399;
+  --red:#f87171;
+  --orange:#fb923c;
+  --text:#e2e8f0;
+  --muted:#4a5568;
+  --muted2:#718096;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
+
+/* Password gate */
+.pw-gate{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.pw-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px;width:100%;max-width:380px;text-align:center;}
+.pw-icon{font-size:36px;margin-bottom:16px;}
+.pw-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
+.pw-sub{font-size:13px;color:var(--muted2);margin-bottom:28px;}
+.pw-input{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 16px;border-radius:10px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:12px;transition:border-color .2s;}
+.pw-input:focus{border-color:var(--purple);}
+.pw-btn{width:100%;background:var(--gold);color:#09090f;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;padding:13px;border:none;border-radius:10px;cursor:pointer;transition:all .2s;}
+.pw-btn:hover{background:#e5aa1a;}
+.pw-error{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+.pw-error.show{display:block;}
+#adminContent{display:none;}
+
+/* Top bar */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);}
+.topbar-title span{color:var(--gold);}
+.topbar-sub{font-size:12px;color:var(--muted2);letter-spacing:1px;}
+.topbar-right{display:flex;gap:10px;align-items:center;}
+.tb-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);font-family:'Space Grotesk',sans-serif;font-size:12px;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.tb-btn:hover{border-color:var(--purple);color:var(--purple);}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 57px);}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}}
+
+/* Sidebar */
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:24px 0;}
+.sidebar-section{margin-bottom:8px;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 20px 8px;}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;cursor:pointer;border-left:2px solid transparent;transition:all .2s;font-size:14px;color:var(--muted2);}
+.sidebar-item:hover{background:rgba(255,255,255,0.02);color:var(--text);}
+.sidebar-item.active{border-left-color:var(--gold);color:var(--gold);background:rgba(251,191,36,0.04);}
+.badge{background:var(--red);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;}
+.badge.green{background:var(--teal);color:#09090f;}
+.badge.gray{background:var(--muted);color:var(--text);}
+
+/* Main */
+.main{padding:32px;overflow-y:auto;}
+.main-header{margin-bottom:28px;}
+.main-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--text);}
+.main-sub{color:var(--muted2);font-size:13px;margin-top:4px;}
+
+/* Filter bar */
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;align-items:center;}
+.filter-select{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 12px;border-radius:8px;cursor:pointer;outline:none;}
+.filter-input{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;outline:none;flex:1;min-width:180px;}
+.filter-input::placeholder{color:var(--muted);}
+.filter-input:focus{border-color:var(--purple);}
+
+/* Stats table */
+.stats-table-wrap{overflow-x:auto;}
+.stats-table{width:100%;border-collapse:collapse;font-size:13px;}
+.stats-table th{text-align:left;padding:10px 14px;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);border-bottom:1px solid var(--border);}
+.stats-table td{padding:0;}
+.stat-row{border-bottom:1px solid var(--border);}
+.stat-row:last-child{border-bottom:none;}
+.stat-row td{padding:14px 14px;}
+.stat-row:hover{background:rgba(255,255,255,0.01);}
+
+/* Status badge */
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.5px;}
+.status-badge.pending{background:rgba(251,191,36,0.1);color:var(--gold);border:1px solid rgba(251,191,36,0.2);}
+.status-badge.approved{background:rgba(52,211,153,0.1);color:var(--teal);border:1px solid rgba(52,211,153,0.2);}
+.status-badge.rejected{background:rgba(248,113,113,0.1);color:var(--red);border:1px solid rgba(248,113,113,0.2);}
+
+/* Player info cell */
+.player-info{}
+.player-name{font-weight:600;font-size:14px;color:var(--text);}
+.player-meta{font-size:12px;color:var(--muted2);margin-top:2px;}
+
+/* Stats mini */
+.stats-mini{display:flex;flex-wrap:wrap;gap:6px;}
+.stat-chip{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--muted2);}
+.stat-chip strong{color:var(--text);}
+
+/* Actions */
+.action-row{display:flex;gap:6px;flex-wrap:wrap;}
+.action-btn{border:none;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;padding:6px 12px;border-radius:7px;cursor:pointer;transition:all .2s;}
+.action-btn.approve{background:rgba(52,211,153,0.12);color:var(--teal);border:1px solid rgba(52,211,153,0.2);}
+.action-btn.approve:hover{background:rgba(52,211,153,0.25);}
+.action-btn.reject{background:rgba(248,113,113,0.1);color:var(--red);border:1px solid rgba(248,113,113,0.2);}
+.action-btn.reject:hover{background:rgba(248,113,113,0.2);}
+.action-btn.edit{background:rgba(129,140,248,0.1);color:var(--purple);border:1px solid rgba(129,140,248,0.2);}
+.action-btn.edit:hover{background:rgba(129,140,248,0.2);}
+.action-btn.delete{background:rgba(248,113,113,0.05);color:var(--muted2);border:1px solid var(--border);}
+.action-btn.delete:hover{color:var(--red);border-color:rgba(248,113,113,0.3);}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted2);}
+.empty-state .icon{font-size:40px;margin-bottom:14px;}
+.empty-state .msg{font-size:14px;}
+
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;}
+.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:24px;color:var(--text);}
+.modal-field{margin-bottom:16px;}
+.modal-field label{display:block;font-size:12px;font-weight:500;color:var(--muted2);margin-bottom:6px;letter-spacing:.5px;}
+.modal-field input,.modal-field select{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;padding:10px 14px;border-radius:9px;outline:none;transition:border-color .2s;}
+.modal-field input:focus,.modal-field select:focus{border-color:var(--purple);}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-section{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin:20px 0 12px;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;}
+.modal-btn{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;padding:10px 22px;border-radius:10px;cursor:pointer;border:none;transition:all .2s;}
+.modal-btn.save{background:var(--purple);color:white;}
+.modal-btn.save:hover{background:#6366f1;}
+.modal-btn.cancel{background:transparent;border:1px solid var(--border2);color:var(--muted2);}
+.modal-btn.cancel:hover{color:var(--text);border-color:var(--text);}
+
+/* Stats summary cards */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:32px;}
+.summary-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.summary-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;}
+.summary-num.gold{color:var(--gold);}
+.summary-num.teal{color:var(--teal);}
+.summary-num.red{color:var(--red);}
+.summary-num.purple{color:var(--purple);}
+.summary-label{font-size:12px;color:var(--muted2);margin-top:4px;}
+</style>
+</head>
+<body>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">Edit Submission</div>
+    <input type="hidden" id="editId"/>
+    <div class="modal-field">
+      <label>Player Name</label>
+      <input type="text" id="editName"/>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-field">
+        <label>Team</label>
+        <select id="editTeam">
+          <option value="Ravens">Ravens</option><option value="Jags">Jags</option><option value="Browns">Browns</option>
+          <option value="49ers">49ers</option><option value="Broncos">Broncos</option><option value="Eagles">Eagles</option>
+          <option value="Bucs">Bucs</option><option value="Texans">Texans</option><option value="Raiders">Raiders</option>
+          <option value="Commanders">Commanders</option><option value="Vikings">Vikings</option><option value="Bengals">Bengals</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>Week</label>
+        <select id="editWeek">
+          <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option>
+          <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
+          <option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option>
+          <option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option>
+          <option value="13">Week 13</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-field">
+      <label>Team Score</label>
+      <input type="number" id="editScore" min="0"/>
+    </div>
+    <div class="modal-section">Passing</div>
+    <div class="modal-grid">
+      <div class="modal-field"><label>Pass TDs</label><input type="number" id="e_pass_tds" min="0"/></div>
+      <div class="modal-field"><label>Attempts</label><input type="number" id="e_pass_att" min="0"/></div>
+      <div class="modal-field"><label>Completions</label><input type="number" id="e_pass_comp" min="0"/></div>
+      <div class="modal-field"><label>INTs Thrown</label><input type="number" id="e_ints_thrown" min="0"/></div>
+    </div>
+    <div class="modal-section">Rushing</div>
+    <div class="modal-grid">
+      <div class="modal-field"><label>Rush TDs</label><input type="number" id="e_rush_tds" min="0"/></div>
+      <div class="modal-field"><label>Rushes</label><input type="number" id="e_rushes" min="0"/></div>
+    </div>
+    <div class="modal-section">Receiving</div>
+    <div class="modal-grid">
+      <div class="modal-field"><label>Rec TDs</label><input type="number" id="e_rec_tds" min="0"/></div>
+      <div class="modal-field"><label>Receptions</label><input type="number" id="e_receptions" min="0"/></div>
+      <div class="modal-field"><label>Targets</label><input type="number" id="e_targets" min="0"/></div>
+    </div>
+    <div class="modal-section">Defense</div>
+    <div class="modal-grid">
+      <div class="modal-field"><label>Tackles</label><input type="number" id="e_tackles" min="0"/></div>
+      <div class="modal-field"><label>INTs Caught</label><input type="number" id="e_ints_caught" min="0"/></div>
+      <div class="modal-field"><label>Swats</label><input type="number" id="e_swats" min="0"/></div>
+    </div>
+    <div class="modal-field">
+      <label>Status</label>
+      <select id="editStatus">
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-btn save" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password Gate -->
+<div class="pw-gate" id="pwGate">
+  <div class="pw-box">
+    <div class="pw-icon">&#128274;</div>
+    <div class="pw-title">Admin Access</div>
+    <div class="pw-sub">Enter the password to continue</div>
+    <input class="pw-input" type="password" id="pwInput" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')checkPw()"/>
+    <button class="pw-btn" onclick="checkPw()">Enter</button>
+    <div class="pw-error" id="pwError">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<div id="adminContent">
+<!-- Top Bar -->
+<div class="topbar">
+  <div>
+    <div class="topbar-title"><span>PEFL</span> Admin Panel</div>
+    <div class="topbar-sub">Season 16 · Stats Management</div>
+  </div>
+  <div class="topbar-right">
+    <a href="submit.html" class="tb-btn">+ Submit Stats</a>
+    <a href="index.html" class="tb-btn">← Schedule</a>
+  </div>
+</div>
+
+<!-- Layout -->
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Filter By</div>
+      <div class="sidebar-item active" onclick="setFilter('all',this)">All Submissions <span class="badge gray" id="badge_all">0</span></div>
+      <div class="sidebar-item" onclick="setFilter('pending',this)">Pending <span class="badge" id="badge_pending">0</span></div>
+      <div class="sidebar-item" onclick="setFilter('approved',this)">Approved <span class="badge green" id="badge_approved">0</span></div>
+      <div class="sidebar-item" onclick="setFilter('rejected',this)">Rejected <span class="badge gray" id="badge_rejected">0</span></div>
+    </div>
+    <div class="sidebar-section" style="margin-top:24px;">
+      <div class="sidebar-label">Quick Actions</div>
+      <div class="sidebar-item" onclick="approveAll()">✓ Approve All Pending</div>
+      <div class="sidebar-item" onclick="clearRejected()">✕ Clear Rejected</div>
+      <div class="sidebar-item" onclick="exportData()">↓ Export JSON</div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="main-header">
+      <div class="main-title" id="mainTitle">All Submissions</div>
+      <div class="main-sub" id="mainSub">Review and manage all player stat submissions</div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-num gold" id="sum_total">0</div><div class="summary-label">Total Submissions</div></div>
+      <div class="summary-card"><div class="summary-num purple" id="sum_pending">0</div><div class="summary-label">Pending Review</div></div>
+      <div class="summary-card"><div class="summary-num teal" id="sum_approved">0</div><div class="summary-label">Approved</div></div>
+      <div class="summary-card"><div class="summary-num red" id="sum_rejected">0</div><div class="summary-label">Rejected</div></div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+      <input class="filter-input" type="text" placeholder="Search player name or team..." id="searchInput" oninput="renderTable()"/>
+      <select class="filter-select" id="weekFilterSel" onchange="renderTable()">
+        <option value="">All Weeks</option>
+        <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option>
+        <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
+        <option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option>
+        <option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option>
+        <option value="13">Week 13</option>
+      </select>
+      <select class="filter-select" id="teamFilterSel" onchange="renderTable()">
+        <option value="">All Teams</option>
+        <option value="Ravens">Ravens</option><option value="Jags">Jags</option><option value="Browns">Browns</option>
+        <option value="49ers">49ers</option><option value="Broncos">Broncos</option><option value="Eagles">Eagles</option>
+        <option value="Bucs">Bucs</option><option value="Texans">Texans</option><option value="Raiders">Raiders</option>
+        <option value="Commanders">Commanders</option><option value="Vikings">Vikings</option><option value="Bengals">Bengals</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="stats-table-wrap">
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Player / Game</th>
+            <th>Score</th>
+            <th>Offense</th>
+            <th>Defense</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY='pefl_s16_stats';
+let currentFilter='all';
+
+function getData(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }catch(e){ return []; } }
+function saveData(d){ localStorage.setItem(STORAGE_KEY,JSON.stringify(d)); }
+
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  const titles={all:'All Submissions',pending:'Pending Review',approved:'Approved Stats',rejected:'Rejected Submissions'};
+  document.getElementById('mainTitle').textContent=titles[f];
+  renderTable();
+}
+
+function updateSummary(){
+  const d=getData();
+  const pending=d.filter(x=>x.status==='pending').length;
+  const approved=d.filter(x=>x.status==='approved').length;
+  const rejected=d.filter(x=>x.status==='rejected').length;
+  document.getElementById('sum_total').textContent=d.length;
+  document.getElementById('sum_pending').textContent=pending;
+  document.getElementById('sum_approved').textContent=approved;
+  document.getElementById('sum_rejected').textContent=rejected;
+  document.getElementById('badge_all').textContent=d.length;
+  document.getElementById('badge_pending').textContent=pending;
+  document.getElementById('badge_approved').textContent=approved;
+  document.getElementById('badge_rejected').textContent=rejected;
+}
+
+function renderTable(){
+  const data=getData();
+  const search=document.getElementById('searchInput').value.toLowerCase();
+  const weekF=document.getElementById('weekFilterSel').value;
+  const teamF=document.getElementById('teamFilterSel').value;
+
+  let filtered=data.filter(s=>{
+    if(currentFilter!=='all'&&s.status!==currentFilter) return false;
+    if(weekF&&String(s.week)!==weekF) return false;
+    if(teamF&&s.team!==teamF) return false;
+    if(search&&!s.player_name?.toLowerCase().includes(search)&&!s.team?.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  filtered.sort((a,b)=>new Date(b.submitted)-new Date(a.submitted));
+
+  const tbody=document.getElementById('tableBody');
+  if(filtered.length===0){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="icon">📋</div><div class="msg">No submissions found</div></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML=filtered.map(s=>{
+    const date=new Date(s.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const offStats=[
+      s.pass_tds?`Pass TDs: <strong>${s.pass_tds}</strong>`:'',
+      s.rush_tds?`Rush TDs: <strong>${s.rush_tds}</strong>`:'',
+      s.rec_tds?`Rec TDs: <strong>${s.rec_tds}</strong>`:'',
+      s.pass_att?`Att: <strong>${s.pass_comp||0}/${s.pass_att}</strong>`:'',
+      s.receptions?`Rec: <strong>${s.receptions}</strong>${s.targets?'/'+s.targets:''}`:'',
+      s.rushes?`Rushes: <strong>${s.rushes}</strong>`:'',
+      s.ints_thrown?`INTs: <strong>${s.ints_thrown}</strong>`:'',
+    ].filter(Boolean);
+    const defStats=[
+      s.tackles?`Tackles: <strong>${s.tackles}</strong>`:'',
+      s.ints_caught?`INTs: <strong>${s.ints_caught}</strong>`:'',
+      s.swats?`Swats: <strong>${s.swats}</strong>`:'',
+    ].filter(Boolean);
+
+    return `<tr class="stat-row">
+      <td>
+        <div class="player-info">
+          <div class="player-name">${s.player_name||'Unknown'}</div>
+          <div class="player-meta">${s.team} · Wk ${s.week} · ${s.home} vs ${s.away}</div>
+          <div class="player-meta" style="margin-top:3px;color:var(--muted);">${date}</div>
+        </div>
+      </td>
+      <td><strong style="font-size:16px;color:var(--text);">${s.score??'—'}</strong></td>
+      <td><div class="stats-mini">${offStats.length?offStats.map(x=>`<span class="stat-chip">${x}</span>`).join(''):'<span class="stat-chip">—</span>'}</div></td>
+      <td><div class="stats-mini">${defStats.length?defStats.map(x=>`<span class="stat-chip">${x}</span>`).join(''):'<span class="stat-chip">—</span>'}</div></td>
+      <td><span class="status-badge ${s.status}">${s.status.charAt(0).toUpperCase()+s.status.slice(1)}</span></td>
+      <td>
+        <div class="action-row">
+          ${s.status!=='approved'?`<button class="action-btn approve" onclick="updateStatus('${s.id}','approved')">✓ Approve</button>`:''}
+          ${s.status!=='rejected'?`<button class="action-btn reject" onclick="updateStatus('${s.id}','rejected')">✕ Reject</button>`:''}
+          <button class="action-btn edit" onclick="openEdit('${s.id}')">✎ Edit</button>
+          <button class="action-btn delete" onclick="deleteEntry('${s.id}')">🗑</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+  updateSummary();
+}
+
+function updateStatus(id,status){
+  const d=getData();
+  const idx=d.findIndex(s=>s.id===id);
+  if(idx>-1){ d[idx].status=status; saveData(d); renderTable(); }
+}
+
+function deleteEntry(id){
+  if(!confirm('Delete this submission?')) return;
+  const d=getData().filter(s=>s.id!==id);
+  saveData(d); renderTable();
+}
+
+function approveAll(){
+  const d=getData();
+  d.forEach(s=>{ if(s.status==='pending') s.status='approved'; });
+  saveData(d); renderTable();
+}
+
+function clearRejected(){
+  if(!confirm('Delete all rejected submissions?')) return;
+  saveData(getData().filter(s=>s.status!=='rejected'));
+  renderTable();
+}
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(getData(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='pefl_s16_stats.json'; a.click();
+}
+
+function openEdit(id){
+  const d=getData();
+  const s=d.find(x=>x.id===id);
+  if(!s) return;
+  document.getElementById('editId').value=id;
+  document.getElementById('editName').value=s.player_name||'';
+  document.getElementById('editTeam').value=s.team||'Ravens';
+  document.getElementById('editWeek').value=s.week||1;
+  document.getElementById('editScore').value=s.score||'';
+  document.getElementById('editStatus').value=s.status||'pending';
+  const fields=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats'];
+  fields.forEach(f=>{ document.getElementById('e_'+f).value=s[f]??0; });
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeModal(){ document.getElementById('editModal').classList.remove('open'); }
+
+function saveEdit(){
+  const id=document.getElementById('editId').value;
+  const d=getData();
+  const idx=d.findIndex(s=>s.id===id);
+  if(idx<0) return;
+  d[idx].player_name=document.getElementById('editName').value;
+  d[idx].team=document.getElementById('editTeam').value;
+  d[idx].week=parseInt(document.getElementById('editWeek').value);
+  d[idx].score=document.getElementById('editScore').value||null;
+  d[idx].status=document.getElementById('editStatus').value;
+  const fields=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats'];
+  fields.forEach(f=>{ d[idx][f]=parseInt(document.getElementById('e_'+f).value)||0; });
+  saveData(d); closeModal(); renderTable();
+}
+
+// Close modal on outside click
+document.getElementById('editModal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+
+renderTable();
+updateSummary();
+
+function checkPw(){
+  const val = document.getElementById('pwInput').value;
+  if(val === 'Gem211533'){
+    document.getElementById('pwGate').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+    sessionStorage.setItem('pefl_admin','1');
+  } else {
+    document.getElementById('pwError').classList.add('show');
+    document.getElementById('pwInput').value='';
+  }
+}
+
+// Auto-unlock if already authenticated this session
+if(sessionStorage.getItem('pefl_admin')==='1'){
+  document.getElementById('pwGate').style.display='none';
+  document.getElementById('adminContent').style.display='block';
+}
+
+</script>
+</div>
+</body>
+</html>
