@@ -221,6 +221,7 @@ const SCHEDULE=[
     {home:"49ers",away:"Commanders",type:"inter"},
   ]},
 ];
+const WEEK_DATES=["June 5 - June 7","June 8 - June 10","June 11 - June 13","June 14 - June 16","June 17 - June 19","June 20 - June 22","June 23 - June 25","June 26 - June 28","June 29 - July 1","July 2 - July 4","July 5 - July 7","July 8 - July 10","July 11 - July 13"];
 const SK='pefl_s16_stats';
 function getData(){try{return JSON.parse(localStorage.getItem(SK)||'[]');}catch(e){return[];}}
 function getApproved(){return getData().filter(s=>s.status==='approved');}
@@ -295,7 +296,7 @@ function buildSchedule(){
   });
   let html='';
   SCHEDULE.forEach(wk=>{
-    html+=`<div class="week-block" data-week="${wk.week}"><div class="week-header"><span class="week-title">WEEK ${wk.week}</span></div><div class="games-grid">`;
+    html+=`<div class="week-block" data-week="${wk.week}"><div class="week-header"><span class="week-title">WEEK ${wk.week}</span><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--muted);letter-spacing:2px;">${WEEK_DATES[wk.week-1]}</span></div><div class="games-grid">`;
     wk.games.forEach(g=>{
       const key='w'+wk.week+'_'+[g.home,g.away].sort().join('_');
       const gStats=statMap[key]||[];
