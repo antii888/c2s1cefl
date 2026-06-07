@@ -225,6 +225,18 @@ const SCHEDULE=[
     {home:"49ers",away:"Commanders",type:"inter"},
   ]},
 ];
+
+// Populate week dropdown on load
+window.addEventListener('DOMContentLoaded', function() {
+  var weekSel = document.getElementById('gameWeek');
+  for (var i = 1; i <= 13; i++) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = 'Week ' + i;
+    weekSel.appendChild(opt);
+  }
+});
+
 function updateGameOptions(){
   const team=document.getElementById('playerTeam').value;
   const week=parseInt(document.getElementById('gameWeek').value);
