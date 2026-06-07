@@ -88,6 +88,26 @@ tr:hover td{background:rgba(255,255,255,.01);}
 .action-btn.del{background:transparent;color:var(--muted2);border:1px solid var(--border);}
 .empty{text-align:center;padding:48px;color:var(--muted2);font-size:14px;}
 
+/* SCORES */
+.scores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;}
+.score-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;overflow:hidden;}
+.score-card-head{background:var(--card2);padding:10px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.score-card-week{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--gold);}
+.score-card-type{font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;}
+.score-card-body{padding:14px;}
+.score-matchup{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.score-team{flex:1;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;}
+.score-team.away{text-align:right;}
+.score-vs{font-size:12px;color:var(--muted2);}
+.score-inputs{display:flex;align-items:center;gap:8px;}
+.score-input{flex:1;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;padding:8px;border-radius:8px;text-align:center;outline:none;width:100%;}
+.score-input:focus{border-color:var(--gold);}
+.score-dash{font-size:18px;color:var(--muted2);}
+.score-save-btn{width:100%;background:var(--gold);color:#09090f;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;padding:9px;border:none;border-radius:8px;cursor:pointer;transition:all .2s;}
+.score-save-btn:hover{background:#e5aa1a;}
+.score-saved{font-size:11px;color:var(--teal);text-align:center;margin-top:6px;display:none;}
+.week-section{margin-bottom:28px;}
+.week-section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--gold);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
@@ -197,7 +217,9 @@ tr:hover td{background:rgba(255,255,255,.01);}
     <div class="sidebar-item" onclick="setFilter('pending',this)">Pending <span class="badge" id="b_pending">0</span></div>
     <div class="sidebar-item" onclick="setFilter('approved',this)">Approved <span class="badge green" id="b_approved">0</span></div>
     <div class="sidebar-item" onclick="setFilter('rejected',this)">Rejected <span class="badge gray" id="b_rejected">0</span></div>
-    <div class="sidebar-label" style="margin-top:24px;">Actions</div>
+    <div class="sidebar-label" style="margin-top:24px;">Scores</div>
+    <div class="sidebar-item" onclick="showSection('scores',this)">&#9917; Enter Scores</div>
+    <div class="sidebar-label" style="margin-top:12px;">Actions</div>
     <div class="sidebar-item" onclick="approveAll()">&#10003; Approve All</div>
     <div class="sidebar-item" onclick="clearRejected()">&#10005; Clear Rejected</div>
     <div class="sidebar-item" onclick="exportData()">&#8595; Export JSON</div>
@@ -233,6 +255,7 @@ tr:hover td{background:rgba(255,255,255,.01);}
       </select>
     </div>
 
+    <div id="content"></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Player / Game</th><th>Stats</th><th>Status</th><th>Actions</th></tr></thead>
@@ -242,9 +265,114 @@ tr:hover td{background:rgba(255,255,255,.01);}
   </div>
 </div>
 
+
+<!-- SCORES SECTION -->
+<div id="scoresSection" style="display:none;">
+  <div class="main-title">Enter Scores</div>
+  <div class="main-sub">Set final scores for each game — they'll show up on the schedule instantly</div>
+
+  <div class="filter-bar">
+    <select class="filter-select" id="scoreWeekSel" onchange="renderScores()">
+      <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option>
+      <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
+      <option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option>
+      <option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option>
+      <option value="13">Week 13</option>
+    </select>
+  </div>
+  <div id="scoresContainer"></div>
+</div>
+
+<style>
+.score-game-card{background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:18px;margin-bottom:12px;}
+.score-game-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:14px;color:var(--text);}
+.score-inputs{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.score-team-block{flex:1;min-width:120px;}
+.score-team-name{font-size:13px;color:var(--muted2);margin-bottom:6px;font-weight:600;}
+.score-input{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;padding:10px 14px;border-radius:8px;outline:none;text-align:center;}
+.score-input:focus{border-color:var(--gold);}
+.score-dash{font-family:'Syne',sans-serif;font-size:24px;color:var(--muted2);}
+.save-score-btn{background:var(--gold);color:#09090f;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;padding:10px 20px;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;}
+.save-score-btn:hover{background:#e5aa1a;}
+.score-saved{font-size:11px;color:var(--teal);margin-top:6px;display:none;}
+</style>
 </div><!-- end adminContent -->
 
 <script>
+
+const SCHEDULE=[
+  {week:1,games:[{home:"49ers",away:"Vikings",type:"inter"},{home:"Texans",away:"Bengals",type:"intra"},{home:"Bucs",away:"Raiders",type:"division"},{home:"Eagles",away:"Broncos",type:"division"},{home:"Browns",away:"Ravens",type:"division"},{home:"Jags",away:"Commanders",type:"inter"}]},
+  {week:2,games:[{home:"Ravens",away:"49ers",type:"intra"},{home:"Broncos",away:"Vikings",type:"inter"},{home:"Raiders",away:"Bengals",type:"intra"},{home:"Browns",away:"Jags",type:"division"},{home:"Bucs",away:"Texans",type:"division"},{home:"Eagles",away:"Commanders",type:"inter"}]},
+  {week:3,games:[{home:"Raiders",away:"Vikings",type:"intra"},{home:"Broncos",away:"Bengals",type:"inter"},{home:"Ravens",away:"Texans",type:"inter"},{home:"Jags",away:"Eagles",type:"intra"},{home:"Browns",away:"49ers",type:"intra"},{home:"Bucs",away:"Commanders",type:"intra"}]},
+  {week:4,games:[{home:"Bucs",away:"Vikings",type:"intra"},{home:"Broncos",away:"Raiders",type:"inter"},{home:"Browns",away:"Bengals",type:"inter"},{home:"Jags",away:"Ravens",type:"division"},{home:"Texans",away:"Commanders",type:"intra"},{home:"Eagles",away:"49ers",type:"division"}]},
+  {week:5,games:[{home:"Vikings",away:"Bengals",type:"division"},{home:"Broncos",away:"Texans",type:"inter"},{home:"49ers",away:"Raiders",type:"inter"},{home:"Jags",away:"Bucs",type:"inter"},{home:"Ravens",away:"Eagles",type:"intra"},{home:"Browns",away:"Commanders",type:"inter"}]},
+  {week:6,games:[{home:"Bucs",away:"Bengals",type:"intra"},{home:"Eagles",away:"Vikings",type:"inter"},{home:"Broncos",away:"49ers",type:"division"},{home:"Ravens",away:"Browns",type:"division"},{home:"Jags",away:"Texans",type:"inter"},{home:"Raiders",away:"Commanders",type:"intra"}]},
+  {week:7,games:[{home:"Ravens",away:"Vikings",type:"inter"},{home:"Broncos",away:"Eagles",type:"division"},{home:"Jags",away:"49ers",type:"intra"},{home:"Raiders",away:"Bucs",type:"division"},{home:"Bengals",away:"Commanders",type:"division"},{home:"Browns",away:"Texans",type:"inter"}]},
+  {week:8,games:[{home:"Vikings",away:"Commanders",type:"division"},{home:"Eagles",away:"Bengals",type:"inter"},{home:"49ers",away:"Broncos",type:"division"},{home:"Texans",away:"Raiders",type:"division"},{home:"Ravens",away:"Jags",type:"division"},{home:"Browns",away:"Bucs",type:"inter"}]},
+  {week:9,games:[{home:"Eagles",away:"Bucs",type:"inter"},{home:"49ers",away:"Bengals",type:"inter"},{home:"Ravens",away:"Commanders",type:"inter"},{home:"Browns",away:"Vikings",type:"inter"},{home:"Raiders",away:"Texans",type:"division"},{home:"Jags",away:"Broncos",type:"intra"}]},
+  {week:10,games:[{home:"Commanders",away:"Vikings",type:"division"},{home:"Broncos",away:"Bucs",type:"inter"},{home:"Jags",away:"Bengals",type:"inter"},{home:"Browns",away:"Eagles",type:"intra"},{home:"49ers",away:"Texans",type:"inter"},{home:"Ravens",away:"Raiders",type:"inter"}]},
+  {week:11,games:[{home:"Texans",away:"Bucs",type:"division"},{home:"Jags",away:"Vikings",type:"inter"},{home:"Browns",away:"Raiders",type:"inter"},{home:"Ravens",away:"Broncos",type:"intra"},{home:"49ers",away:"Eagles",type:"division"},{home:"Commanders",away:"Bengals",type:"division"}]},
+  {week:12,games:[{home:"Texans",away:"Vikings",type:"intra"},{home:"Jags",away:"Browns",type:"division"},{home:"Eagles",away:"Raiders",type:"inter"},{home:"Ravens",away:"Bengals",type:"inter"},{home:"Broncos",away:"Commanders",type:"inter"},{home:"49ers",away:"Bucs",type:"inter"}]},
+  {week:13,games:[{home:"Bengals",away:"Vikings",type:"division"},{home:"Browns",away:"Broncos",type:"intra"},{home:"Ravens",away:"Bucs",type:"inter"},{home:"Eagles",away:"Texans",type:"inter"},{home:"Jags",away:"Raiders",type:"inter"},{home:"49ers",away:"Commanders",type:"inter"}]},
+];
+const SCORES_KEY='pefl_s16_scores';
+function getScores(){try{return JSON.parse(localStorage.getItem(SCORES_KEY)||'{}');}catch(e){return{};}}
+function saveScores(s){localStorage.setItem(SCORES_KEY,JSON.stringify(s));}
+
+function renderScores(){
+  const scores=getScores();
+  let html='';
+  SCHEDULE.forEach(wk=>{
+    html+=`<div class="week-section"><div class="week-section-title">Week ${wk.week}</div><div class="scores-grid">`;
+    wk.games.forEach((g,gi)=>{
+      const key=`w${wk.week}_${[g.home,g.away].sort().join('_')}`;
+      const existing=scores[key]||{};
+      const typeLabel=g.type==='inter'?'Inter-Conf':g.type==='intra'?'Intra-Conf':'Division';
+      html+=`<div class="score-card">
+        <div class="score-card-head">
+          <span class="score-card-week">Week ${wk.week}</span>
+          <span class="score-card-type">${typeLabel}</span>
+        </div>
+        <div class="score-card-body">
+          <div class="score-matchup">
+            <span class="score-team">${g.home}</span>
+            <span class="score-vs">vs</span>
+            <span class="score-team away">${g.away}</span>
+          </div>
+          <div class="score-inputs">
+            <input class="score-input" type="number" id="hs_${key}" placeholder="0" value="${existing.home||''}" min="0"/>
+            <span class="score-dash">—</span>
+            <input class="score-input" type="number" id="as_${key}" placeholder="0" value="${existing.away||''}" min="0"/>
+          </div>
+          <button class="score-save-btn" onclick="saveScore('${key}','${g.home}','${g.away}')">Save Score</button>
+          <div class="score-saved" id="saved_${key}">✓ Saved!</div>
+        </div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('content').innerHTML=html;
+}
+
+function saveScore(key,home,away){
+  const hs=document.getElementById('hs_'+key).value;
+  const as=document.getElementById('as_'+key).value;
+  const scores=getScores();
+  scores[key]={home:hs,away:as,homeTeam:home,awayTeam:away};
+  // Also save as approved stat entries so index.html picks them up
+  const allStats=JSON.parse(localStorage.getItem('pefl_s16_stats')||'[]');
+  // Remove old admin score entries for this game
+  const filtered=allStats.filter(s=>!(s.admin_score&&s.home===home&&s.away===as&&s.week===parseInt(key.split('_')[0].replace('w',''))));
+  const week=parseInt(key.split('_')[0].replace('w',''));
+  if(hs!=='') filtered.push({id:'admin_'+key+'_home',status:'approved',admin_score:true,player_name:home,team:home,week,home,away,score:hs,submitted:new Date().toISOString()});
+  if(as!=='') filtered.push({id:'admin_'+key+'_away',status:'approved',admin_score:true,player_name:away,team:away,week,home,away,score:as,submitted:new Date().toISOString()});
+  localStorage.setItem('pefl_s16_stats',JSON.stringify(filtered));
+  saveScores(scores);
+  const savedEl=document.getElementById('saved_'+key);
+  savedEl.style.display='block';
+  setTimeout(()=>{savedEl.style.display='none';},2000);
+}
+
 const SK='pefl_s16_stats';
 let currentFilter='all';
 function getData(){try{return JSON.parse(localStorage.getItem(SK)||'[]');}catch(e){return[];}}
@@ -269,9 +397,28 @@ function setFilter(f,el){
   currentFilter=f;
   document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
   el.classList.add('active');
-  const t={all:'All Submissions',pending:'Pending Review',approved:'Approved',rejected:'Rejected'};
-  document.getElementById('mainTitle').textContent=t[f];
-  renderTable();
+  const t={all:'All Submissions',pending:'Pending Review',approved:'Approved',rejected:'Rejected',scores:'Enter Scores'};
+  document.getElementById('mainTitle').textContent=t[f]||f;
+  document.getElementById('mainSub').textContent=f==='scores'?'Add scores directly to the schedule':'Review and manage player stat submissions';
+  if(f==='scores'){
+    document.querySelector('.filter-bar').style.display='none';
+    document.querySelector('.table-wrap').style.display='none';
+    document.querySelector('.summary-grid').style.display='none';
+    var cd=document.getElementById('content');
+    if(!cd){
+      var d=document.createElement('div');
+      d.id='content';
+      document.querySelector('.main').appendChild(d);
+    }
+    renderScores();
+  } else {
+    document.querySelector('.filter-bar').style.display='flex';
+    document.querySelector('.table-wrap').style.display='block';
+    document.querySelector('.summary-grid').style.display='grid';
+    var cd=document.getElementById('content');
+    if(cd) cd.innerHTML='';
+    renderTable();
+  }
 }
 
 function updateSummary(){
@@ -374,6 +521,98 @@ function saveEdit(){
 }
 document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 renderTable();updateSummary();
+
+const PEFL_SCHEDULE=[
+  {week:1,games:[{home:"49ers",away:"Vikings"},{home:"Texans",away:"Bengals"},{home:"Bucs",away:"Raiders"},{home:"Eagles",away:"Broncos"},{home:"Browns",away:"Ravens"},{home:"Jags",away:"Commanders"}]},
+  {week:2,games:[{home:"Ravens",away:"49ers"},{home:"Broncos",away:"Vikings"},{home:"Raiders",away:"Bengals"},{home:"Browns",away:"Jags"},{home:"Bucs",away:"Texans"},{home:"Eagles",away:"Commanders"}]},
+  {week:3,games:[{home:"Raiders",away:"Vikings"},{home:"Broncos",away:"Bengals"},{home:"Ravens",away:"Texans"},{home:"Jags",away:"Eagles"},{home:"Browns",away:"49ers"},{home:"Bucs",away:"Commanders"}]},
+  {week:4,games:[{home:"Bucs",away:"Vikings"},{home:"Broncos",away:"Raiders"},{home:"Browns",away:"Bengals"},{home:"Jags",away:"Ravens"},{home:"Texans",away:"Commanders"},{home:"Eagles",away:"49ers"}]},
+  {week:5,games:[{home:"Vikings",away:"Bengals"},{home:"Broncos",away:"Texans"},{home:"49ers",away:"Raiders"},{home:"Jags",away:"Bucs"},{home:"Ravens",away:"Eagles"},{home:"Browns",away:"Commanders"}]},
+  {week:6,games:[{home:"Bucs",away:"Bengals"},{home:"Eagles",away:"Vikings"},{home:"Broncos",away:"49ers"},{home:"Ravens",away:"Browns"},{home:"Jags",away:"Texans"},{home:"Raiders",away:"Commanders"}]},
+  {week:7,games:[{home:"Ravens",away:"Vikings"},{home:"Broncos",away:"Eagles"},{home:"Jags",away:"49ers"},{home:"Raiders",away:"Bucs"},{home:"Bengals",away:"Commanders"},{home:"Browns",away:"Texans"}]},
+  {week:8,games:[{home:"Vikings",away:"Commanders"},{home:"Eagles",away:"Bengals"},{home:"49ers",away:"Broncos"},{home:"Texans",away:"Raiders"},{home:"Ravens",away:"Jags"},{home:"Browns",away:"Bucs"}]},
+  {week:9,games:[{home:"Eagles",away:"Bucs"},{home:"49ers",away:"Bengals"},{home:"Ravens",away:"Commanders"},{home:"Browns",away:"Vikings"},{home:"Raiders",away:"Texans"},{home:"Jags",away:"Broncos"}]},
+  {week:10,games:[{home:"Commanders",away:"Vikings"},{home:"Broncos",away:"Bucs"},{home:"Jags",away:"Bengals"},{home:"Browns",away:"Eagles"},{home:"49ers",away:"Texans"},{home:"Ravens",away:"Raiders"}]},
+  {week:11,games:[{home:"Texans",away:"Bucs"},{home:"Jags",away:"Vikings"},{home:"Browns",away:"Raiders"},{home:"Ravens",away:"Broncos"},{home:"49ers",away:"Eagles"},{home:"Commanders",away:"Bengals"}]},
+  {week:12,games:[{home:"Texans",away:"Vikings"},{home:"Jags",away:"Browns"},{home:"Eagles",away:"Raiders"},{home:"Ravens",away:"Bengals"},{home:"Broncos",away:"Commanders"},{home:"49ers",away:"Bucs"}]},
+  {week:13,games:[{home:"Bengals",away:"Vikings"},{home:"Browns",away:"Broncos"},{home:"Ravens",away:"Bucs"},{home:"Eagles",away:"Texans"},{home:"Jags",away:"Raiders"},{home:"49ers",away:"Commanders"}]},
+];
+
+const SCORES_KEY='pefl_s16_scores';
+function getScores(){try{return JSON.parse(localStorage.getItem(SCORES_KEY)||'{}');}catch(e){return{};}}
+function saveScore(week,home,away,homeScore,awayScore){
+  const scores=getScores();
+  const key='w'+week+'_'+[home,away].sort().join('_');
+  scores[key]={home,away,week,homeScore,awayScore};
+  localStorage.setItem(SCORES_KEY,JSON.stringify(scores));
+  // Also save into stats storage so schedule page picks it up
+  const allStats=getData();
+  const statsKey='score_'+key;
+  // Remove old score entries for this game
+  const filtered=allStats.filter(s=>!(s.is_score&&s.home===home&&s.away===away&&s.week===week));
+  // Add home score entry
+  filtered.push({id:statsKey+'_home',status:'approved',is_score:true,player_name:'',team:home,week:parseInt(week),home,away,score:homeScore,submitted:new Date().toISOString()});
+  // Add away score entry
+  filtered.push({id:statsKey+'_away',status:'approved',is_score:true,player_name:'',team:away,week:parseInt(week),home,away,score:awayScore,submitted:new Date().toISOString()});
+  saveData(filtered);
+}
+
+function renderScores(){
+  const week=parseInt(document.getElementById('scoreWeekSel').value);
+  const wkData=PEFL_SCHEDULE.find(w=>w.week===week);
+  const scores=getScores();
+  if(!wkData){document.getElementById('scoresContainer').innerHTML='';return;}
+  let html='';
+  wkData.games.forEach(g=>{
+    const key='w'+week+'_'+[g.home,g.away].sort().join('_');
+    const existing=scores[key]||{};
+    html+=`<div class="score-game-card">
+      <div class="score-game-title">${g.home} vs ${g.away}</div>
+      <div class="score-inputs">
+        <div class="score-team-block">
+          <div class="score-team-name">${g.home}</div>
+          <input class="score-input" type="number" id="hs_${key}" placeholder="0" value="${existing.homeScore??''}"/>
+        </div>
+        <div class="score-dash">—</div>
+        <div class="score-team-block">
+          <div class="score-team-name">${g.away}</div>
+          <input class="score-input" type="number" id="as_${key}" placeholder="0" value="${existing.awayScore??''}"/>
+        </div>
+        <button class="save-score-btn" onclick="submitScore(${week},'${g.home}','${g.away}','${key}')">Save</button>
+      </div>
+      <div class="score-saved" id="saved_${key}">✓ Saved!</div>
+    </div>`;
+  });
+  document.getElementById('scoresContainer').innerHTML=html;
+}
+
+function submitScore(week,home,away,key){
+  const hs=document.getElementById('hs_'+key).value;
+  const as=document.getElementById('as_'+key).value;
+  if(hs===''||as===''){alert('Please enter both scores.');return;}
+  saveScore(week,home,away,parseInt(hs),parseInt(as));
+  const saved=document.getElementById('saved_'+key);
+  saved.style.display='block';
+  setTimeout(()=>{saved.style.display='none';},2000);
+}
+
+function showSection(section, el){
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('scoresSection').style.display=section==='scores'?'block':'none';
+  document.querySelector('.main-title') && (document.querySelector('.main-title').closest('.main') ? null : null);
+  // Toggle main stats content
+  const statsContent = document.querySelector('.summary-grid');
+  if(statsContent){
+    statsContent.closest('.main').querySelectorAll(':scope > *:not(#scoresSection)').forEach(el=>{
+      el.style.display = section==='scores' ? 'none' : '';
+    });
+    document.getElementById('scoresSection').style.display = section==='scores' ? 'block' : 'none';
+  }
+  if(section!=='scores') renderTable();
+  else renderScores();
+}
+
 </script>
 </body>
 </html>
