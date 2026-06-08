@@ -11,7 +11,7 @@
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;padding:40px 20px 80px;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 10% 50%,rgba(110,231,183,.06) 0%,transparent 50%),radial-gradient(circle at 90% 20%,rgba(129,140,248,.07) 0%,transparent 50%);pointer-events:none;}
 .container{max-width:560px;margin:0 auto;position:relative;z-index:1;}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:32px;transition:color .2s;}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;text-decoration:none;margin-bottom:32px;}
 .back-link:hover{color:var(--accent);}
 .page-tag{display:inline-block;background:rgba(110,231,183,.1);border:1px solid rgba(110,231,183,.2);color:var(--accent);font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:16px;}
 .page-title{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;line-height:1;}
@@ -22,7 +22,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .field{margin-bottom:20px;}
 .field label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:7px;}
 .field input,.field select{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;padding:12px 16px;border-radius:10px;outline:none;transition:border-color .2s;}
-.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,231,183,.1);}
+.field input:focus,.field select:focus{border-color:var(--accent);}
 .field select option{background:var(--bg2);}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -31,19 +31,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
 .stat-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .stat-input-row:last-child{margin-bottom:0;}
 .stat-name{font-size:13px;color:var(--muted);}
-.stat-num{width:70px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;padding:6px 10px;border-radius:8px;text-align:center;outline:none;transition:border-color .2s;}
+.stat-num{width:70px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;padding:6px 10px;border-radius:8px;text-align:center;outline:none;}
 .stat-num:focus{border-color:var(--accent);}
 .submit-btn{width:100%;background:var(--accent);color:#0f1117;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:1px;padding:16px;border:none;border-radius:12px;cursor:pointer;transition:all .2s;margin-top:8px;}
-.submit-btn:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(110,231,183,.25);}
+.submit-btn:hover{background:var(--accent2);transform:translateY(-1px);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
 .success-card{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:20px;padding:40px;text-align:center;display:none;}
 .success-icon{font-size:48px;margin-bottom:16px;}
 .success-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--green);margin-bottom:10px;}
 .success-sub{color:var(--muted);font-size:14px;line-height:1.6;}
-.submit-another{display:inline-block;margin-top:24px;background:transparent;border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;padding:10px 24px;border-radius:10px;cursor:pointer;transition:all .2s;}
+.submit-another{display:inline-block;margin-top:24px;background:transparent;border:1px solid var(--border);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;padding:10px 24px;border-radius:10px;cursor:pointer;}
 .submit-another:hover{border-color:var(--accent);color:var(--accent);}
-.game-info{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-top:8px;font-size:13px;color:var(--muted);display:none;}
-.game-info.show{display:block;}
-.game-info strong{color:var(--text);}
+.status-msg{text-align:center;padding:12px;border-radius:10px;font-size:14px;margin-top:12px;display:none;}
+.status-msg.error{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2);}
+.status-msg.loading{background:rgba(110,231,183,.08);color:var(--accent);border:1px solid rgba(110,231,183,.2);}
 </style>
 </head>
 <body>
@@ -69,15 +70,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
           </select>
         </div>
         <div class="field"><label>Week</label>
-          <select id="gameWeek" onchange="updateGameOptions()">
-            <option value="">Select week...</option>
-            <option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option><option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option><option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option><option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option><option value="13">Week 13</option>
-          </select>
+          <select id="gameWeek" onchange="updateGameOptions()"><option value="">Select week...</option></select>
         </div>
       </div>
       <div class="field"><label>Game</label>
         <select id="gameSelect"><option value="">Select team & week first...</option></select>
-        <div class="game-info" id="gameInfo"></div>
       </div>
     </div>
     <div class="form-card">
@@ -106,10 +103,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
           <div class="stat-input-row"><span class="stat-name">Tackles</span><input class="stat-num" type="number" id="tackles" value="0" min="0"/></div>
           <div class="stat-input-row"><span class="stat-name">INTs Caught</span><input class="stat-num" type="number" id="ints_caught" value="0" min="0"/></div>
           <div class="stat-input-row"><span class="stat-name">Swats</span><input class="stat-num" type="number" id="swats" value="0" min="0"/></div>
+          <div class="stat-input-row"><span class="stat-name">Safeties</span><input class="stat-num" type="number" id="safeties" value="0" min="0"/></div>
+          <div class="stat-input-row"><span class="stat-name">Def TDs</span><input class="stat-num" type="number" id="def_tds" value="0" min="0"/></div>
         </div>
       </div>
     </div>
-    <button class="submit-btn" onclick="submitStats()">Submit Stats →</button>
+    <button class="submit-btn" id="submitBtn" onclick="submitStats()">Submit Stats →</button>
+    <div class="status-msg" id="statusMsg"></div>
   </div>
   <div class="success-card" id="successCard">
     <div class="success-icon">🏈</div>
@@ -119,174 +119,108 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
   </div>
 </div>
 <script>
-const SCHEDULE=[
-  {week:1,games:[
-    {home:"49ers",away:"Vikings",type:"inter"},
-    {home:"Texans",away:"Bengals",type:"intra"},
-    {home:"Bucs",away:"Raiders",type:"division"},
-    {home:"Eagles",away:"Broncos",type:"division"},
-    {home:"Browns",away:"Ravens",type:"division"},
-    {home:"Jags",away:"Commanders",type:"inter"},
-  ]},
-  {week:2,games:[
-    {home:"Ravens",away:"49ers",type:"intra"},
-    {home:"Broncos",away:"Vikings",type:"inter"},
-    {home:"Raiders",away:"Bengals",type:"intra"},
-    {home:"Browns",away:"Jags",type:"division"},
-    {home:"Bucs",away:"Texans",type:"division"},
-    {home:"Eagles",away:"Commanders",type:"inter"},
-  ]},
-  {week:3,games:[
-    {home:"Raiders",away:"Vikings",type:"intra"},
-    {home:"Broncos",away:"Bengals",type:"inter"},
-    {home:"Ravens",away:"Texans",type:"inter"},
-    {home:"Jags",away:"Eagles",type:"intra"},
-    {home:"Browns",away:"49ers",type:"intra"},
-    {home:"Bucs",away:"Commanders",type:"intra"},
-  ]},
-  {week:4,games:[
-    {home:"Bucs",away:"Vikings",type:"intra"},
-    {home:"Broncos",away:"Raiders",type:"inter"},
-    {home:"Browns",away:"Bengals",type:"inter"},
-    {home:"Jags",away:"Ravens",type:"division"},
-    {home:"Texans",away:"Commanders",type:"intra"},
-    {home:"Eagles",away:"49ers",type:"division"},
-  ]},
-  {week:5,games:[
-    {home:"Vikings",away:"Bengals",type:"division"},
-    {home:"Broncos",away:"Texans",type:"inter"},
-    {home:"49ers",away:"Raiders",type:"inter"},
-    {home:"Jags",away:"Bucs",type:"inter"},
-    {home:"Ravens",away:"Eagles",type:"intra"},
-    {home:"Browns",away:"Commanders",type:"inter"},
-  ]},
-  {week:6,games:[
-    {home:"Bucs",away:"Bengals",type:"intra"},
-    {home:"Eagles",away:"Vikings",type:"inter"},
-    {home:"Broncos",away:"49ers",type:"division"},
-    {home:"Ravens",away:"Browns",type:"division"},
-    {home:"Jags",away:"Texans",type:"inter"},
-    {home:"Raiders",away:"Commanders",type:"intra"},
-  ]},
-  {week:7,games:[
-    {home:"Ravens",away:"Vikings",type:"inter"},
-    {home:"Broncos",away:"Eagles",type:"division"},
-    {home:"Jags",away:"49ers",type:"intra"},
-    {home:"Raiders",away:"Bucs",type:"division"},
-    {home:"Bengals",away:"Commanders",type:"division"},
-    {home:"Browns",away:"Texans",type:"inter"},
-  ]},
-  {week:8,games:[
-    {home:"Vikings",away:"Commanders",type:"division"},
-    {home:"Eagles",away:"Bengals",type:"inter"},
-    {home:"49ers",away:"Broncos",type:"division"},
-    {home:"Texans",away:"Raiders",type:"division"},
-    {home:"Ravens",away:"Jags",type:"division"},
-    {home:"Browns",away:"Bucs",type:"inter"},
-  ]},
-  {week:9,games:[
-    {home:"Eagles",away:"Bucs",type:"inter"},
-    {home:"49ers",away:"Bengals",type:"inter"},
-    {home:"Ravens",away:"Commanders",type:"inter"},
-    {home:"Browns",away:"Vikings",type:"inter"},
-    {home:"Raiders",away:"Texans",type:"division"},
-    {home:"Jags",away:"Broncos",type:"intra"},
-  ]},
-  {week:10,games:[
-    {home:"Commanders",away:"Vikings",type:"division"},
-    {home:"Broncos",away:"Bucs",type:"inter"},
-    {home:"Jags",away:"Bengals",type:"inter"},
-    {home:"Browns",away:"Eagles",type:"intra"},
-    {home:"49ers",away:"Texans",type:"inter"},
-    {home:"Ravens",away:"Raiders",type:"inter"},
-  ]},
-  {week:11,games:[
-    {home:"Texans",away:"Bucs",type:"division"},
-    {home:"Jags",away:"Vikings",type:"inter"},
-    {home:"Browns",away:"Raiders",type:"inter"},
-    {home:"Ravens",away:"Broncos",type:"intra"},
-    {home:"49ers",away:"Eagles",type:"division"},
-    {home:"Commanders",away:"Bengals",type:"division"},
-  ]},
-  {week:12,games:[
-    {home:"Texans",away:"Vikings",type:"intra"},
-    {home:"Jags",away:"Browns",type:"division"},
-    {home:"Eagles",away:"Raiders",type:"inter"},
-    {home:"Ravens",away:"Bengals",type:"inter"},
-    {home:"Broncos",away:"Commanders",type:"inter"},
-    {home:"49ers",away:"Bucs",type:"inter"},
-  ]},
-  {week:13,games:[
-    {home:"Bengals",away:"Vikings",type:"division"},
-    {home:"Browns",away:"Broncos",type:"intra"},
-    {home:"Ravens",away:"Bucs",type:"inter"},
-    {home:"Eagles",away:"Texans",type:"inter"},
-    {home:"Jags",away:"Raiders",type:"inter"},
-    {home:"49ers",away:"Commanders",type:"inter"},
-  ]},
+var BIN_ID = '6a25d244da38895dfe9664c6';
+var API_KEY = '$2a$10$zGVgXvyaRBjJ49E3mqZ0suasvEoos6HR82ZGhpnSByh7mtyuwpu7e';
+var LEAGUE = 'PEFL';
+
+var SCHEDULE=[
+  {week:1,games:[{home:"Ravens",away:"Jags"},{home:"Bengals",away:"Browns"},{home:"Vikings",away:"49ers"},{home:"Commanders",away:"Broncos"},{home:"Raiders",away:"Eagles"},{home:"Texans",away:"Bucs"}]},
+  {week:2,games:[{home:"Ravens",away:"Browns"},{home:"Jags",away:"49ers"},{home:"Bengals",away:"Broncos"},{home:"Vikings",away:"Eagles"},{home:"Commanders",away:"Bucs"},{home:"Raiders",away:"Texans"}]},
+  {week:3,games:[{home:"Ravens",away:"49ers"},{home:"Browns",away:"Broncos"},{home:"Jags",away:"Eagles"},{home:"Bengals",away:"Bucs"},{home:"Vikings",away:"Texans"},{home:"Commanders",away:"Raiders"}]},
+  {week:4,games:[{home:"Ravens",away:"Broncos"},{home:"49ers",away:"Eagles"},{home:"Browns",away:"Bucs"},{home:"Jags",away:"Texans"},{home:"Bengals",away:"Raiders"},{home:"Vikings",away:"Commanders"}]},
+  {week:5,games:[{home:"Ravens",away:"Eagles"},{home:"Broncos",away:"Bucs"},{home:"49ers",away:"Texans"},{home:"Browns",away:"Raiders"},{home:"Jags",away:"Commanders"},{home:"Bengals",away:"Vikings"}]},
+  {week:6,games:[{home:"Ravens",away:"Bucs"},{home:"Eagles",away:"Texans"},{home:"Broncos",away:"Raiders"},{home:"49ers",away:"Commanders"},{home:"Browns",away:"Vikings"},{home:"Jags",away:"Bengals"}]},
+  {week:7,games:[{home:"Ravens",away:"Texans"},{home:"Bucs",away:"Raiders"},{home:"Eagles",away:"Commanders"},{home:"Broncos",away:"Vikings"},{home:"49ers",away:"Bengals"},{home:"Browns",away:"Jags"}]},
+  {week:8,games:[{home:"Ravens",away:"Raiders"},{home:"Texans",away:"Commanders"},{home:"Bucs",away:"Vikings"},{home:"Eagles",away:"Bengals"},{home:"Broncos",away:"Jags"},{home:"49ers",away:"Browns"}]},
+  {week:9,games:[{home:"Ravens",away:"Commanders"},{home:"Raiders",away:"Vikings"},{home:"Texans",away:"Bengals"},{home:"Bucs",away:"Jags"},{home:"Eagles",away:"Browns"},{home:"Broncos",away:"49ers"}]},
+  {week:10,games:[{home:"Ravens",away:"Vikings"},{home:"Commanders",away:"Bengals"},{home:"Raiders",away:"Jags"},{home:"Texans",away:"Browns"},{home:"Bucs",away:"49ers"},{home:"Eagles",away:"Broncos"}]},
+  {week:11,games:[{home:"Ravens",away:"Bengals"},{home:"Vikings",away:"Jags"},{home:"Commanders",away:"Browns"},{home:"Raiders",away:"49ers"},{home:"Texans",away:"Broncos"},{home:"Bucs",away:"Eagles"}]},
+  {week:12,games:[{home:"Bucs",away:"Texans"},{home:"49ers",away:"Eagles"},{home:"Jags",away:"Browns"},{home:"Vikings",away:"Commanders"},{home:"Ravens",away:"Jags"},{home:"Raiders",away:"Bucs"}]},
+  {week:13,games:[{home:"Browns",away:"Ravens"},{home:"Eagles",away:"Broncos"},{home:"Bengals",away:"Vikings"},{home:"Texans",away:"Raiders"},{home:"49ers",away:"Broncos"},{home:"Bengals",away:"Commanders"}]},
 ];
 
-// Populate week dropdown on load
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function(){
   var weekSel = document.getElementById('gameWeek');
-  for (var i = 1; i <= 13; i++) {
-    var opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = 'Week ' + i;
+  for(var i=1;i<=13;i++){
+    var opt=document.createElement('option');
+    opt.value=i; opt.textContent='Week '+i;
     weekSel.appendChild(opt);
   }
 });
 
 function updateGameOptions(){
-  const team=document.getElementById('playerTeam').value;
-  const week=parseInt(document.getElementById('gameWeek').value);
-  const sel=document.getElementById('gameSelect');
-  const info=document.getElementById('gameInfo');
+  var team=document.getElementById('playerTeam').value;
+  var week=parseInt(document.getElementById('gameWeek').value);
+  var sel=document.getElementById('gameSelect');
   sel.innerHTML='<option value="">Select a game...</option>';
-  info.className='game-info';
   if(!team||!week) return;
-  const wk=SCHEDULE.find(w=>w.week===week);
+  var wk=SCHEDULE.find(function(w){return w.week===week;});
   if(!wk) return;
-  const myGames=wk.games.filter(g=>g.home===team||g.away===team);
-  if(!myGames.length){sel.innerHTML='<option value="">Bye week — no game</option>';return;}
-  myGames.forEach(g=>{
-    const side=g.home===team?'Home':'Away';
-    const opt=document.createElement('option');
+  var myGames=wk.games.filter(function(g){return g.home===team||g.away===team;});
+  if(!myGames.length){sel.innerHTML='<option value="">No game this week (bye)</option>';return;}
+  myGames.forEach(function(g){
+    var side=g.home===team?'Home':'Away';
+    var opt=document.createElement('option');
     opt.value=JSON.stringify(g);
-    opt.textContent=`${g.home} vs ${g.away} (You are ${side})`;
+    opt.textContent=g.home+' vs '+g.away+' ('+side+')';
     sel.appendChild(opt);
   });
-  if(myGames.length===1){
-    sel.selectedIndex=1;
-    const g=myGames[0];
-    info.className='game-info show';
-    info.innerHTML=`<strong>${g.home}</strong> vs <strong>${g.away}</strong> — Week ${week}`;
+  if(myGames.length===1) sel.selectedIndex=1;
+}
+
+function showStatus(msg, type){
+  var el=document.getElementById('statusMsg');
+  el.textContent=msg; el.className='status-msg '+type; el.style.display='block';
+}
+
+async function submitStats(){
+  var name=document.getElementById('playerName').value.trim();
+  var team=document.getElementById('playerTeam').value;
+  var week=document.getElementById('gameWeek').value;
+  var gameRaw=document.getElementById('gameSelect').value;
+  if(!name||!team||!week||!gameRaw){alert('Please fill in your name, team, week, and select a game.');return;}
+  var game;try{game=JSON.parse(gameRaw);}catch(e){alert('Please select a valid game.');return;}
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='Submitting...';
+  showStatus('Saving your stats...','loading');
+  var fields=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'];
+  var entry={id:Date.now()+'_'+Math.random().toString(36).slice(2),league:LEAGUE,status:'pending',submitted:new Date().toISOString(),player_name:name,team:team,week:parseInt(week),home:game.home,away:game.away};
+  fields.forEach(function(f){var v=document.getElementById(f).value;entry[f]=v===''?0:parseInt(v)||0;});
+  try{
+    // Get current bin data
+    var getRes=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
+    var getData=await getRes.json();
+    var current=getData.record.stats||[];
+    current.push(entry);
+    // Update bin
+    var putRes=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
+      body:JSON.stringify({stats:current})
+    });
+    if(putRes.ok){
+      document.getElementById('formWrap').style.display='none';
+      document.getElementById('successCard').style.display='block';
+    } else {
+      throw new Error('Save failed');
+    }
+  } catch(e){
+    showStatus('Something went wrong. Please try again.','error');
+    btn.disabled=false; btn.textContent='Submit Stats →';
   }
 }
-function submitStats(){
-  const name=document.getElementById('playerName').value.trim();
-  const team=document.getElementById('playerTeam').value;
-  const week=document.getElementById('gameWeek').value;
-  const gameRaw=document.getElementById('gameSelect').value;
-  if(!name||!team||!week||!gameRaw){alert('Please fill in your name, team, week, and select a game.');return;}
-  let game;try{game=JSON.parse(gameRaw);}catch(e){alert('Please select a valid game.');return;}
-  const fields=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats'];
-  const entry={id:Date.now()+'_'+Math.random().toString(36).slice(2),status:'pending',submitted:new Date().toISOString(),player_name:name,team,week:parseInt(week),home:game.home,away:game.away};
-  fields.forEach(f=>{entry[f]=parseInt(document.getElementById(f).value)||0;});
-  const all=JSON.parse(localStorage.getItem('pefl_s16_stats')||'[]');
-  all.push(entry);
-  localStorage.setItem('pefl_s16_stats',JSON.stringify(all));
-  document.getElementById('formWrap').style.display='none';
-  document.getElementById('successCard').style.display='block';
-}
+
 function resetForm(){
   document.getElementById('formWrap').style.display='block';
   document.getElementById('successCard').style.display='none';
+  document.getElementById('statusMsg').style.display='none';
+  document.getElementById('submitBtn').disabled=false;
+  document.getElementById('submitBtn').textContent='Submit Stats →';
   document.getElementById('playerName').value='';
   document.getElementById('playerTeam').value='';
   document.getElementById('gameWeek').value='';
   document.getElementById('gameSelect').innerHTML='<option value="">Select team & week first...</option>';
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats'].forEach(id=>{document.getElementById(id).value=0;});
+  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(id){document.getElementById(id).value=0;});
 }
 </script>
 </body>
