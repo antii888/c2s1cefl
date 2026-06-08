@@ -99,9 +99,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,10vw,100px);color:va
 </div>
 <script>
 const TEAMS={Ravens:{conf:"PFC",div:"Lebron"},Jags:{conf:"PFC",div:"Lebron"},Browns:{conf:"PFC",div:"Lebron"},"49ers":{conf:"PFC",div:"Curry"},Broncos:{conf:"PFC",div:"Curry"},Eagles:{conf:"PFC",div:"Curry"},Bucs:{conf:"EFC",div:"Wemby"},Texans:{conf:"EFC",div:"Wemby"},Raiders:{conf:"EFC",div:"Wemby"},Commanders:{conf:"EFC",div:"Jordan"},Vikings:{conf:"EFC",div:"Jordan"},Bengals:{conf:"EFC",div:"Jordan"}};
-const SK='pefl_s16_stats';
-function getData(){try{return JSON.parse(localStorage.getItem(SK)||'[]');}catch(e){return[];}}
-function getApproved(){return getData().filter(s=>s.status==='approved');}
+
 
 const STAT_CATS=[
   {key:'pass_tds',label:'Pass TDs',icon:'🎯'},
@@ -220,7 +218,20 @@ function render(){
   if(mode==='teams') renderTeams();
   else renderPlayers();
 }
-render();
+var _BIN_ID='6a25d244da38895dfe9664c6';
+var _API_KEY='$2a$10$zGVgXvyaRBjJ49E3mqZ0suasvEoos6HR82ZGhpnSByh7mtyuwpu7e';
+var _cachedStats=[];
+function getApproved(){return _cachedStats.filter(function(s){return s.league==='PEFL'&&s.status==='approved';});}
+async function fetchAndRender(){
+  try{
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+_BIN_ID+'/latest',{headers:{'X-Master-Key':_API_KEY}});
+    var json=await res.json();
+    _cachedStats=json.record.stats||[];
+  }catch(e){_cachedStats=[];}
+  render();
+}
+
+fetchAndRender();
 </script>
 </body>
 </html>
