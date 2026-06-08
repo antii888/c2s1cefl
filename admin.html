@@ -260,7 +260,7 @@ tr:hover td{background:rgba(255,255,255,.01);}
 
 <script>
 var BIN_ID = '6a25d244da38895dfe9664c6';
-var API_KEY = '$2a$10$zGVgXvyaRBjJ49E3mqZ0suasvEoos6HR82ZGhpnSByh7mtyuwpu7e';
+var API_KEY = '$2a$10$Ii4MSYaZNvLPJFsP07/U.eZev7vokGg9uFs36nt4IG3sJ7rbdt8T6';
 var LEAGUE = 'PEFL';
 var allData = [];
 var currentFilter = 'all';
@@ -382,11 +382,31 @@ function renderTable(){
   }).join('');
 }
 
-function getScores(){try{return JSON.parse(localStorage.getItem('pefl_s16_scores')||'{}');}catch(e){return{};}}
-function saveScores(s){localStorage.setItem('pefl_s16_scores',JSON.stringify(s));}
+var _scoresCache={};
+var _scoresLoaded=false;
+async function getScores(){
+  if(_scoresLoaded) return _scoresCache;
+  try{
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
+    var json=await res.json();
+    _scoresCache=json.record.scores||{};
+    _scoresLoaded=true;
+  }catch(e){_scoresCache={};}
+  return _scoresCache;
+}
+async function saveScores(s){
+  _scoresCache=s;
+  try{
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
+    var json=await res.json();
+    var current=json.record;
+    current.scores=s;
+    await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(current)});
+  }catch(e){console.error('Score save failed',e);}
+}
 
-function renderScores(){
-  var scores=getScores();
+async function renderScores(){
+  var scores=await getScores();
   var html='<div style="display:grid;gap:24px;">';
   SCHEDULE.forEach(function(wk){
     html+='<div><div class="score-week-title">Week '+wk.week+'</div>';
@@ -410,11 +430,11 @@ function renderScores(){
   document.getElementById('scoresContainer').innerHTML=html;
 }
 
-function saveScore(key,side,value){
-  var scores=getScores();
+async function saveScore(key,side,value){
+  var scores=await getScores();
   if(!scores[key]) scores[key]={home:'',away:''};
   scores[key][side]=value;
-  saveScores(scores);
+  await saveScores(scores);
 }
 
 async function updateStatus(id,status){
