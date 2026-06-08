@@ -223,7 +223,7 @@ const SCHEDULE=[
 ];
 const WEEK_DATES=["June 5 - June 7","June 8 - June 10","June 11 - June 13","June 14 - June 16","June 17 - June 19","June 20 - June 22","June 23 - June 25","June 26 - June 28","June 29 - July 1","July 2 - July 4","July 5 - July 7","July 8 - July 10","July 11 - July 13"];
 var BIN_ID='6a25d244da38895dfe9664c6';
-var API_KEY='$2a$10$zGVgXvyaRBjJ49E3mqZ0suasvEoos6HR82ZGhpnSByh7mtyuwpu7e';
+var API_KEY='$2a$10$Ii4MSYaZNvLPJFsP07/U.eZev7vokGg9uFs36nt4IG3sJ7rbdt8T6';
 var _cachedStats=[];
 var _cachedScores={};
 function getApproved(){return _cachedStats.filter(function(s){return s.league==='PEFL'&&s.status==='approved';});}
@@ -235,7 +235,7 @@ async function fetchAndRender(){
     var json=await res.json();
     _cachedStats=json.record.stats||[];
   }catch(e){_cachedStats=[];}
-  buildStandings();buildSchedule();
+  buildStandings();await buildSchedule();
 }
 
 function buildStandings(){
