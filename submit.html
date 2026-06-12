@@ -119,9 +119,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle
   </div>
 </div>
 <script>
-var BIN_ID = '6a25d244da38895dfe9664c6';
-var API_KEY = '$2a$10$Ii4MSYaZNvLPJFsP07/U.eZev7vokGg9uFs36nt4IG3sJ7rbdt8T6';
-var LEAGUE = 'PEFL';
+var DB = 'https://pefl-cefl-default-rtdb.firebaseio.com';
+var LEAGUE = 'pefl';
 
 var SCHEDULE=[
   {week:1,games:[{home:"Ravens",away:"Jags"},{home:"Bengals",away:"Browns"},{home:"Vikings",away:"49ers"},{home:"Commanders",away:"Broncos"},{home:"Raiders",away:"Eagles"},{home:"Texans",away:"Bucs"}]},
@@ -157,7 +156,7 @@ function updateGameOptions(){
   var wk=SCHEDULE.find(function(w){return w.week===week;});
   if(!wk) return;
   var myGames=wk.games.filter(function(g){return g.home===team||g.away===team;});
-  if(!myGames.length){sel.innerHTML='<option value="">No game this week (bye)</option>';return;}
+  if(!myGames.length){sel.innerHTML='<option value="">No game this week</option>';return;}
   myGames.forEach(function(g){
     var side=g.home===team?'Home':'Away';
     var opt=document.createElement('option');
@@ -168,7 +167,7 @@ function updateGameOptions(){
   if(myGames.length===1) sel.selectedIndex=1;
 }
 
-function showStatus(msg, type){
+function showStatus(msg,type){
   var el=document.getElementById('statusMsg');
   el.textContent=msg; el.className='status-msg '+type; el.style.display='block';
 }
@@ -184,28 +183,22 @@ async function submitStats(){
   btn.disabled=true; btn.textContent='Submitting...';
   showStatus('Saving your stats...','loading');
   var fields=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'];
-  var entry={id:Date.now()+'_'+Math.random().toString(36).slice(2),league:LEAGUE,status:'pending',submitted:new Date().toISOString(),player_name:name,team:team,week:parseInt(week),home:game.home,away:game.away};
-  fields.forEach(function(f){var v=document.getElementById(f).value;entry[f]=v===''?0:parseInt(v)||0;});
+  var entry={league:LEAGUE,status:'pending',submitted:new Date().toISOString(),player_name:name,team:team,week:parseInt(week),home:game.home,away:game.away};
+  fields.forEach(function(f){var el=document.getElementById(f);entry[f]=el?parseInt(el.value)||0:0;});
   try{
-    // Get current bin data
-    var getRes=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
-    var getData=await getRes.json();
-    var current=getData.record.stats||[];
-    current.push(entry);
-    // Update bin
-    var putRes=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-      body:JSON.stringify({stats:current})
+    var res=await fetch(DB+'/stats.json',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(entry)
     });
-    if(putRes.ok){
+    if(res.ok){
       document.getElementById('formWrap').style.display='none';
       document.getElementById('successCard').style.display='block';
     } else {
-      throw new Error('Save failed');
+      throw new Error('HTTP '+res.status);
     }
-  } catch(e){
-    showStatus('Something went wrong. Please try again.','error');
+  }catch(e){
+    showStatus('Something went wrong: '+e.message,'error');
     btn.disabled=false; btn.textContent='Submit Stats →';
   }
 }
@@ -214,13 +207,13 @@ function resetForm(){
   document.getElementById('formWrap').style.display='block';
   document.getElementById('successCard').style.display='none';
   document.getElementById('statusMsg').style.display='none';
-  document.getElementById('submitBtn').disabled=false;
-  document.getElementById('submitBtn').textContent='Submit Stats →';
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=false; btn.textContent='Submit Stats →';
   document.getElementById('playerName').value='';
   document.getElementById('playerTeam').value='';
   document.getElementById('gameWeek').value='';
   document.getElementById('gameSelect').innerHTML='<option value="">Select team & week first...</option>';
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(id){document.getElementById(id).value=0;});
+  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){var el=document.getElementById(f);if(el)el.value=0;});
 }
 </script>
 </body>
