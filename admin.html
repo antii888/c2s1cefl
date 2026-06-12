@@ -64,8 +64,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 .filter-input{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;outline:none;flex:1;min-width:160px;}
 .filter-input::placeholder{color:var(--muted);}
 .filter-select{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 12px;border-radius:8px;cursor:pointer;outline:none;}
-.refresh-btn{background:var(--card2);border:1px solid var(--border2);color:var(--teal);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;}
-.refresh-btn:hover{background:rgba(52,211,153,.1);}
+.refresh-btn{background:var(--card2);border:1px solid var(--teal);color:var(--teal);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;}
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 table th{text-align:left;padding:10px 14px;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);border-bottom:1px solid var(--border);}
@@ -87,8 +86,7 @@ tr:hover td{background:rgba(255,255,255,.01);}
 .action-btn.reject{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2);}
 .action-btn.edit{background:rgba(129,140,248,.1);color:var(--purple);border:1px solid rgba(129,140,248,.2);}
 .action-btn.del{background:transparent;color:var(--muted2);border:1px solid var(--border);}
-.empty{text-align:center;padding:48px;color:var(--muted2);font-size:14px;}
-.loading{text-align:center;padding:48px;color:var(--muted2);font-size:14px;}
+.empty{text-align:center;padding:48px;color:var(--muted2);}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
@@ -96,7 +94,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
 .mfield{margin-bottom:12px;}
 .mfield label{display:block;font-size:12px;color:var(--muted2);margin-bottom:4px;}
 .mfield input,.mfield select{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;padding:9px 13px;border-radius:9px;outline:none;}
-.mfield input:focus,.mfield select:focus{border-color:var(--purple);}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .msec{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin:16px 0 8px;}
 .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
@@ -114,7 +111,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
 </style>
 </head>
 <body>
-
 <div id="pwGate">
   <div class="pw-box">
     <div class="pw-icon">🔒</div>
@@ -125,7 +121,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
     <div class="pw-error" id="pwError">Incorrect password. Try again.</div>
   </div>
 </div>
-
 <div id="adminContent">
 <div class="modal-overlay" id="editModal">
   <div class="modal">
@@ -186,7 +181,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
     </div>
   </div>
 </div>
-
 <div class="topbar">
   <div>
     <div class="topbar-title"><span>PEFL</span> Admin Panel</div>
@@ -197,7 +191,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
     <a href="index.html" class="tb-btn">&larr; Schedule</a>
   </div>
 </div>
-
 <div class="layout">
   <div class="sidebar">
     <div class="sidebar-label">View</div>
@@ -247,24 +240,20 @@ tr:hover td{background:rgba(255,255,255,.01);}
       <div class="table-wrap">
         <table>
           <thead><tr><th>Player / Game</th><th>Stats</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="tbody"><tr><td colspan="4"><div class="loading">Loading submissions...</div></td></tr></tbody>
+          <tbody id="tbody"><tr><td colspan="4"><div class="empty">Loading...</div></td></tr></tbody>
         </table>
       </div>
     </div>
-    <div id="scoresSection" style="display:none;">
-      <div id="scoresContainer"></div>
-    </div>
+    <div id="scoresSection" style="display:none;"><div id="scoresContainer"></div></div>
   </div>
 </div>
 </div>
-
 <script>
-var BIN_ID = '6a25d244da38895dfe9664c6';
-var API_KEY = '$2a$10$Ii4MSYaZNvLPJFsP07/U.eZev7vokGg9uFs36nt4IG3sJ7rbdt8T6';
-var LEAGUE = 'PEFL';
-var allData = [];
-var currentFilter = 'all';
-var currentSection = 'submissions';
+var DB='https://pefl-cefl-default-rtdb.firebaseio.com';
+var LEAGUE='pefl';
+var allData=[];
+var currentFilter='all';
+var currentSection='submissions';
 
 var SCHEDULE=[
   {week:1,games:[{home:"Ravens",away:"Jags"},{home:"Bengals",away:"Browns"},{home:"Vikings",away:"49ers"},{home:"Commanders",away:"Broncos"},{home:"Raiders",away:"Eagles"},{home:"Texans",away:"Bucs"}]},
@@ -284,31 +273,45 @@ var SCHEDULE=[
 
 async function loadData(){
   try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
+    var res=await fetch(DB+'/stats.json');
     var json=await res.json();
-    var all=json.record.stats||[];
-    allData=all.filter(function(s){return s.league===LEAGUE;});
-    renderTable();
-    updateSummary();
+    allData=[];
+    if(json){
+      Object.keys(json).forEach(function(k){
+        var s=json[k]; s._fbkey=k;
+        if(s.league===LEAGUE) allData.push(s);
+      });
+    }
+    allData.sort(function(a,b){return new Date(b.submitted)-new Date(a.submitted);});
+    renderTable(); updateSummary();
   }catch(e){
-    document.getElementById('tbody').innerHTML='<tr><td colspan="4"><div class="empty">Failed to load data. Check your connection.</div></td></tr>';
+    document.getElementById('tbody').innerHTML='<tr><td colspan="4"><div class="empty">Failed to load. '+e.message+'</div></td></tr>';
   }
 }
 
-async function saveBin(){
-  try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
-    var json=await res.json();
-    var all=json.record.stats||[];
-    // Replace PEFL entries with current allData
-    var others=all.filter(function(s){return s.league!==LEAGUE;});
-    var updated=others.concat(allData);
-    await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
-      method:'PUT',
-      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-      body:JSON.stringify({stats:updated})
-    });
-  }catch(e){alert('Failed to save. Please try again.');}
+async function updateStatus(fbkey,status){
+  await fetch(DB+'/stats/'+fbkey+'/status.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(status)});
+  loadData();
+}
+async function delEntry(fbkey){
+  if(!confirm('Delete this submission?')) return;
+  await fetch(DB+'/stats/'+fbkey+'.json',{method:'DELETE'});
+  loadData();
+}
+async function approveAll(){
+  var pending=allData.filter(function(s){return s.status==='pending';});
+  await Promise.all(pending.map(function(s){return fetch(DB+'/stats/'+s._fbkey+'/status.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify('approved')});}));
+  loadData();
+}
+async function clearRejected(){
+  if(!confirm('Delete all rejected?')) return;
+  var rejected=allData.filter(function(s){return s.status==='rejected';});
+  await Promise.all(rejected.map(function(s){return fetch(DB+'/stats/'+s._fbkey+'.json',{method:'DELETE'});}));
+  loadData();
+}
+function exportData(){
+  var b=new Blob([JSON.stringify(allData,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pefl_s16_stats.json';a.click();
 }
 
 function showSection(s){
@@ -319,18 +322,13 @@ function showSection(s){
   document.getElementById('tab_submissions').classList.toggle('active',s==='submissions');
   document.getElementById('tab_scores').classList.toggle('active',s==='scores');
   document.getElementById('mainTitle').textContent=s==='scores'?'Enter Scores':'Submissions';
-  document.getElementById('mainSub').textContent=s==='scores'?'Enter final scores — they show up live on the schedule':'Review and manage player stat submissions';
   if(s==='scores') renderScores();
 }
-
 function setFilter(f){
   currentFilter=f;
-  ['all','pending','approved','rejected'].forEach(function(x){
-    document.getElementById('tab_'+x).classList.toggle('active',x===f);
-  });
+  ['all','pending','approved','rejected'].forEach(function(x){document.getElementById('tab_'+x).classList.toggle('active',x===f);});
   renderTable();
 }
-
 function updateSummary(){
   var p=allData.filter(function(x){return x.status==='pending';}).length;
   var a=allData.filter(function(x){return x.status==='approved';}).length;
@@ -345,7 +343,6 @@ function updateSummary(){
   document.getElementById('b_approved').textContent=a;
   document.getElementById('b_rejected').textContent=r;
 }
-
 function renderTable(){
   var search=document.getElementById('searchInput').value.toLowerCase();
   var weekF=document.getElementById('weekSel').value;
@@ -356,7 +353,7 @@ function renderTable(){
     if(teamF&&s.team!==teamF) return false;
     if(search&&!(s.player_name||'').toLowerCase().includes(search)&&!(s.team||'').toLowerCase().includes(search)) return false;
     return true;
-  }).sort(function(a,b){return new Date(b.submitted)-new Date(a.submitted);});
+  });
   var tbody=document.getElementById('tbody');
   if(!filtered.length){tbody.innerHTML='<tr><td colspan="4"><div class="empty">No submissions found</div></td></tr>';return;}
   tbody.innerHTML=filtered.map(function(s){
@@ -370,43 +367,43 @@ function renderTable(){
       s.safeties?'Saf: <strong>'+s.safeties+'</strong>':'',
       s.def_tds?'Def TDs: <strong>'+s.def_tds+'</strong>':'',
     ].filter(Boolean).map(function(c){return '<span class="stat-chip">'+c+'</span>';}).join('');
-    return '<tr><td><div class="player-name">'+(s.player_name||'Unknown')+'</div><div class="player-meta">'+s.team+' &middot; Wk '+s.week+' &middot; '+s.home+' vs '+s.away+'</div><div class="player-meta">'+date+'</div></td>'
+    return '<tr><td><div class="player-name">'+(s.player_name||'Unknown')+'</div>'
+      +'<div class="player-meta">'+s.team+' &middot; Wk '+s.week+' &middot; '+s.home+' vs '+s.away+'</div>'
+      +'<div class="player-meta">'+date+'</div></td>'
       +'<td>'+(chips||'<span class="stat-chip">No stats</span>')+'</td>'
       +'<td><span class="status-badge '+s.status+'">'+s.status.charAt(0).toUpperCase()+s.status.slice(1)+'</span></td>'
       +'<td><div class="action-row">'
-      +(s.status!=='approved'?'<button class="action-btn approve" onclick="updateStatus(\''+s.id+'\',\'approved\')">&#10003; Approve</button>':'')
-      +(s.status!=='rejected'?'<button class="action-btn reject" onclick="updateStatus(\''+s.id+'\',\'rejected\')">&#10005; Reject</button>':'')
-      +'<button class="action-btn edit" onclick="openEdit(\''+s.id+'\')">&#9998; Edit</button>'
-      +'<button class="action-btn del" onclick="delEntry(\''+s.id+'\')">&#128465;</button>'
+      +(s.status!=='approved'?'<button class="action-btn approve" onclick="updateStatus(\''+s._fbkey+'\',\'approved\')">&#10003; Approve</button>':'')
+      +(s.status!=='rejected'?'<button class="action-btn reject" onclick="updateStatus(\''+s._fbkey+'\',\'rejected\')">&#10005; Reject</button>':'')
+      +'<button class="action-btn edit" onclick="openEdit(\''+s._fbkey+'\')">&#9998; Edit</button>'
+      +'<button class="action-btn del" onclick="delEntry(\''+s._fbkey+'\')">&#128465;</button>'
       +'</div></td></tr>';
   }).join('');
 }
-
-var _scoresCache={};
-var _scoresLoaded=false;
-async function getScores(){
-  if(_scoresLoaded) return _scoresCache;
-  try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
-    var json=await res.json();
-    _scoresCache=json.record.scores||{};
-    _scoresLoaded=true;
-  }catch(e){_scoresCache={};}
-  return _scoresCache;
+function openEdit(fbkey){
+  var s=allData.find(function(x){return x._fbkey===fbkey;});if(!s) return;
+  document.getElementById('editId').value=fbkey;
+  document.getElementById('editName').value=s.player_name||'';
+  document.getElementById('editTeam').value=s.team||'Ravens';
+  document.getElementById('editWeek').value=s.week||1;
+  document.getElementById('editStatus').value=s.status||'pending';
+  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){var el=document.getElementById('e_'+f);if(el)el.value=s[f]||0;});
+  document.getElementById('editModal').classList.add('open');
 }
-async function saveScores(s){
-  _scoresCache=s;
-  try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{headers:{'X-Master-Key':API_KEY}});
-    var json=await res.json();
-    var current=json.record;
-    current.scores=s;
-    await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(current)});
-  }catch(e){console.error('Score save failed',e);}
+function closeModal(){document.getElementById('editModal').classList.remove('open');}
+async function saveEdit(){
+  var fbkey=document.getElementById('editId').value;
+  var s=allData.find(function(x){return x._fbkey===fbkey;});if(!s) return;
+  var updated={league:LEAGUE,status:document.getElementById('editStatus').value,submitted:s.submitted,player_name:document.getElementById('editName').value,team:document.getElementById('editTeam').value,week:parseInt(document.getElementById('editWeek').value),home:s.home,away:s.away};
+  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){var el=document.getElementById('e_'+f);updated[f]=el?parseInt(el.value)||0:0;});
+  await fetch(DB+'/stats/'+fbkey+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updated)});
+  closeModal(); loadData();
 }
+document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
 async function renderScores(){
-  var scores=await getScores();
+  var res=await fetch(DB+'/pefl_scores.json');
+  var scores=await res.json()||{};
   var html='<div style="display:grid;gap:24px;">';
   SCHEDULE.forEach(function(wk){
     html+='<div><div class="score-week-title">Week '+wk.week+'</div>';
@@ -418,9 +415,9 @@ async function renderScores(){
         +'<div class="score-game-label">'+g.home+' vs '+g.away+'</div>'
         +'<div class="score-inputs">'
         +'<span class="score-team-label">'+g.home+'</span>'
-        +'<input class="score-input" type="number" min="0" value="'+sc.home+'" placeholder="0" onchange="saveScore(\''+key+'\',\'home\',this.value)"/>'
+        +'<input class="score-input" type="number" min="0" value="'+(sc.home||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'home\',this.value)"/>'
         +'<span style="color:var(--muted2);font-weight:700;">—</span>'
-        +'<input class="score-input" type="number" min="0" value="'+sc.away+'" placeholder="0" onchange="saveScore(\''+key+'\',\'away\',this.value)"/>'
+        +'<input class="score-input" type="number" min="0" value="'+(sc.away||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'away\',this.value)"/>'
         +'<span class="score-team-label">'+g.away+'</span>'
         +'</div>'+saved+'</div>';
     });
@@ -429,58 +426,9 @@ async function renderScores(){
   html+='</div>';
   document.getElementById('scoresContainer').innerHTML=html;
 }
-
 async function saveScore(key,side,value){
-  var scores=await getScores();
-  if(!scores[key]) scores[key]={home:'',away:''};
-  scores[key][side]=value;
-  await saveScores(scores);
+  await fetch(DB+'/pefl_scores/'+key+'/'+side+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
 }
-
-async function updateStatus(id,status){
-  var i=allData.findIndex(function(s){return s.id===id;});
-  if(i>-1){allData[i].status=status;await saveBin();renderTable();updateSummary();}
-}
-async function delEntry(id){
-  if(!confirm('Delete this submission?')) return;
-  allData=allData.filter(function(s){return s.id!==id;});
-  await saveBin();renderTable();updateSummary();
-}
-async function approveAll(){
-  allData.forEach(function(s){if(s.status==='pending')s.status='approved';});
-  await saveBin();renderTable();updateSummary();
-}
-async function clearRejected(){
-  if(!confirm('Delete all rejected?')) return;
-  allData=allData.filter(function(s){return s.status!=='rejected';});
-  await saveBin();renderTable();updateSummary();
-}
-function exportData(){
-  var b=new Blob([JSON.stringify(allData,null,2)],{type:'application/json'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pefl_s16_stats.json';a.click();
-}
-function openEdit(id){
-  var s=allData.find(function(x){return x.id===id;});if(!s) return;
-  document.getElementById('editId').value=id;
-  document.getElementById('editName').value=s.player_name||'';
-  document.getElementById('editTeam').value=s.team||'Ravens';
-  document.getElementById('editWeek').value=s.week||1;
-  document.getElementById('editStatus').value=s.status||'pending';
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){document.getElementById('e_'+f).value=s[f]||0;});
-  document.getElementById('editModal').classList.add('open');
-}
-function closeModal(){document.getElementById('editModal').classList.remove('open');}
-async function saveEdit(){
-  var id=document.getElementById('editId').value;
-  var i=allData.findIndex(function(s){return s.id===id;});if(i<0) return;
-  allData[i].player_name=document.getElementById('editName').value;
-  allData[i].team=document.getElementById('editTeam').value;
-  allData[i].week=parseInt(document.getElementById('editWeek').value);
-  allData[i].status=document.getElementById('editStatus').value;
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){allData[i][f]=parseInt(document.getElementById('e_'+f).value)||0;});
-  await saveBin();closeModal();renderTable();updateSummary();
-}
-document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
 try{
   if(sessionStorage.getItem('pefl_admin')==='1'){
