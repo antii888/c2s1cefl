@@ -218,19 +218,18 @@ function render(){
   if(mode==='teams') renderTeams();
   else renderPlayers();
 }
-var _BIN_ID='6a25d244da38895dfe9664c6';
-var _API_KEY='$2a$10$Ii4MSYaZNvLPJFsP07/U.eZev7vokGg9uFs36nt4IG3sJ7rbdt8T6';
+var DB='https://pefl-cefl-default-rtdb.firebaseio.com';
 var _cachedStats=[];
-function getApproved(){return _cachedStats.filter(function(s){return s.league==='PEFL'&&s.status==='approved';});}
+function getApproved(){return _cachedStats.filter(function(s){return s.league==='pefl'&&s.status==='approved';});}
 async function fetchAndRender(){
   try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+_BIN_ID+'/latest',{headers:{'X-Master-Key':_API_KEY}});
+    var res=await fetch(DB+'/stats.json');
     var json=await res.json();
-    _cachedStats=json.record.stats||[];
+    _cachedStats=[];
+    if(json) Object.values(json).forEach(function(s){_cachedStats.push(s);});
   }catch(e){_cachedStats=[];}
   render();
 }
-
 fetchAndRender();
 </script>
 </body>
