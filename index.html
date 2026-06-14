@@ -157,40 +157,32 @@ async function fetchAndRender(){
 }
 
 function buildStandings(){
-  var approved=getApproved();
   var records={};
   Object.keys(TEAMS).forEach(function(t){records[t]={w:0,l:0,diff:0};});
-  var games={};
-  approved.forEach(function(s){
-    if(!s.score) return;
-    var key='w'+s.week+'_'+[s.home,s.away].sort().join('_');
-    if(!games[key]) games[key]={home:s.home,away:s.away,scores:{}};
-    if(!games[key].scores[s.team]) games[key].scores[s.team]=parseInt(s.score)||0;
+
+  // Build a lookup of key -> {home, away} from the schedule
+  var gameLookup={};
+  SCHEDULE.forEach(function(wk){
+    wk.games.forEach(function(g){
+      var key='w'+wk.week+'_'+[g.home,g.away].sort().join('_');
+      gameLookup[key]={home:g.home,away:g.away};
+    });
   });
-  // also check admin scores
+
+  // Use admin-entered scores as the source of truth
   Object.keys(_scores).forEach(function(key){
     var sc=_scores[key];
-    if(sc.home===''||sc.away==='') return;
-    if(!games[key]){
-      // parse key: w1_Home_Away
-      var parts=key.split('_');
-      var week=parseInt(parts[0].replace('w',''));
-      var teams=[parts[1],parts[2]];
-      games[key]={home:teams[0],away:teams[1],scores:{}};
-    }
-    games[key].adminHome=sc.home;
-    games[key].adminAway=sc.away;
+    if(sc.home===''||sc.away===''||sc.home===undefined||sc.away===undefined) return;
+    var gl=gameLookup[key];
+    if(!gl) return;
+    var hs=parseInt(sc.home),as=parseInt(sc.away);
+    if(isNaN(hs)||isNaN(as)) return;
+    if(hs>as){records[gl.home].w++;records[gl.away].l++;}
+    else if(as>hs){records[gl.away].w++;records[gl.home].l++;}
+    records[gl.home].diff+=hs-as;
+    records[gl.away].diff+=as-hs;
   });
-  Object.values(games).forEach(function(g){
-    var hs=g.adminHome!==undefined?g.adminHome:(g.scores[g.home]??null);
-    var as=g.adminAway!==undefined?g.adminAway:(g.scores[g.away]??null);
-    if(hs===null||as===null) return;
-    hs=parseInt(hs); as=parseInt(as);
-    if(hs>as){records[g.home].w++;records[g.away].l++;}
-    else if(as>hs){records[g.away].w++;records[g.home].l++;}
-    records[g.home].diff+=hs-as;
-    records[g.away].diff+=as-hs;
-  });
+
   function divHTML(teams,dname){
     var sorted=teams.slice().sort(function(a,b){
       var ra=records[a],rb=records[b];
