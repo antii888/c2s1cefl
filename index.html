@@ -102,7 +102,7 @@ footer a{color:var(--purple2);text-decoration:none;margin:0 8px;}
   <div class="view-team">
     View:<select id="teamFilter" onchange="filterTeam()">
       <option value="all">All Teams</option>
-      <optgroup label="PFC – Lebron"><option value="Ravens">Ravens</option><option value="Jags">Jags</option><option value="Browns">Browns</option></optgroup>
+      <optgroup label="PFC – Lebron"><option value="Ravens">Ravens</option><option value="Jags">Jags</option><option value="Dolphins">Dolphins</option></optgroup>
       <optgroup label="PFC – Curry"><option value="49ers">49ers</option><option value="Broncos">Broncos</option><option value="Eagles">Eagles</option></optgroup>
       <optgroup label="EFC – Wemby"><option value="Bucs">Bucs</option><option value="Texans">Texans</option><option value="Raiders">Raiders</option></optgroup>
       <optgroup label="EFC – Jordan"><option value="Commanders">Commanders</option><option value="Vikings">Vikings</option><option value="Bengals">Bengals</option></optgroup>
@@ -115,22 +115,22 @@ footer a{color:var(--purple2);text-decoration:none;margin:0 8px;}
 </div>
 <script>
 var DB='https://pefl-cefl-default-rtdb.firebaseio.com';
-var TEAMS={Ravens:{conf:"PFC",div:"Lebron"},Jags:{conf:"PFC",div:"Lebron"},Browns:{conf:"PFC",div:"Lebron"},"49ers":{conf:"PFC",div:"Curry"},Broncos:{conf:"PFC",div:"Curry"},Eagles:{conf:"PFC",div:"Curry"},Bucs:{conf:"EFC",div:"Wemby"},Texans:{conf:"EFC",div:"Wemby"},Raiders:{conf:"EFC",div:"Wemby"},Commanders:{conf:"EFC",div:"Jordan"},Vikings:{conf:"EFC",div:"Jordan"},Bengals:{conf:"EFC",div:"Jordan"}};
+var TEAMS={Ravens:{conf:"PFC",div:"Lebron"},Jags:{conf:"PFC",div:"Lebron"},Dolphins:{conf:"PFC",div:"Lebron"},"49ers":{conf:"PFC",div:"Curry"},Broncos:{conf:"PFC",div:"Curry"},Eagles:{conf:"PFC",div:"Curry"},Bucs:{conf:"EFC",div:"Wemby"},Texans:{conf:"EFC",div:"Wemby"},Raiders:{conf:"EFC",div:"Wemby"},Commanders:{conf:"EFC",div:"Jordan"},Vikings:{conf:"EFC",div:"Jordan"},Bengals:{conf:"EFC",div:"Jordan"}};
 var WEEK_DATES=["June 5 - June 7","June 8 - June 10","June 11 - June 13","June 14 - June 16","June 17 - June 19","June 20 - June 22","June 23 - June 25","June 26 - June 28","June 29 - July 1","July 2 - July 4","July 5 - July 7","July 8 - July 10","July 11 - July 13"];
-var SCHEDULE=[
-  {week:1,games:[{home:"Ravens",away:"Jags",type:"division"},{home:"Bengals",away:"Browns",type:"inter"},{home:"Vikings",away:"49ers",type:"inter"},{home:"Commanders",away:"Broncos",type:"inter"},{home:"Raiders",away:"Eagles",type:"inter"},{home:"Texans",away:"Bucs",type:"division"}]},
-  {week:2,games:[{home:"Ravens",away:"Browns",type:"division"},{home:"Jags",away:"49ers",type:"intra"},{home:"Bengals",away:"Broncos",type:"inter"},{home:"Vikings",away:"Eagles",type:"inter"},{home:"Commanders",away:"Bucs",type:"intra"},{home:"Raiders",away:"Texans",type:"division"}]},
-  {week:3,games:[{home:"Ravens",away:"49ers",type:"intra"},{home:"Browns",away:"Broncos",type:"intra"},{home:"Jags",away:"Eagles",type:"intra"},{home:"Bengals",away:"Bucs",type:"intra"},{home:"Vikings",away:"Texans",type:"intra"},{home:"Commanders",away:"Raiders",type:"intra"}]},
-  {week:4,games:[{home:"Ravens",away:"Broncos",type:"intra"},{home:"49ers",away:"Eagles",type:"division"},{home:"Browns",away:"Bucs",type:"inter"},{home:"Jags",away:"Texans",type:"inter"},{home:"Bengals",away:"Raiders",type:"intra"},{home:"Vikings",away:"Commanders",type:"division"}]},
-  {week:5,games:[{home:"Ravens",away:"Eagles",type:"intra"},{home:"Broncos",away:"Bucs",type:"inter"},{home:"49ers",away:"Texans",type:"inter"},{home:"Browns",away:"Raiders",type:"inter"},{home:"Jags",away:"Commanders",type:"inter"},{home:"Bengals",away:"Vikings",type:"division"}]},
-  {week:6,games:[{home:"Ravens",away:"Bucs",type:"inter"},{home:"Eagles",away:"Texans",type:"inter"},{home:"Broncos",away:"Raiders",type:"inter"},{home:"49ers",away:"Commanders",type:"inter"},{home:"Browns",away:"Vikings",type:"inter"},{home:"Jags",away:"Bengals",type:"inter"}]},
-  {week:7,games:[{home:"Ravens",away:"Texans",type:"inter"},{home:"Bucs",away:"Raiders",type:"division"},{home:"Eagles",away:"Commanders",type:"inter"},{home:"Broncos",away:"Vikings",type:"inter"},{home:"49ers",away:"Bengals",type:"inter"},{home:"Browns",away:"Jags",type:"division"}]},
-  {week:8,games:[{home:"Ravens",away:"Raiders",type:"inter"},{home:"Texans",away:"Commanders",type:"intra"},{home:"Bucs",away:"Vikings",type:"intra"},{home:"Eagles",away:"Bengals",type:"inter"},{home:"Broncos",away:"Jags",type:"intra"},{home:"49ers",away:"Browns",type:"intra"}]},
-  {week:9,games:[{home:"Ravens",away:"Commanders",type:"inter"},{home:"Raiders",away:"Vikings",type:"intra"},{home:"Texans",away:"Bengals",type:"intra"},{home:"Bucs",away:"Jags",type:"inter"},{home:"Eagles",away:"Browns",type:"intra"},{home:"Broncos",away:"49ers",type:"division"}]},
-  {week:10,games:[{home:"Ravens",away:"Vikings",type:"inter"},{home:"Commanders",away:"Bengals",type:"division"},{home:"Raiders",away:"Jags",type:"inter"},{home:"Texans",away:"Browns",type:"inter"},{home:"Bucs",away:"49ers",type:"inter"},{home:"Eagles",away:"Broncos",type:"division"}]},
-  {week:11,games:[{home:"Ravens",away:"Bengals",type:"inter"},{home:"Vikings",away:"Jags",type:"inter"},{home:"Commanders",away:"Browns",type:"inter"},{home:"Raiders",away:"49ers",type:"inter"},{home:"Texans",away:"Broncos",type:"inter"},{home:"Bucs",away:"Eagles",type:"inter"}]},
-  {week:12,games:[{home:"Bucs",away:"Texans",type:"division"},{home:"49ers",away:"Eagles",type:"division"},{home:"Jags",away:"Browns",type:"division"},{home:"Vikings",away:"Commanders",type:"division"},{home:"Ravens",away:"Jags",type:"division"},{home:"Raiders",away:"Bucs",type:"division"}]},
-  {week:13,games:[{home:"Browns",away:"Ravens",type:"division"},{home:"Eagles",away:"Broncos",type:"division"},{home:"Bengals",away:"Vikings",type:"division"},{home:"Texans",away:"Raiders",type:"division"},{home:"49ers",away:"Broncos",type:"division"},{home:"Bengals",away:"Commanders",type:"division"}]},
+const SCHEDULE=[
+  {week:1,games:[{home:"49ers",away:"Vikings",type:"inter"},{home:"Texans",away:"Bengals",type:"intra"},{home:"Bucs",away:"Raiders",type:"division"},{home:"Eagles",away:"Broncos",type:"division"},{home:"Dolphins",away:"Ravens",type:"division"},{home:"Jags",away:"Commanders",type:"inter"}]},
+  {week:2,games:[{home:"Ravens",away:"Dolphins",type:"division"},{home:"Jags",away:"49ers",type:"intra"},{home:"Bengals",away:"Broncos",type:"inter"},{home:"Vikings",away:"Eagles",type:"inter"},{home:"Commanders",away:"Bucs",type:"intra"},{home:"Raiders",away:"Texans",type:"division"}]},
+  {week:3,games:[{home:"Ravens",away:"49ers",type:"intra"},{home:"Dolphins",away:"Broncos",type:"intra"},{home:"Jags",away:"Eagles",type:"intra"},{home:"Bengals",away:"Bucs",type:"intra"},{home:"Vikings",away:"Texans",type:"intra"},{home:"Commanders",away:"Raiders",type:"intra"}]},
+  {week:4,games:[{home:"Ravens",away:"Broncos",type:"intra"},{home:"49ers",away:"Eagles",type:"division"},{home:"Dolphins",away:"Bucs",type:"inter"},{home:"Jags",away:"Texans",type:"inter"},{home:"Bengals",away:"Raiders",type:"intra"},{home:"Vikings",away:"Commanders",type:"division"}]},
+  {week:5,games:[{home:"Ravens",away:"Eagles",type:"intra"},{home:"Broncos",away:"Bucs",type:"inter"},{home:"49ers",away:"Texans",type:"inter"},{home:"Dolphins",away:"Raiders",type:"inter"},{home:"Jags",away:"Commanders",type:"inter"},{home:"Bengals",away:"Vikings",type:"division"}]},
+  {week:6,games:[{home:"Ravens",away:"Bucs",type:"inter"},{home:"Eagles",away:"Texans",type:"inter"},{home:"Broncos",away:"Raiders",type:"inter"},{home:"49ers",away:"Commanders",type:"inter"},{home:"Dolphins",away:"Vikings",type:"inter"},{home:"Jags",away:"Bengals",type:"inter"}]},
+  {week:7,games:[{home:"Ravens",away:"Texans",type:"inter"},{home:"Bucs",away:"Raiders",type:"division"},{home:"Eagles",away:"Commanders",type:"inter"},{home:"Broncos",away:"Vikings",type:"inter"},{home:"49ers",away:"Bengals",type:"inter"},{home:"Dolphins",away:"Jags",type:"division"}]},
+  {week:8,games:[{home:"Ravens",away:"Raiders",type:"inter"},{home:"Texans",away:"Commanders",type:"intra"},{home:"Bucs",away:"Vikings",type:"intra"},{home:"Eagles",away:"Bengals",type:"inter"},{home:"Broncos",away:"Jags",type:"intra"},{home:"49ers",away:"Dolphins",type:"intra"}]},
+  {week:9,games:[{home:"Ravens",away:"Commanders",type:"inter"},{home:"Raiders",away:"Vikings",type:"intra"},{home:"Texans",away:"Bengals",type:"intra"},{home:"Bucs",away:"Jags",type:"inter"},{home:"Eagles",away:"Dolphins",type:"intra"},{home:"Broncos",away:"49ers",type:"division"}]},
+  {week:10,games:[{home:"Ravens",away:"Vikings",type:"inter"},{home:"Commanders",away:"Bengals",type:"division"},{home:"Raiders",away:"Jags",type:"inter"},{home:"Texans",away:"Dolphins",type:"inter"},{home:"Bucs",away:"49ers",type:"inter"},{home:"Eagles",away:"Broncos",type:"division"}]},
+  {week:11,games:[{home:"Ravens",away:"Bengals",type:"inter"},{home:"Vikings",away:"Jags",type:"inter"},{home:"Commanders",away:"Dolphins",type:"inter"},{home:"Raiders",away:"49ers",type:"inter"},{home:"Texans",away:"Broncos",type:"inter"},{home:"Bucs",away:"Eagles",type:"inter"}]},
+  {week:12,games:[{home:"Bucs",away:"Texans",type:"division"},{home:"49ers",away:"Eagles",type:"division"},{home:"Jags",away:"Dolphins",type:"division"},{home:"Vikings",away:"Commanders",type:"division"},{home:"Ravens",away:"Jags",type:"division"},{home:"Raiders",away:"Bucs",type:"division"}]},
+  {week:13,games:[{home:"Dolphins",away:"Ravens",type:"division"},{home:"Eagles",away:"Broncos",type:"division"},{home:"Bengals",away:"Vikings",type:"division"},{home:"Texans",away:"Raiders",type:"division"},{home:"49ers",away:"Broncos",type:"division"},{home:"Bengals",away:"Commanders",type:"division"}]},
 ];
 
 var _stats=[];
@@ -209,7 +209,7 @@ function buildStandings(){
       +'<table class="standings-table">'+divHTML(div1,d1n)+divHTML(div2,d2n)+'</table></div>';
   }
   document.getElementById('standingsGrid').innerHTML=
-    confHTML('PFC',['Ravens','Jags','Browns'],['49ers','Broncos','Eagles'],'Lebron','Curry')+
+    confHTML('PFC',['Ravens','Jags','Dolphins'],['49ers','Broncos','Eagles'],'Lebron','Curry')+
     confHTML('EFC',['Bucs','Texans','Raiders'],['Commanders','Vikings','Bengals'],'Wemby','Jordan');
 }
 
