@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PEFL S16 Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<title>CEFL C2S1 Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet"/>
 <script>
 function checkPw(){
   var val=document.getElementById('pwInput').value;
-  if(val==='Gem211533'){
+  if(val==='CEFL2S1'){
     document.getElementById('pwGate').style.display='none';
     document.getElementById('adminContent').style.display='block';
-    try{sessionStorage.setItem('pefl_admin','1');}catch(e){}
+    try{sessionStorage.setItem('c2s1_admin','1');}catch(e){}
     loadData();
   } else {
     document.getElementById('pwError').style.display='block';
@@ -21,119 +21,129 @@ function checkPw(){
 </script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg:#09090f;--bg2:#111118;--card:#14141f;--card2:#1a1a28;--border:#222235;--border2:#2e2e48;--gold:#fbbf24;--purple:#818cf8;--teal:#34d399;--red:#f87171;--text:#e2e8f0;--muted:#4a5568;--muted2:#718096;}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
+:root{--bg:#080808;--bg2:#0f0f0f;--bg3:#141414;--card:#0d0d0d;--crimson:#8b0000;--gold:#c9a84c;--gold2:#ffd700;--warm:#f5f0e0;--muted:#7a7060;--border:#2a1a1a;--border2:#3a2a2a;--green:#4caf7d;--red:#e05555;--blue:#4a9eff;}
+body{background:var(--bg);color:var(--warm);font-family:'Barlow',sans-serif;min-height:100vh;}
 #pwGate{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;}
 #adminContent{display:none;}
-.pw-box{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px;width:100%;max-width:380px;text-align:center;}
-.pw-icon{font-size:36px;margin-bottom:12px;}
-.pw-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
-.pw-sub{font-size:13px;color:var(--muted2);margin-bottom:24px;}
-.pw-input{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:16px;padding:12px 16px;border-radius:10px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:10px;}
-.pw-btn{width:100%;background:var(--gold);color:#09090f;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;padding:12px;border:none;border-radius:10px;cursor:pointer;}
-.pw-btn:hover{background:#e5aa1a;}
-.pw-error{color:var(--red);font-size:13px;margin-top:8px;display:none;}
-.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}
-.topbar-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
-.topbar-title span{color:var(--gold);}
-.topbar-sub{font-size:12px;color:var(--muted2);}
-.tb-btn{background:transparent;border:1px solid var(--border2);color:var(--muted2);font-family:'Space Grotesk',sans-serif;font-size:12px;padding:7px 14px;border-radius:8px;cursor:pointer;text-decoration:none;}
-.tb-btn:hover{border-color:var(--purple);color:var(--purple);}
+.pw-box{background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:40px;width:100%;max-width:380px;text-align:center;}
+.pw-icon{font-size:32px;margin-bottom:12px;}
+.pw-title{font-family:'Playfair Display',serif;font-size:28px;font-style:italic;font-weight:900;margin-bottom:6px;color:var(--gold);}
+.pw-sub{font-size:13px;color:var(--muted);margin-bottom:24px;font-style:italic;}
+.pw-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:16px;padding:12px 16px;border-radius:2px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:10px;}
+.pw-input:focus{border-color:var(--gold);}
+.pw-btn{width:100%;background:linear-gradient(135deg,var(--crimson),#a50000);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:12px;border:none;border-radius:2px;cursor:pointer;}
+.pw-btn:hover{background:linear-gradient(135deg,#a50000,#c00);}
+.pw-error{color:var(--red);font-size:12px;margin-top:8px;display:none;font-style:italic;}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border2);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-title{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--gold);}
+.topbar-sub{font-size:11px;color:var(--muted);}
+.tb-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;padding:6px 12px;border-radius:2px;cursor:pointer;text-decoration:none;}
+.tb-btn:hover{border-color:var(--gold);color:var(--gold);}
 .topbar-right{display:flex;gap:8px;}
-.layout{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 57px);}
-.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:20px 0;}
-.sidebar-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 20px 8px;}
-.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;cursor:pointer;border-left:2px solid transparent;font-size:14px;color:var(--muted2);}
-.sidebar-item:hover{background:rgba(255,255,255,.02);color:var(--text);}
+.layout{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 53px);}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border2);padding:20px 0;}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 16px 8px;font-family:'Barlow Condensed',sans-serif;}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;cursor:pointer;border-left:2px solid transparent;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.5px;color:var(--muted);}
+.sidebar-item:hover{background:rgba(201,168,76,.04);color:var(--warm);}
 .sidebar-item.active{border-left-color:var(--gold);color:var(--gold);}
-.badge{background:var(--red);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;}
-.badge.green{background:var(--teal);color:#09090f;}
-.badge.gray{background:var(--muted);color:var(--text);}
-.main{padding:28px;overflow-y:auto;}
-.main-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:4px;}
-.main-sub{color:var(--muted2);font-size:13px;margin-bottom:20px;}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px;}
-.summary-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
-.summary-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;}
+.badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;}
+.badge.red{background:var(--red);color:white;}
+.badge.green{background:var(--green);color:#080808;}
+.badge.gray{background:var(--muted);color:var(--bg);}
+.main{padding:24px;overflow-y:auto;}
+.main-title{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--warm);margin-bottom:4px;}
+.main-sub{color:var(--muted);font-size:12px;margin-bottom:20px;font-style:italic;}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px;}
+.summary-card{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:14px;}
+.summary-num{font-family:'Bebas Neue',sans-serif;font-size:30px;}
 .summary-num.gold{color:var(--gold);}
-.summary-num.teal{color:var(--teal);}
 .summary-num.red{color:var(--red);}
-.summary-num.purple{color:var(--purple);}
-.summary-label{font-size:12px;color:var(--muted2);margin-top:3px;}
-.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
-.filter-input{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;outline:none;flex:1;min-width:160px;}
+.summary-num.green{color:var(--green);}
+.summary-num.blue{color:var(--blue);}
+.summary-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.filter-input{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;outline:none;flex:1;min-width:160px;}
 .filter-input::placeholder{color:var(--muted);}
-.filter-select{background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 12px;border-radius:8px;cursor:pointer;outline:none;}
-.refresh-btn{background:var(--card2);border:1px solid var(--teal);color:var(--teal);font-family:'Space Grotesk',sans-serif;font-size:13px;padding:8px 16px;border-radius:8px;cursor:pointer;}
+.filter-input:focus{border-color:var(--gold);}
+.filter-select{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;cursor:pointer;outline:none;}
+.refresh-btn{background:var(--bg2);border:1px solid rgba(76,175,125,.4);color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;}
+.refresh-btn:hover{background:rgba(76,175,125,.08);}
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
-table th{text-align:left;padding:10px 14px;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);border-bottom:1px solid var(--border);}
-table td{padding:14px;}
-tr{border-bottom:1px solid var(--border);}
-tr:last-child{border-bottom:none;}
-tr:hover td{background:rgba(255,255,255,.01);}
-.player-name{font-weight:700;font-size:14px;}
-.player-meta{font-size:12px;color:var(--muted2);margin-top:2px;}
-.status-badge{display:inline-flex;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
-.status-badge.pending{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2);}
-.status-badge.approved{background:rgba(52,211,153,.1);color:var(--teal);border:1px solid rgba(52,211,153,.2);}
-.status-badge.rejected{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2);}
-.stat-chip{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--muted2);display:inline-block;margin:2px;}
-.stat-chip strong{color:var(--text);}
-.action-row{display:flex;gap:6px;flex-wrap:wrap;}
-.action-btn{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;padding:6px 12px;border-radius:7px;cursor:pointer;border:none;}
-.action-btn.approve{background:rgba(52,211,153,.12);color:var(--teal);border:1px solid rgba(52,211,153,.2);}
-.action-btn.reject{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2);}
-.action-btn.edit{background:rgba(129,140,248,.1);color:var(--purple);border:1px solid rgba(129,140,248,.2);}
-.action-btn.del{background:transparent;color:var(--muted2);border:1px solid var(--border);}
-.empty{text-align:center;padding:48px;color:var(--muted2);}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+table th{text-align:left;padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);}
+table td{padding:12px 14px;border-bottom:1px solid rgba(42,26,26,.4);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(201,168,76,.02);}
+.player-name{font-weight:700;font-size:14px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;}
+.player-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.dup-warning{background:rgba(224,85,85,.1);border:1px solid rgba(224,85,85,.2);color:var(--red);font-size:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;padding:2px 8px;border-radius:2px;margin-top:4px;display:inline-block;}
+.status-badge{display:inline-flex;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:2px;text-transform:uppercase;}
+.status-badge.pending{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2);}
+.status-badge.approved{background:rgba(76,175,125,.1);color:var(--green);border:1px solid rgba(76,175,125,.2);}
+.status-badge.rejected{background:rgba(224,85,85,.1);color:var(--red);border:1px solid rgba(224,85,85,.2);}
+.gcs-tag{display:inline-flex;align-items:center;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;padding:2px 7px;border-radius:2px;margin-left:6px;}
+.stat-chip{background:var(--bg3);border:1px solid var(--border2);padding:2px 8px;font-size:11px;color:var(--muted);display:inline-block;margin:2px;border-radius:2px;}
+.stat-chip strong{color:var(--warm);}
+.action-row{display:flex;gap:5px;flex-wrap:wrap;}
+.action-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;padding:5px 10px;cursor:pointer;border:none;border-radius:2px;}
+.action-btn.approve{background:rgba(76,175,125,.12);color:var(--green);border:1px solid rgba(76,175,125,.25);}
+.action-btn.reject{background:rgba(224,85,85,.1);color:var(--red);border:1px solid rgba(224,85,85,.25);}
+.action-btn.edit{background:rgba(74,158,255,.1);color:var(--blue);border:1px solid rgba(74,158,255,.2);}
+.action-btn.del{background:transparent;color:var(--muted);border:1px solid var(--border2);}
+.empty{text-align:center;padding:48px;color:var(--muted);font-size:13px;font-style:italic;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
-.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:20px;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:28px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-close{position:absolute;top:12px;right:14px;background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--warm);margin-bottom:20px;}
 .mfield{margin-bottom:12px;}
-.mfield label{display:block;font-size:12px;color:var(--muted2);margin-bottom:4px;}
-.mfield input,.mfield select{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;padding:9px 13px;border-radius:9px;outline:none;}
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.msec{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--purple);margin:16px 0 8px;}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
-.mbtn{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;padding:10px 22px;border-radius:10px;cursor:pointer;border:none;}
-.mbtn.save{background:var(--purple);color:white;}
-.mbtn.cancel{background:transparent;border:1px solid var(--border2);color:var(--muted2);}
-.score-week-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.score-game-row{background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
-.score-game-label{flex:1;min-width:120px;font-size:14px;font-weight:600;}
+.mfield label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.mfield input,.mfield select{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;outline:none;}
+.mfield input:focus,.mfield select:focus{border-color:var(--gold);}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.msec{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--crimson);margin:16px 0 8px;}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
+.mbtn{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:9px 20px;cursor:pointer;border:none;border-radius:2px;text-transform:uppercase;}
+.mbtn.save{background:linear-gradient(135deg,var(--crimson),#a50000);color:var(--warm);}
+.mbtn.cancel{background:transparent;border:1px solid var(--border2);color:var(--muted);}
+.score-section{display:grid;gap:24px;}
+.score-week-title{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border2);}
+.score-game-row{background:var(--bg2);border:1px solid var(--border2);border-radius:2px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+.score-game-label{flex:1;min-width:140px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;}
 .score-inputs{display:flex;align-items:center;gap:8px;}
-.score-team-label{font-size:11px;color:var(--muted2);}
-.score-input{width:64px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;padding:6px 8px;border-radius:7px;text-align:center;outline:none;}
-.score-input:focus{border-color:var(--teal);}
-.score-saved{background:rgba(52,211,153,.12);color:var(--teal);border:1px solid rgba(52,211,153,.2);font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;}
+.score-team-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.score-input{width:64px;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Bebas Neue',sans-serif;font-size:16px;padding:6px 8px;border-radius:2px;text-align:center;outline:none;}
+.score-input:focus{border-color:var(--gold);}
+.score-saved{background:rgba(76,175,125,.1);color:var(--green);border:1px solid rgba(76,175,125,.2);font-family:'Barlow Condensed',sans-serif;font-size:10px;padding:2px 8px;border-radius:2px;letter-spacing:1px;}
 </style>
 </head>
 <body>
 <div id="pwGate">
   <div class="pw-box">
-    <div class="pw-icon">🔒</div>
+    <div class="pw-icon">🎬</div>
     <div class="pw-title">Admin Access</div>
-    <div class="pw-sub">Enter the password to continue</div>
+    <div class="pw-sub">CEFL Chapter 2 Season 1</div>
     <input class="pw-input" type="password" id="pwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPw()"/>
     <button class="pw-btn" onclick="checkPw()">Enter</button>
     <div class="pw-error" id="pwError">Incorrect password. Try again.</div>
   </div>
 </div>
+
 <div id="adminContent">
+<!-- EDIT MODAL -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
+    <button class="modal-close" onclick="closeModal('editModal')">✕</button>
     <div class="modal-title">Edit Submission</div>
     <input type="hidden" id="editId"/>
     <div class="mfield"><label>Player Name</label><input type="text" id="editName"/></div>
     <div class="mgrid">
       <div class="mfield"><label>Team</label>
         <select id="editTeam">
-          <option>Ravens</option><option>Jags</option><option>Dolphins</option>
-          <option>49ers</option><option>Broncos</option><option>Eagles</option>
-          <option>Bucs</option><option>Texans</option><option>Raiders</option>
-          <option>Commanders</option><option>Vikings</option><option>Bengals</option>
+          <option>Minnesota</option><option>Cincinnati</option><option>Oklahoma</option><option>Delaware</option>
+          <option>Penn State</option><option>Georgia</option><option>Ole Miss</option><option>Texas A&M</option>
+          <option>North Dakota State</option><option>LSU</option><option>Ohio State</option><option>TCU</option>
+          <option>Kansas</option><option>UCLA</option><option>Michigan State</option><option>Oregon</option>
         </select>
       </div>
       <div class="mfield"><label>Week</label>
@@ -142,7 +152,6 @@ tr:hover td{background:rgba(255,255,255,.01);}
           <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
           <option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option>
           <option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option>
-          <option value="13">Week 13</option>
         </select>
       </div>
     </div>
@@ -156,10 +165,11 @@ tr:hover td{background:rgba(255,255,255,.01);}
       <div class="mfield"><label>Completions</label><input type="number" id="e_pass_comp" min="0"/></div>
       <div class="mfield"><label>INTs Thrown</label><input type="number" id="e_ints_thrown" min="0"/></div>
     </div>
-    <div class="msec">Rushing</div>
+    <div class="msec">Rushing / Special</div>
     <div class="mgrid">
       <div class="mfield"><label>Rush TDs</label><input type="number" id="e_rush_tds" min="0"/></div>
       <div class="mfield"><label>Rushes</label><input type="number" id="e_rushes" min="0"/></div>
+      <div class="mfield"><label>KR TDs</label><input type="number" id="e_kr_tds" min="0"/></div>
     </div>
     <div class="msec">Receiving</div>
     <div class="mgrid">
@@ -171,26 +181,29 @@ tr:hover td{background:rgba(255,255,255,.01);}
     <div class="mgrid">
       <div class="mfield"><label>Tackles</label><input type="number" id="e_tackles" min="0"/></div>
       <div class="mfield"><label>INTs Caught</label><input type="number" id="e_ints_caught" min="0"/></div>
+      <div class="mfield"><label>Pick 6s</label><input type="number" id="e_pick6" min="0"/></div>
       <div class="mfield"><label>Swats</label><input type="number" id="e_swats" min="0"/></div>
       <div class="mfield"><label>Safeties</label><input type="number" id="e_safeties" min="0"/></div>
       <div class="mfield"><label>Def TDs</label><input type="number" id="e_def_tds" min="0"/></div>
     </div>
     <div class="modal-actions">
-      <button class="mbtn cancel" onclick="closeModal()">Cancel</button>
+      <button class="mbtn cancel" onclick="closeModal('editModal')">Cancel</button>
       <button class="mbtn save" onclick="saveEdit()">Save Changes</button>
     </div>
   </div>
 </div>
+
 <div class="topbar">
   <div>
-    <div class="topbar-title"><span>PEFL</span> Admin Panel</div>
-    <div class="topbar-sub">Season 16 &middot; Stats Management</div>
+    <div class="topbar-title">CEFL Chapter 2 · Admin</div>
+    <div class="topbar-sub">Season 1 · Stats & Scores Management</div>
   </div>
   <div class="topbar-right">
     <a href="submit.html" class="tb-btn">+ Submit Stats</a>
-    <a href="index.html" class="tb-btn">&larr; Schedule</a>
+    <a href="index.html" class="tb-btn">← Schedule</a>
   </div>
 </div>
+
 <div class="layout">
   <div class="sidebar">
     <div class="sidebar-label">View</div>
@@ -198,25 +211,29 @@ tr:hover td{background:rgba(255,255,255,.01);}
     <div class="sidebar-item" id="tab_scores" onclick="showSection('scores')">Enter Scores</div>
     <div class="sidebar-label" style="margin-top:20px;">Filter</div>
     <div class="sidebar-item active" id="tab_all" onclick="setFilter('all')">All <span class="badge gray" id="b_all2">0</span></div>
-    <div class="sidebar-item" id="tab_pending" onclick="setFilter('pending')">Pending <span class="badge" id="b_pending">0</span></div>
+    <div class="sidebar-item" id="tab_pending" onclick="setFilter('pending')">Pending <span class="badge red" id="b_pending">0</span></div>
     <div class="sidebar-item" id="tab_approved" onclick="setFilter('approved')">Approved <span class="badge green" id="b_approved">0</span></div>
     <div class="sidebar-item" id="tab_rejected" onclick="setFilter('rejected')">Rejected <span class="badge gray" id="b_rejected">0</span></div>
     <div class="sidebar-label" style="margin-top:20px;">Actions</div>
-    <div class="sidebar-item" onclick="approveAll()">&#10003; Approve All</div>
-    <div class="sidebar-item" onclick="clearRejected()">&#10005; Clear Rejected</div>
-    <div class="sidebar-item" onclick="exportData()">&#8595; Export JSON</div>
+    <div class="sidebar-item" onclick="approveAll()">✓ Approve All Pending</div>
+    <div class="sidebar-item" onclick="approveWeek()">✓ Approve By Week</div>
+    <div class="sidebar-item" onclick="clearRejected()">✕ Clear Rejected</div>
+    <div class="sidebar-item" onclick="exportData()">↓ Export JSON</div>
   </div>
+
   <div class="main">
     <div class="main-title" id="mainTitle">Submissions</div>
     <div class="main-sub" id="mainSub">Review and manage player stat submissions</div>
+
     <div id="summarySection">
       <div class="summary-grid">
         <div class="summary-card"><div class="summary-num gold" id="s_total">0</div><div class="summary-label">Total</div></div>
-        <div class="summary-card"><div class="summary-num purple" id="s_pending">0</div><div class="summary-label">Pending</div></div>
-        <div class="summary-card"><div class="summary-num teal" id="s_approved">0</div><div class="summary-label">Approved</div></div>
+        <div class="summary-card"><div class="summary-num blue" id="s_pending">0</div><div class="summary-label">Pending</div></div>
+        <div class="summary-card"><div class="summary-num green" id="s_approved">0</div><div class="summary-label">Approved</div></div>
         <div class="summary-card"><div class="summary-num red" id="s_rejected">0</div><div class="summary-label">Rejected</div></div>
       </div>
     </div>
+
     <div id="submissionsSection">
       <div class="filter-bar">
         <input class="filter-input" type="text" placeholder="Search player or team..." id="searchInput" oninput="renderTable()"/>
@@ -226,157 +243,73 @@ tr:hover td{background:rgba(255,255,255,.01);}
           <option value="4">Week 4</option><option value="5">Week 5</option><option value="6">Week 6</option>
           <option value="7">Week 7</option><option value="8">Week 8</option><option value="9">Week 9</option>
           <option value="10">Week 10</option><option value="11">Week 11</option><option value="12">Week 12</option>
-          <option value="13">Week 13</option>
         </select>
         <select class="filter-select" id="teamSel" onchange="renderTable()">
           <option value="">All Teams</option>
-          <option>Ravens</option><option>Jags</option><option>Dolphins</option>
-          <option>49ers</option><option>Broncos</option><option>Eagles</option>
-          <option>Bucs</option><option>Texans</option><option>Raiders</option>
-          <option>Commanders</option><option>Vikings</option><option>Bengals</option>
+          <option>Minnesota</option><option>Cincinnati</option><option>Oklahoma</option><option>Delaware</option>
+          <option>Penn State</option><option>Georgia</option><option>Ole Miss</option><option>Texas A&M</option>
+          <option>North Dakota State</option><option>LSU</option><option>Ohio State</option><option>TCU</option>
+          <option>Kansas</option><option>UCLA</option><option>Michigan State</option><option>Oregon</option>
         </select>
-        <button class="refresh-btn" onclick="loadData()">&#8635; Refresh</button>
+        <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Player / Game</th><th>Stats</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="tbody"><tr><td colspan="4"><div class="empty">Loading...</div></td></tr></tbody>
+          <thead><tr><th>Player / Game</th><th>Stats</th><th>GCS</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="tbody"><tr><td colspan="5"><div class="empty">Loading...</div></td></tr></tbody>
         </table>
       </div>
     </div>
-    <div id="scoresSection" style="display:none;"><div id="scoresContainer"></div></div>
+
+    <div id="scoresSection" style="display:none;">
+      <div class="score-section" id="scoresContainer"></div>
+    </div>
   </div>
 </div>
 </div>
+
 <script>
 var DB='https://pefl-cefl-default-rtdb.firebaseio.com';
-var LEAGUE='pefl';
+var LEAGUE='cefl_c2s1';
 var allData=[];
 var currentFilter='all';
-var currentSection='submissions';
+
+var STAT_FIELDS=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','kr_tds','rec_tds','receptions','targets','tackles','ints_caught','pick6','swats','safeties','def_tds'];
 
 var SCHEDULE=[
-  {week:1,games:[
-    {home:"49ers",away:"Vikings",type:"inter"},
-    {home:"Texans",away:"Bengals",type:"intra"},
-    {home:"Bucs",away:"Raiders",type:"division"},
-    {home:"Eagles",away:"Broncos",type:"division"},
-    {home:"Dolphins",away:"Ravens",type:"division"},
-    {home:"Jags",away:"Commanders",type:"inter"},
-  ]},
-  {week:2,games:[
-    {home:"Ravens",away:"49ers",type:"intra"},
-    {home:"Broncos",away:"Vikings",type:"inter"},
-    {home:"Raiders",away:"Bengals",type:"intra"},
-    {home:"Dolphins",away:"Jags",type:"division"},
-    {home:"Bucs",away:"Texans",type:"division"},
-    {home:"Eagles",away:"Commanders",type:"inter"},
-  ]},
-  {week:3,games:[
-    {home:"Raiders",away:"Vikings",type:"intra"},
-    {home:"Broncos",away:"Bengals",type:"inter"},
-    {home:"Ravens",away:"Texans",type:"inter"},
-    {home:"Jags",away:"Eagles",type:"intra"},
-    {home:"Dolphins",away:"49ers",type:"intra"},
-    {home:"Bucs",away:"Commanders",type:"intra"},
-  ]},
-  {week:4,games:[
-    {home:"Bucs",away:"Vikings",type:"intra"},
-    {home:"Broncos",away:"Raiders",type:"inter"},
-    {home:"Dolphins",away:"Bengals",type:"inter"},
-    {home:"Jags",away:"Ravens",type:"division"},
-    {home:"Texans",away:"Commanders",type:"intra"},
-    {home:"Eagles",away:"49ers",type:"division"},
-  ]},
-  {week:5,games:[
-    {home:"Vikings",away:"Bengals",type:"division"},
-    {home:"Broncos",away:"Texans",type:"inter"},
-    {home:"49ers",away:"Raiders",type:"inter"},
-    {home:"Jags",away:"Bucs",type:"inter"},
-    {home:"Ravens",away:"Eagles",type:"intra"},
-    {home:"Dolphins",away:"Commanders",type:"inter"},
-  ]},
-  {week:6,games:[
-    {home:"Bucs",away:"Bengals",type:"intra"},
-    {home:"Eagles",away:"Vikings",type:"inter"},
-    {home:"Broncos",away:"49ers",type:"division"},
-    {home:"Ravens",away:"Dolphins",type:"division"},
-    {home:"Jags",away:"Texans",type:"inter"},
-    {home:"Raiders",away:"Commanders",type:"intra"},
-  ]},
-  {week:7,games:[
-    {home:"Ravens",away:"Vikings",type:"inter"},
-    {home:"Broncos",away:"Eagles",type:"division"},
-    {home:"Jags",away:"49ers",type:"intra"},
-    {home:"Raiders",away:"Bucs",type:"division"},
-    {home:"Bengals",away:"Commanders",type:"division"},
-    {home:"Dolphins",away:"Texans",type:"inter"},
-  ]},
-  {week:8,games:[
-    {home:"Vikings",away:"Commanders",type:"division"},
-    {home:"Eagles",away:"Bengals",type:"inter"},
-    {home:"49ers",away:"Broncos",type:"division"},
-    {home:"Texans",away:"Raiders",type:"division"},
-    {home:"Ravens",away:"Jags",type:"division"},
-    {home:"Dolphins",away:"Bucs",type:"inter"},
-  ]},
-  {week:9,games:[
-    {home:"Eagles",away:"Bucs",type:"inter"},
-    {home:"49ers",away:"Bengals",type:"inter"},
-    {home:"Ravens",away:"Commanders",type:"inter"},
-    {home:"Dolphins",away:"Vikings",type:"inter"},
-    {home:"Raiders",away:"Texans",type:"division"},
-    {home:"Jags",away:"Broncos",type:"intra"},
-  ]},
-  {week:10,games:[
-    {home:"Commanders",away:"Vikings",type:"division"},
-    {home:"Broncos",away:"Bucs",type:"inter"},
-    {home:"Jags",away:"Bengals",type:"inter"},
-    {home:"Dolphins",away:"Eagles",type:"intra"},
-    {home:"49ers",away:"Texans",type:"inter"},
-    {home:"Ravens",away:"Raiders",type:"inter"},
-  ]},
-  {week:11,games:[
-    {home:"Texans",away:"Bucs",type:"division"},
-    {home:"Jags",away:"Vikings",type:"inter"},
-    {home:"Dolphins",away:"Raiders",type:"inter"},
-    {home:"Ravens",away:"Broncos",type:"intra"},
-    {home:"49ers",away:"Eagles",type:"division"},
-    {home:"Commanders",away:"Bengals",type:"division"},
-  ]},
-  {week:12,games:[
-    {home:"Texans",away:"Vikings",type:"intra"},
-    {home:"Jags",away:"Dolphins",type:"division"},
-    {home:"Eagles",away:"Raiders",type:"inter"},
-    {home:"Ravens",away:"Bengals",type:"inter"},
-    {home:"Broncos",away:"Commanders",type:"inter"},
-    {home:"49ers",away:"Bucs",type:"inter"},
-  ]},
-  {week:13,games:[
-    {home:"Bengals",away:"Vikings",type:"division"},
-    {home:"Dolphins",away:"Broncos",type:"intra"},
-    {home:"Ravens",away:"Bucs",type:"inter"},
-    {home:"Eagles",away:"Texans",type:"inter"},
-    {home:"Jags",away:"Raiders",type:"inter"},
-    {home:"49ers",away:"Commanders",type:"inter"},
-  ]},
+  {week:1,games:[{home:'North Dakota State',away:'Texas A&M'},{home:'Oklahoma',away:'UCLA'},{home:'TCU',away:'LSU'},{home:'Oregon',away:'Kansas'},{home:'Ohio State',away:'Cincinnati'},{home:'Michigan State',away:'Ole Miss'},{home:'Minnesota',away:'Georgia'},{home:'Penn State',away:'Delaware'}]},
+  {week:2,games:[{home:'North Dakota State',away:'Kansas'},{home:'UCLA',away:'Ohio State'},{home:'Michigan State',away:'LSU'},{home:'TCU',away:'Texas A&M'},{home:'Oregon',away:'Delaware'},{home:'Minnesota',away:'Oklahoma'},{home:'Ole Miss',away:'Georgia'},{home:'Penn State',away:'Cincinnati'}]},
+  {week:3,games:[{home:'North Dakota State',away:'Ohio State'},{home:'Michigan State',away:'Kansas'},{home:'TCU',away:'UCLA'},{home:'Oregon',away:'Penn State'},{home:'LSU',away:'Cincinnati'},{home:'Minnesota',away:'Oklahoma'},{home:'Ole Miss',away:'Georgia'},{home:'Texas A&M',away:'Delaware'}]},
+  {week:4,games:[{home:'Delaware',away:'Minnesota'},{home:'Cincinnati',away:'Ole Miss'},{home:'Texas A&M',away:'Penn State'},{home:'Oklahoma',away:'North Dakota State'},{home:'Georgia',away:'LSU'},{home:'UCLA',away:'Oregon'},{home:'TCU',away:'Kansas'},{home:'Michigan State',away:'Ohio State'}]},
+  {week:5,games:[{home:'Cincinnati',away:'Minnesota'},{home:'Delaware',away:'Oklahoma'},{home:'Ole Miss',away:'Penn State'},{home:'Texas A&M',away:'Georgia'},{home:'TCU',away:'Oregon'},{home:'Ohio State',away:'LSU'},{home:'North Dakota State',away:'UCLA'},{home:'Michigan State',away:'Kansas'}]},
+  {week:6,games:[{home:'North Dakota State',away:'Ohio State'},{home:'TCU',away:'Michigan State'},{home:'Oregon',away:'LSU'},{home:'UCLA',away:'Kansas'},{home:'Ole Miss',away:'Minnesota'},{home:'Delaware',away:'Oklahoma'},{home:'Penn State',away:'Georgia'},{home:'Texas A&M',away:'Cincinnati'}]},
+  {week:7,games:[{home:'North Dakota State',away:'Oregon'},{home:'Michigan State',away:'Georgia'},{home:'TCU',away:'Ole Miss'},{home:'Delaware',away:'Minnesota'},{home:'Cincinnati',away:'Oklahoma'},{home:'Texas A&M',away:'Penn State'},{home:'UCLA',away:'LSU'},{home:'Ohio State',away:'Kansas'}]},
+  {week:8,games:[{home:'North Dakota State',away:'LSU'},{home:'TCU',away:'Ohio State'},{home:'Michigan State',away:'UCLA'},{home:'Oregon',away:'Kansas'},{home:'Delaware',away:'Cincinnati'},{home:'Minnesota',away:'Texas A&M'},{home:'Ole Miss',away:'Penn State'},{home:'Georgia',away:'Oklahoma'}]},
+  {week:9,games:[{home:'North Dakota State',away:'LSU'},{home:'TCU',away:'Ohio State'},{home:'Oregon',away:'Michigan State'},{home:'UCLA',away:'Kansas'},{home:'Minnesota',away:'Cincinnati'},{home:'Delaware',away:'Ole Miss'},{home:'Penn State',away:'Georgia'},{home:'Texas A&M',away:'Oklahoma'}]},
+  {week:10,games:[{home:'North Dakota State',away:'TCU'},{home:'Ole Miss',away:'Texas A&M'},{home:'LSU',away:'Kansas'},{home:'Delaware',away:'Georgia'},{home:'Cincinnati',away:'Oklahoma'},{home:'Penn State',away:'Minnesota'},{home:'Ohio State',away:'Oregon'},{home:'UCLA',away:'Michigan State'}]},
+  {week:11,games:[{home:'North Dakota State',away:'TCU'},{home:'LSU',away:'Ohio State'},{home:'Minnesota',away:'UCLA'},{home:'Oregon',away:'Michigan State'},{home:'Ole Miss',away:'Texas A&M'},{home:'Georgia',away:'Cincinnati'},{home:'Oklahoma',away:'Penn State'},{home:'Delaware',away:'Kansas'}]},
+  {week:12,games:[{home:'North Dakota State',away:'Michigan State'},{home:'Ole Miss',away:'Oklahoma'},{home:'TCU',away:'LSU'},{home:'Delaware',away:'Cincinnati'},{home:'UCLA',away:'Oregon'},{home:'Texas A&M',away:'Georgia'},{home:'Minnesota',away:'Ohio State'},{home:'Penn State',away:'Kansas'}]},
 ];
+
+function calcGCS(s){
+  if(!s) return 0;
+  return ((s.pass_tds||0)*6)+((s.rush_tds||0)*6)+((s.rec_tds||0)*6)+((s.def_tds||0)*6)+((s.pick6||0)*6)+((s.kr_tds||0)*6)+((s.receptions||0)*1)+((s.rushes||0)*0.5)+((s.pass_comp||0)*0.5)+((s.tackles||0)*1)+((s.ints_caught||0)*4)+((s.swats||0)*2)+((s.safeties||0)*4)+((s.ints_thrown||0)*-2);
+}
+
+function isDuplicate(s){
+  return allData.filter(function(x){return x._fbkey!==s._fbkey&&x.player_name===s.player_name&&x.week===s.week&&x.home===s.home&&x.away===s.away;}).length>0;
+}
 
 async function loadData(){
   try{
     var res=await fetch(DB+'/stats.json');
     var json=await res.json();
     allData=[];
-    if(json){
-      Object.keys(json).forEach(function(k){
-        var s=json[k]; s._fbkey=k;
-        if(s.league===LEAGUE) allData.push(s);
-      });
-    }
+    if(json){Object.keys(json).forEach(function(k){var s=json[k];s._fbkey=k;if(s.league===LEAGUE)allData.push(s);});}
     allData.sort(function(a,b){return new Date(b.submitted)-new Date(a.submitted);});
-    renderTable(); updateSummary();
+    renderTable();updateSummary();
   }catch(e){
-    document.getElementById('tbody').innerHTML='<tr><td colspan="4"><div class="empty">Failed to load. '+e.message+'</div></td></tr>';
+    document.getElementById('tbody').innerHTML='<tr><td colspan="5"><div class="empty">Failed to load: '+e.message+'</div></td></tr>';
   }
 }
 
@@ -391,35 +324,46 @@ async function delEntry(fbkey){
 }
 async function approveAll(){
   var pending=allData.filter(function(s){return s.status==='pending';});
+  if(!pending.length){alert('No pending submissions.');return;}
+  await Promise.all(pending.map(function(s){return fetch(DB+'/stats/'+s._fbkey+'/status.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify('approved')});}));
+  loadData();
+}
+async function approveWeek(){
+  var week=prompt('Approve all pending for which week? (1-12)');
+  if(!week) return;
+  var pending=allData.filter(function(s){return s.status==='pending'&&String(s.week)===String(week);});
+  if(!pending.length){alert('No pending submissions for Week '+week);return;}
   await Promise.all(pending.map(function(s){return fetch(DB+'/stats/'+s._fbkey+'/status.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify('approved')});}));
   loadData();
 }
 async function clearRejected(){
-  if(!confirm('Delete all rejected?')) return;
+  if(!confirm('Delete all rejected submissions?')) return;
   var rejected=allData.filter(function(s){return s.status==='rejected';});
   await Promise.all(rejected.map(function(s){return fetch(DB+'/stats/'+s._fbkey+'.json',{method:'DELETE'});}));
   loadData();
 }
 function exportData(){
   var b=new Blob([JSON.stringify(allData,null,2)],{type:'application/json'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pefl_s16_stats.json';a.click();
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cefl_c2s1_stats.json';a.click();
 }
 
 function showSection(s){
-  currentSection=s;
   document.getElementById('submissionsSection').style.display=s==='submissions'?'':'none';
   document.getElementById('scoresSection').style.display=s==='scores'?'':'none';
   document.getElementById('summarySection').style.display=s==='submissions'?'':'none';
   document.getElementById('tab_submissions').classList.toggle('active',s==='submissions');
   document.getElementById('tab_scores').classList.toggle('active',s==='scores');
   document.getElementById('mainTitle').textContent=s==='scores'?'Enter Scores':'Submissions';
+  document.getElementById('mainSub').textContent=s==='scores'?'Scores sync to all devices instantly':'Review and manage player stat submissions';
   if(s==='scores') renderScores();
 }
+
 function setFilter(f){
   currentFilter=f;
   ['all','pending','approved','rejected'].forEach(function(x){document.getElementById('tab_'+x).classList.toggle('active',x===f);});
   renderTable();
 }
+
 function updateSummary(){
   var p=allData.filter(function(x){return x.status==='pending';}).length;
   var a=allData.filter(function(x){return x.status==='approved';}).length;
@@ -428,14 +372,14 @@ function updateSummary(){
   document.getElementById('s_pending').textContent=p;
   document.getElementById('s_approved').textContent=a;
   document.getElementById('s_rejected').textContent=r;
-  document.getElementById('b_all').textContent=allData.length;
-  document.getElementById('b_all2').textContent=allData.length;
+  ['b_all','b_all2'].forEach(function(id){document.getElementById(id).textContent=allData.length;});
   document.getElementById('b_pending').textContent=p;
   document.getElementById('b_approved').textContent=a;
   document.getElementById('b_rejected').textContent=r;
 }
+
 function renderTable(){
-  var search=document.getElementById('searchInput').value.toLowerCase();
+  var search=(document.getElementById('searchInput').value||'').toLowerCase();
   var weekF=document.getElementById('weekSel').value;
   var teamF=document.getElementById('teamSel').value;
   var filtered=allData.filter(function(s){
@@ -446,83 +390,88 @@ function renderTable(){
     return true;
   });
   var tbody=document.getElementById('tbody');
-  if(!filtered.length){tbody.innerHTML='<tr><td colspan="4"><div class="empty">No submissions found</div></td></tr>';return;}
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="5"><div class="empty">No submissions found</div></td></tr>';return;}
   tbody.innerHTML=filtered.map(function(s){
     var date=new Date(s.submitted).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    var gcs=Math.round(calcGCS(s));
+    var dup=isDuplicate(s);
     var chips=[
       s.pass_tds?'Pass TDs: <strong>'+s.pass_tds+'</strong>':'',
       s.rush_tds?'Rush TDs: <strong>'+s.rush_tds+'</strong>':'',
       s.rec_tds?'Rec TDs: <strong>'+s.rec_tds+'</strong>':'',
+      s.pick6?'Pick 6s: <strong>'+s.pick6+'</strong>':'',
+      s.kr_tds?'KR TDs: <strong>'+s.kr_tds+'</strong>':'',
       s.tackles?'Tkl: <strong>'+s.tackles+'</strong>':'',
       s.ints_caught?'INTs: <strong>'+s.ints_caught+'</strong>':'',
       s.safeties?'Saf: <strong>'+s.safeties+'</strong>':'',
-      s.def_tds?'Def TDs: <strong>'+s.def_tds+'</strong>':'',
     ].filter(Boolean).map(function(c){return '<span class="stat-chip">'+c+'</span>';}).join('');
-    return '<tr><td><div class="player-name">'+(s.player_name||'Unknown')+'</div>'
-      +'<div class="player-meta">'+s.team+' &middot; Wk '+s.week+' &middot; '+s.home+' vs '+s.away+'</div>'
+    return '<tr>'
+      +'<td><div class="player-name">'+(s.player_name||'Unknown')+(dup?'<span class="dup-warning">⚠ Duplicate</span>':'')+'</div>'
+      +'<div class="player-meta">'+s.team+' · Wk '+s.week+' · '+s.home+' vs '+s.away+'</div>'
       +'<div class="player-meta">'+date+'</div></td>'
       +'<td>'+(chips||'<span class="stat-chip">No stats</span>')+'</td>'
-      +'<td><span class="status-badge '+s.status+'">'+s.status.charAt(0).toUpperCase()+s.status.slice(1)+'</span></td>'
+      +'<td><span class="gcs-tag">'+gcs+'</span></td>'
+      +'<td><span class="status-badge '+s.status+'">'+s.status+'</span></td>'
       +'<td><div class="action-row">'
-      +(s.status!=='approved'?'<button class="action-btn approve" onclick="updateStatus(\''+s._fbkey+'\',\'approved\')">&#10003; Approve</button>':'')
-      +(s.status!=='rejected'?'<button class="action-btn reject" onclick="updateStatus(\''+s._fbkey+'\',\'rejected\')">&#10005; Reject</button>':'')
-      +'<button class="action-btn edit" onclick="openEdit(\''+s._fbkey+'\')">&#9998; Edit</button>'
-      +'<button class="action-btn del" onclick="delEntry(\''+s._fbkey+'\')">&#128465;</button>'
+      +(s.status!=='approved'?'<button class="action-btn approve" onclick="updateStatus(\''+s._fbkey+'\',\'approved\')">✓ Approve</button>':'')
+      +(s.status!=='rejected'?'<button class="action-btn reject" onclick="updateStatus(\''+s._fbkey+'\',\'rejected\')">✕ Reject</button>':'')
+      +'<button class="action-btn edit" onclick="openEdit(\''+s._fbkey+'\')">✎ Edit</button>'
+      +'<button class="action-btn del" onclick="delEntry(\''+s._fbkey+'\')">🗑</button>'
       +'</div></td></tr>';
   }).join('');
 }
+
 function openEdit(fbkey){
   var s=allData.find(function(x){return x._fbkey===fbkey;});if(!s) return;
   document.getElementById('editId').value=fbkey;
   document.getElementById('editName').value=s.player_name||'';
-  document.getElementById('editTeam').value=s.team||'Ravens';
+  document.getElementById('editTeam').value=s.team||'Minnesota';
   document.getElementById('editWeek').value=s.week||1;
   document.getElementById('editStatus').value=s.status||'pending';
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){var el=document.getElementById('e_'+f);if(el)el.value=s[f]||0;});
+  STAT_FIELDS.forEach(function(f){var el=document.getElementById('e_'+f);if(el)el.value=s[f]||0;});
   document.getElementById('editModal').classList.add('open');
 }
-function closeModal(){document.getElementById('editModal').classList.remove('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 async function saveEdit(){
   var fbkey=document.getElementById('editId').value;
   var s=allData.find(function(x){return x._fbkey===fbkey;});if(!s) return;
   var updated={league:LEAGUE,status:document.getElementById('editStatus').value,submitted:s.submitted,player_name:document.getElementById('editName').value,team:document.getElementById('editTeam').value,week:parseInt(document.getElementById('editWeek').value),home:s.home,away:s.away};
-  ['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','rec_tds','receptions','targets','tackles','ints_caught','swats','safeties','def_tds'].forEach(function(f){var el=document.getElementById('e_'+f);updated[f]=el?parseInt(el.value)||0:0;});
+  STAT_FIELDS.forEach(function(f){var el=document.getElementById('e_'+f);updated[f]=el?parseInt(el.value)||0:0;});
+  updated.gcs=Math.round(calcGCS(updated));
   await fetch(DB+'/stats/'+fbkey+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updated)});
-  closeModal(); loadData();
+  closeModal('editModal');loadData();
 }
-document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeModal('editModal');});
 
 async function renderScores(){
-  var res=await fetch(DB+'/pefl_scores.json');
+  var res=await fetch(DB+'/cefl_c2_scores.json');
   var scores=await res.json()||{};
-  var html='<div style="display:grid;gap:24px;">';
-  SCHEDULE.forEach(function(wk){
-    html+='<div><div class="score-week-title">Week '+wk.week+'</div>';
-    wk.games.forEach(function(g){
+  var html=SCHEDULE.map(function(wk){
+    var games=wk.games.map(function(g){
       var key='w'+wk.week+'_'+[g.home,g.away].sort().join('_');
       var sc=scores[key]||{home:'',away:''};
-      var saved=sc.home!==''&&sc.away!==''?'<span class="score-saved">SAVED</span>':'';
-      html+='<div class="score-game-row">'
+      var saved=sc.home!==''&&sc.away!==''?'<span class="score-saved">✓ SAVED</span>':'';
+      return '<div class="score-game-row">'
         +'<div class="score-game-label">'+g.home+' vs '+g.away+'</div>'
         +'<div class="score-inputs">'
-        +'<span class="score-team-label">'+g.home+'</span>'
+        +'<span class="score-team-label">'+g.home.split(' ').pop()+'</span>'
         +'<input class="score-input" type="number" min="0" value="'+(sc.home||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'home\',this.value)"/>'
-        +'<span style="color:var(--muted2);font-weight:700;">—</span>'
+        +'<span style="color:var(--muted);font-weight:700;font-family:Bebas Neue">—</span>'
         +'<input class="score-input" type="number" min="0" value="'+(sc.away||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'away\',this.value)"/>'
-        +'<span class="score-team-label">'+g.away+'</span>'
+        +'<span class="score-team-label">'+g.away.split(' ').pop()+'</span>'
         +'</div>'+saved+'</div>';
-    });
-    html+='</div>';
-  });
-  html+='</div>';
+    }).join('');
+    return '<div><div class="score-week-title">Week '+wk.week+'</div>'+games+'</div>';
+  }).join('');
   document.getElementById('scoresContainer').innerHTML=html;
 }
+
 async function saveScore(key,side,value){
-  await fetch(DB+'/pefl_scores/'+key+'/'+side+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
+  await fetch(DB+'/cefl_c2_scores/'+key+'/'+side+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(value)});
 }
 
 try{
-  if(sessionStorage.getItem('pefl_admin')==='1'){
+  if(sessionStorage.getItem('c2s1_admin')==='1'){
     document.getElementById('pwGate').style.display='none';
     document.getElementById('adminContent').style.display='block';
     loadData();
