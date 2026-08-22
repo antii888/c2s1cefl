@@ -27,23 +27,23 @@ body{background:var(--bg);color:var(--warm);font-family:'Barlow',sans-serif;min-
 #adminContent{display:none;}
 .pw-box{background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:40px;width:100%;max-width:380px;text-align:center;}
 .pw-icon{font-size:32px;margin-bottom:12px;}
-.pw-title{font-family:'Playfair Display',serif;font-size:28px;font-style:italic;font-weight:900;margin-bottom:6px;color:var(--gold);}
+.pw-title{font-family:Playfair Display,serif;font-size:28px;font-style:italic;font-weight:900;margin-bottom:6px;color:var(--gold);}
 .pw-sub{font-size:13px;color:var(--muted);margin-bottom:24px;font-style:italic;}
-.pw-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:16px;padding:12px 16px;border-radius:2px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:10px;}
+.pw-input{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:Barlow Condensed,sans-serif;font-size:16px;padding:12px 16px;border-radius:2px;outline:none;text-align:center;letter-spacing:3px;margin-bottom:10px;}
 .pw-input:focus{border-color:var(--gold);}
-.pw-btn{width:100%;background:linear-gradient(135deg,var(--crimson),#a50000);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:12px;border:none;border-radius:2px;cursor:pointer;}
+.pw-btn{width:100%;background:linear-gradient(135deg,var(--crimson),#a50000);color:var(--warm);font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:12px;border:none;border-radius:2px;cursor:pointer;}
 .pw-btn:hover{background:linear-gradient(135deg,#a50000,#c00);}
 .pw-error{color:var(--red);font-size:12px;margin-top:8px;display:none;font-style:italic;}
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border2);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;}
-.topbar-title{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--gold);}
+.topbar-title{font-family:Playfair Display,serif;font-size:18px;font-style:italic;color:var(--gold);}
 .topbar-sub{font-size:11px;color:var(--muted);}
-.tb-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;padding:6px 12px;border-radius:2px;cursor:pointer;text-decoration:none;}
+.tb-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);font-family:Barlow Condensed,sans-serif;font-size:11px;letter-spacing:1px;padding:6px 12px;border-radius:2px;cursor:pointer;text-decoration:none;}
 .tb-btn:hover{border-color:var(--gold);color:var(--gold);}
 .topbar-right{display:flex;gap:8px;}
 .layout{display:grid;grid-template-columns:210px 1fr;min-height:calc(100vh - 53px);}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border2);padding:20px 0;}
-.sidebar-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 16px 8px;font-family:'Barlow Condensed',sans-serif;}
-.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;cursor:pointer;border-left:2px solid transparent;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.5px;color:var(--muted);}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 16px 8px;font-family:Barlow Condensed,sans-serif;}
+.sidebar-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;cursor:pointer;border-left:2px solid transparent;font-family:Barlow Condensed,sans-serif;font-size:13px;letter-spacing:.5px;color:var(--muted);}
 .sidebar-item:hover{background:rgba(201,168,76,.04);color:var(--warm);}
 .sidebar-item.active{border-left-color:var(--gold);color:var(--gold);}
 .badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;}
@@ -51,41 +51,41 @@ body{background:var(--bg);color:var(--warm);font-family:'Barlow',sans-serif;min-
 .badge.green{background:var(--green);color:#080808;}
 .badge.gray{background:var(--muted);color:var(--bg);}
 .main{padding:24px;overflow-y:auto;}
-.main-title{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;color:var(--warm);margin-bottom:4px;}
+.main-title{font-family:Playfair Display,serif;font-size:24px;font-style:italic;color:var(--warm);margin-bottom:4px;}
 .main-sub{color:var(--muted);font-size:12px;margin-bottom:20px;font-style:italic;}
 .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px;}
 .summary-card{background:var(--card);border:1px solid var(--border2);border-radius:2px;padding:14px;}
-.summary-num{font-family:'Bebas Neue',sans-serif;font-size:30px;}
+.summary-num{font-family:Bebas Neue,sans-serif;font-size:30px;}
 .summary-num.gold{color:var(--gold);}
 .summary-num.red{color:var(--red);}
 .summary-num.green{color:var(--green);}
 .summary-num.blue{color:var(--blue);}
-.summary-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.summary-label{font-family:Barlow Condensed,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 .filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-.filter-input{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;outline:none;flex:1;min-width:160px;}
+.filter-input{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:Barlow Condensed,sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;outline:none;flex:1;min-width:160px;}
 .filter-input::placeholder{color:var(--muted);}
 .filter-input:focus{border-color:var(--gold);}
-.filter-select{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;cursor:pointer;outline:none;}
-.refresh-btn{background:var(--bg2);border:1px solid rgba(76,175,125,.4);color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;}
+.filter-select{background:var(--bg2);border:1px solid var(--border2);color:var(--warm);font-family:Barlow Condensed,sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;cursor:pointer;outline:none;}
+.refresh-btn{background:var(--bg2);border:1px solid rgba(76,175,125,.4);color:var(--green);font-family:Barlow Condensed,sans-serif;font-size:13px;padding:8px 14px;border-radius:2px;cursor:pointer;}
 .refresh-btn:hover{background:rgba(76,175,125,.08);}
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
-table th{text-align:left;padding:10px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);}
+table th{text-align:left;padding:10px 14px;font-family:Barlow Condensed,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);}
 table td{padding:12px 14px;border-bottom:1px solid rgba(42,26,26,.4);}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:rgba(201,168,76,.02);}
-.player-name{font-weight:700;font-size:14px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;}
+.player-name{font-weight:700;font-size:14px;font-family:Barlow Condensed,sans-serif;letter-spacing:.5px;}
 .player-meta{font-size:11px;color:var(--muted);margin-top:2px;}
-.dup-warning{background:rgba(224,85,85,.1);border:1px solid rgba(224,85,85,.2);color:var(--red);font-size:10px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;padding:2px 8px;border-radius:2px;margin-top:4px;display:inline-block;}
-.status-badge{display:inline-flex;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:2px;text-transform:uppercase;}
+.dup-warning{background:rgba(224,85,85,.1);border:1px solid rgba(224,85,85,.2);color:var(--red);font-size:10px;font-family:Barlow Condensed,sans-serif;letter-spacing:1px;padding:2px 8px;border-radius:2px;margin-top:4px;display:inline-block;}
+.status-badge{display:inline-flex;font-family:Barlow Condensed,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:2px;text-transform:uppercase;}
 .status-badge.pending{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2);}
 .status-badge.approved{background:rgba(76,175,125,.1);color:var(--green);border:1px solid rgba(76,175,125,.2);}
 .status-badge.rejected{background:rgba(224,85,85,.1);color:var(--red);border:1px solid rgba(224,85,85,.2);}
-.gcs-tag{display:inline-flex;align-items:center;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:1px;padding:2px 7px;border-radius:2px;margin-left:6px;}
+.gcs-tag{display:inline-flex;align-items:center;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.15);color:var(--gold);font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:1px;padding:2px 7px;border-radius:2px;margin-left:6px;}
 .stat-chip{background:var(--bg3);border:1px solid var(--border2);padding:2px 8px;font-size:11px;color:var(--muted);display:inline-block;margin:2px;border-radius:2px;}
 .stat-chip strong{color:var(--warm);}
 .action-row{display:flex;gap:5px;flex-wrap:wrap;}
-.action-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;padding:5px 10px;cursor:pointer;border:none;border-radius:2px;}
+.action-btn{font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;padding:5px 10px;cursor:pointer;border:none;border-radius:2px;}
 .action-btn.approve{background:rgba(76,175,125,.12);color:var(--green);border:1px solid rgba(76,175,125,.25);}
 .action-btn.reject{background:rgba(224,85,85,.1);color:var(--red);border:1px solid rgba(224,85,85,.25);}
 .action-btn.edit{background:rgba(74,158,255,.1);color:var(--blue);border:1px solid rgba(74,158,255,.2);}
@@ -95,26 +95,26 @@ tr:hover td{background:rgba(201,168,76,.02);}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:4px;padding:28px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative;}
 .modal-close{position:absolute;top:12px;right:14px;background:transparent;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
-.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--warm);margin-bottom:20px;}
+.modal-title{font-family:Playfair Display,serif;font-size:22px;font-style:italic;color:var(--warm);margin-bottom:20px;}
 .mfield{margin-bottom:12px;}
-.mfield label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.mfield label{display:block;font-family:Barlow Condensed,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
 .mfield input,.mfield select{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Barlow',sans-serif;font-size:13px;padding:8px 12px;border-radius:2px;outline:none;}
 .mfield input:focus,.mfield select:focus{border-color:var(--gold);}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.msec{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--crimson);margin:16px 0 8px;}
+.msec{font-family:Barlow Condensed,sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--crimson);margin:16px 0 8px;}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;}
-.mbtn{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:9px 20px;cursor:pointer;border:none;border-radius:2px;text-transform:uppercase;}
+.mbtn{font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:9px 20px;cursor:pointer;border:none;border-radius:2px;text-transform:uppercase;}
 .mbtn.save{background:linear-gradient(135deg,var(--crimson),#a50000);color:var(--warm);}
 .mbtn.cancel{background:transparent;border:1px solid var(--border2);color:var(--muted);}
 .score-section{display:grid;gap:24px;}
-.score-week-title{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border2);}
+.score-week-title{font-family:Playfair Display,serif;font-size:18px;font-style:italic;color:var(--gold);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border2);}
 .score-game-row{background:var(--bg2);border:1px solid var(--border2);border-radius:2px;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
-.score-game-label{flex:1;min-width:140px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;}
+.score-game-label{flex:1;min-width:140px;font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:600;}
 .score-inputs{display:flex;align-items:center;gap:8px;}
-.score-team-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--muted);letter-spacing:1px;}
-.score-input{width:64px;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:'Bebas Neue',sans-serif;font-size:16px;padding:6px 8px;border-radius:2px;text-align:center;outline:none;}
+.score-team-label{font-family:Barlow Condensed,sans-serif;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.score-input{width:64px;background:var(--bg3);border:1px solid var(--border2);color:var(--warm);font-family:Bebas Neue,sans-serif;font-size:16px;padding:6px 8px;border-radius:2px;text-align:center;outline:none;}
 .score-input:focus{border-color:var(--gold);}
-.score-saved{background:rgba(76,175,125,.1);color:var(--green);border:1px solid rgba(76,175,125,.2);font-family:'Barlow Condensed',sans-serif;font-size:10px;padding:2px 8px;border-radius:2px;letter-spacing:1px;}
+.score-saved{background:rgba(76,175,125,.1);color:var(--green);border:1px solid rgba(76,175,125,.2);font-family:Barlow Condensed,sans-serif;font-size:10px;padding:2px 8px;border-radius:2px;letter-spacing:1px;}
 </style>
 </head>
 <body>
@@ -136,7 +136,12 @@ tr:hover td{background:rgba(201,168,76,.02);}
     <button class="modal-close" onclick="closeModal('editModal')">✕</button>
     <div class="modal-title">Edit Submission</div>
     <input type="hidden" id="editId"/>
-    <div class="mfield"><label>Player Name</label><input type="text" id="editName"/></div>
+    <div class="mfield"><label>Player Name (as submitted)</label><input type="text" id="editName"/></div>
+    <div class="mfield"><label>Link to Profile <span style="color:var(--gold);font-size:10px;">— use this if name was typed wrong</span></label>
+      <select id="editLinkedProfile">
+        <option value="">No profile linked (use submitted name)</option>
+      </select>
+    </div>
     <div class="mgrid">
       <div class="mfield"><label>Team</label>
         <select id="editTeam">
@@ -219,6 +224,8 @@ tr:hover td{background:rgba(201,168,76,.02);}
     <div class="sidebar-item" onclick="approveWeek()">✓ Approve By Week</div>
     <div class="sidebar-item" onclick="clearRejected()">✕ Clear Rejected</div>
     <div class="sidebar-item" onclick="exportData()">↓ Export JSON</div>
+    <div class="sidebar-label" style="margin-top:20px;">Issues</div>
+    <div class="sidebar-item" id="tab_unlinked" onclick="setFilter('unlinked')">Unlinked <span class="badge red" id="b_unlinked">0</span></div>
   </div>
 
   <div class="main">
@@ -231,6 +238,7 @@ tr:hover td{background:rgba(201,168,76,.02);}
         <div class="summary-card"><div class="summary-num blue" id="s_pending">0</div><div class="summary-label">Pending</div></div>
         <div class="summary-card"><div class="summary-num green" id="s_approved">0</div><div class="summary-label">Approved</div></div>
         <div class="summary-card"><div class="summary-num red" id="s_rejected">0</div><div class="summary-label">Rejected</div></div>
+        <div class="summary-card"><div class="summary-num gold" id="s_unlinked">0</div><div class="summary-label">Unlinked</div></div>
       </div>
     </div>
 
@@ -277,18 +285,126 @@ var currentFilter='all';
 var STAT_FIELDS=['pass_tds','pass_att','pass_comp','ints_thrown','rush_tds','rushes','kr_tds','rec_tds','receptions','targets','tackles','ints_caught','pick6','swats','safeties','def_tds'];
 
 var SCHEDULE=[
-  {week:1,games:[{home:'North Dakota State',away:'Texas A&M'},{home:'Oklahoma',away:'UCLA'},{home:'TCU',away:'LSU'},{home:'Oregon',away:'Kansas'},{home:'Ohio State',away:'Cincinnati'},{home:'Michigan State',away:'Ole Miss'},{home:'Minnesota',away:'Georgia'},{home:'Penn State',away:'Delaware'}]},
-  {week:2,games:[{home:'North Dakota State',away:'Kansas'},{home:'UCLA',away:'Ohio State'},{home:'Michigan State',away:'LSU'},{home:'TCU',away:'Texas A&M'},{home:'Oregon',away:'Delaware'},{home:'Minnesota',away:'Oklahoma'},{home:'Ole Miss',away:'Georgia'},{home:'Penn State',away:'Cincinnati'}]},
-  {week:3,games:[{home:'North Dakota State',away:'Ohio State'},{home:'Michigan State',away:'Kansas'},{home:'TCU',away:'UCLA'},{home:'Oregon',away:'Penn State'},{home:'LSU',away:'Cincinnati'},{home:'Minnesota',away:'Oklahoma'},{home:'Ole Miss',away:'Georgia'},{home:'Texas A&M',away:'Delaware'}]},
-  {week:4,games:[{home:'Delaware',away:'Minnesota'},{home:'Cincinnati',away:'Ole Miss'},{home:'Texas A&M',away:'Penn State'},{home:'Oklahoma',away:'North Dakota State'},{home:'Georgia',away:'LSU'},{home:'UCLA',away:'Oregon'},{home:'TCU',away:'Kansas'},{home:'Michigan State',away:'Ohio State'}]},
-  {week:5,games:[{home:'Cincinnati',away:'Minnesota'},{home:'Delaware',away:'Oklahoma'},{home:'Ole Miss',away:'Penn State'},{home:'Texas A&M',away:'Georgia'},{home:'TCU',away:'Oregon'},{home:'Ohio State',away:'LSU'},{home:'North Dakota State',away:'UCLA'},{home:'Michigan State',away:'Kansas'}]},
-  {week:6,games:[{home:'North Dakota State',away:'Ohio State'},{home:'TCU',away:'Michigan State'},{home:'Oregon',away:'LSU'},{home:'UCLA',away:'Kansas'},{home:'Ole Miss',away:'Minnesota'},{home:'Delaware',away:'Oklahoma'},{home:'Penn State',away:'Georgia'},{home:'Texas A&M',away:'Cincinnati'}]},
-  {week:7,games:[{home:'North Dakota State',away:'Oregon'},{home:'Michigan State',away:'Georgia'},{home:'TCU',away:'Ole Miss'},{home:'Delaware',away:'Minnesota'},{home:'Cincinnati',away:'Oklahoma'},{home:'Texas A&M',away:'Penn State'},{home:'UCLA',away:'LSU'},{home:'Ohio State',away:'Kansas'}]},
-  {week:8,games:[{home:'North Dakota State',away:'LSU'},{home:'TCU',away:'Ohio State'},{home:'Michigan State',away:'UCLA'},{home:'Oregon',away:'Kansas'},{home:'Delaware',away:'Cincinnati'},{home:'Minnesota',away:'Texas A&M'},{home:'Ole Miss',away:'Penn State'},{home:'Georgia',away:'Oklahoma'}]},
-  {week:9,games:[{home:'North Dakota State',away:'LSU'},{home:'TCU',away:'Ohio State'},{home:'Oregon',away:'Michigan State'},{home:'UCLA',away:'Kansas'},{home:'Minnesota',away:'Cincinnati'},{home:'Delaware',away:'Ole Miss'},{home:'Penn State',away:'Georgia'},{home:'Texas A&M',away:'Oklahoma'}]},
-  {week:10,games:[{home:'North Dakota State',away:'TCU'},{home:'Ole Miss',away:'Texas A&M'},{home:'LSU',away:'Kansas'},{home:'Delaware',away:'Georgia'},{home:'Cincinnati',away:'Oklahoma'},{home:'Penn State',away:'Minnesota'},{home:'Ohio State',away:'Oregon'},{home:'UCLA',away:'Michigan State'}]},
-  {week:11,games:[{home:'North Dakota State',away:'TCU'},{home:'LSU',away:'Ohio State'},{home:'Minnesota',away:'UCLA'},{home:'Oregon',away:'Michigan State'},{home:'Ole Miss',away:'Texas A&M'},{home:'Georgia',away:'Cincinnati'},{home:'Oklahoma',away:'Penn State'},{home:'Delaware',away:'Kansas'}]},
-  {week:12,games:[{home:'North Dakota State',away:'Michigan State'},{home:'Ole Miss',away:'Oklahoma'},{home:'TCU',away:'LSU'},{home:'Delaware',away:'Cincinnati'},{home:'UCLA',away:'Oregon'},{home:'Texas A&M',away:'Georgia'},{home:'Minnesota',away:'Ohio State'},{home:'Penn State',away:'Kansas'}]},
+  {week:1,games:[
+    {home:'Delaware',away:'Oklahoma',type:'conference'},
+    {home:'Penn State',away:'Texas A&M',type:'conference'},
+    {home:'Georgia',away:'Cincinnati',type:'conference'},
+    {home:'LSU',away:'Kansas',type:'conference'},
+    {home:'Ohio State',away:'Michigan State',type:'conference'},
+    {home:'UCLA',away:'TCU',type:'conference'},
+    {home:'Oregon',away:'Ole Miss',type:'inter'},
+    {home:'North Dakota State',away:'Minnesota',type:'inter'},
+  ]},
+  {week:2,games:[
+    {home:'Minnesota',away:'Oklahoma',type:'conference'},
+    {home:'Georgia',away:'Texas A&M',type:'conference'},
+    {home:'Ole Miss',away:'Delaware',type:'conference'},
+    {home:'Oregon',away:'North Dakota State',type:'inter'},
+    {home:'Ohio State',away:'UCLA',type:'conference'},
+    {home:'TCU',away:'Michigan State',type:'conference'},
+    {home:'Penn State',away:'LSU',type:'inter'},
+    {home:'Kansas',away:'Cincinnati',type:'conference'},
+  ]},
+  {week:3,games:[
+    {home:'Ole Miss',away:'Penn State',type:'inter'},
+    {home:'Texas A&M',away:'Minnesota',type:'inter'},
+    {home:'LSU',away:'Michigan State',type:'inter'},
+    {home:'Kansas',away:'TCU',type:'conference'},
+    {home:'Delaware',away:'Ohio State',type:'inter'},
+    {home:'North Dakota State',away:'Cincinnati',type:'inter'},
+    {home:'Oregon',away:'Georgia',type:'inter'},
+    {home:'Oklahoma',away:'UCLA',type:'inter'},
+  ]},
+  {week:4,games:[
+    {home:'Cincinnati',away:'Delaware',type:'conference'},
+    {home:'Georgia',away:'Penn State',type:'conference'},
+    {home:'Ole Miss',away:'Oklahoma',type:'inter'},
+    {home:'North Dakota State',away:'UCLA',type:'inter'},
+    {home:'LSU',away:'Oregon',type:'conference'},
+    {home:'Kansas',away:'Ohio State',type:'conference'},
+    {home:'Minnesota',away:'TCU',type:'inter'},
+    {home:'Texas A&M',away:'Michigan State',type:'inter'},
+  ]},
+  {week:5,games:[
+    {home:'Delaware',away:'Minnesota',type:'conference'},
+    {home:'Oklahoma',away:'Cincinnati',type:'conference'},
+    {home:'Ole Miss',away:'Penn State',type:'inter'},
+    {home:'Texas A&M',away:'Georgia',type:'conference'},
+    {home:'TCU',away:'North Dakota State',type:'inter'},
+    {home:'LSU',away:'Ohio State',type:'conference'},
+    {home:'Kansas',away:'Oregon',type:'conference'},
+    {home:'Michigan State',away:'UCLA',type:'conference'},
+  ]},
+  {week:6,games:[
+    {home:'North Dakota State',away:'LSU',type:'inter'},
+    {home:'UCLA',away:'Kansas',type:'conference'},
+    {home:'Minnesota',away:'Penn State',type:'conference'},
+    {home:'Ole Miss',away:'Cincinnati',type:'inter'},
+    {home:'Texas A&M',away:'Delaware',type:'conference'},
+    {home:'TCU',away:'Oregon',type:'conference'},
+    {home:'Oklahoma',away:'Ohio State',type:'inter'},
+    {home:'Michigan State',away:'Georgia',type:'inter'},
+  ]},
+  {week:7,games:[
+    {home:'Ohio State',away:'North Dakota State',type:'inter'},
+    {home:'LSU',away:'TCU',type:'conference'},
+    {home:'Kansas',away:'Oregon',type:'conference'},
+    {home:'Michigan State',away:'UCLA',type:'conference'},
+    {home:'Minnesota',away:'Ole Miss',type:'inter'},
+    {home:'Cincinnati',away:'Texas A&M',type:'conference'},
+    {home:'Penn State',away:'Oklahoma',type:'conference'},
+    {home:'Georgia',away:'Delaware',type:'conference'},
+  ]},
+  {week:8,games:[
+    {home:'Cincinnati',away:'Minnesota',type:'conference'},
+    {home:'Texas A&M',away:'Ole Miss',type:'conference'},
+    {home:'TCU',away:'North Dakota State',type:'inter'},
+    {home:'Ohio State',away:'LSU',type:'conference'},
+    {home:'Kansas',away:'UCLA',type:'conference'},
+    {home:'Oregon',away:'Michigan State',type:'conference'},
+    {home:'Oklahoma',away:'Georgia',type:'inter'},
+    {home:'Penn State',away:'Delaware',type:'conference'},
+  ]},
+  {week:9,games:[
+    {home:'Minnesota',away:'Oklahoma',type:'conference'},
+    {home:'Cincinnati',away:'Delaware',type:'conference'},
+    {home:'Penn State',away:'Texas A&M',type:'conference'},
+    {home:'Georgia',away:'Ole Miss',type:'conference'},
+    {home:'North Dakota State',away:'LSU',type:'inter'},
+    {home:'TCU',away:'Ohio State',type:'conference'},
+    {home:'Michigan State',away:'Kansas',type:'conference'},
+    {home:'UCLA',away:'Oregon',type:'conference'},
+  ]},
+  {week:10,games:[
+    {home:'Delaware',away:'Oklahoma',type:'conference'},
+    {home:'LSU',away:'TCU',type:'conference'},
+    {home:'Minnesota',away:'Georgia',type:'inter'},
+    {home:'Cincinnati',away:'Penn State',type:'conference'},
+    {home:'Michigan State',away:'North Dakota State',type:'inter'},
+    {home:'Oregon',away:'Ohio State',type:'conference'},
+    {home:'UCLA',away:'Texas A&M',type:'inter'},
+    {home:'Ole Miss',away:'Kansas',type:'inter'},
+  ]},
+  {week:11,games:[
+    {home:'Cincinnati',away:'Minnesota',type:'conference'},
+    {home:'Georgia',away:'Ole Miss',type:'conference'},
+    {home:'Ohio State',away:'North Dakota State',type:'inter'},
+    {home:'Michigan State',away:'Kansas',type:'conference'},
+    {home:'UCLA',away:'Oregon',type:'conference'},
+    {home:'Oklahoma',away:'Texas A&M',type:'conference'},
+    {home:'Delaware',away:'LSU',type:'inter'},
+    {home:'TCU',away:'Penn State',type:'inter'},
+  ]},
+  {week:12,games:[
+    {home:'Delaware',away:'Minnesota',type:'conference'},
+    {home:'Oklahoma',away:'Cincinnati',type:'conference'},
+    {home:'Penn State',away:'Georgia',type:'conference'},
+    {home:'Texas A&M',away:'Ole Miss',type:'conference'},
+    {home:'Ohio State',away:'TCU',type:'conference'},
+    {home:'Oregon',away:'Michigan State',type:'conference'},
+    {home:'North Dakota State',away:'Kansas',type:'inter'},
+    {home:'UCLA',away:'LSU',type:'conference'},
+  ]},
 ];
 
 function calcGCS(s){
@@ -300,6 +416,7 @@ function isDuplicate(s){
   return allData.filter(function(x){return x._fbkey!==s._fbkey&&x.player_name===s.player_name&&x.week===s.week&&x.home===s.home&&x.away===s.away;}).length>0;
 }
 
+var _profiles={};
 async function loadData(){
   try{
     var res=await fetch(DB+'/stats.json');
@@ -307,10 +424,22 @@ async function loadData(){
     allData=[];
     if(json){Object.keys(json).forEach(function(k){var s=json[k];s._fbkey=k;if(s.league===LEAGUE)allData.push(s);});}
     allData.sort(function(a,b){return new Date(b.submitted)-new Date(a.submitted);});
-    renderTable();updateSummary();
-  }catch(e){
-    document.getElementById('tbody').innerHTML='<tr><td colspan="5"><div class="empty">Failed to load: '+e.message+'</div></td></tr>';
-  }
+  }catch(e){allData=[];}
+  try{
+    var r2=await fetch(DB+'/cefl_c2_profiles.json');
+    var j2=await r2.json();
+    _profiles=j2||{};
+    // Populate profile dropdown in edit modal
+    var sel=document.getElementById('editLinkedProfile');
+    sel.innerHTML='<option value="">No profile linked (use submitted name)</option>';
+    Object.values(_profiles).forEach(function(p){
+      var o=document.createElement('option');
+      o.value=p.username;
+      o.textContent=p.username+' ('+p.team+')';
+      sel.appendChild(o);
+    });
+  }catch(e){_profiles={};}
+  renderTable();updateSummary();
 }
 
 async function updateStatus(fbkey,status){
@@ -360,22 +489,32 @@ function showSection(s){
 
 function setFilter(f){
   currentFilter=f;
-  ['all','pending','approved','rejected'].forEach(function(x){document.getElementById('tab_'+x).classList.toggle('active',x===f);});
+  ['all','pending','approved','rejected','unlinked'].forEach(function(x){
+    var el=document.getElementById('tab_'+x);
+    if(el) el.classList.toggle('active',x===f);
+  });
   renderTable();
 }
 
+function isUnlinked(s){
+  var knownNames=Object.values(_profiles).map(function(p){return p.username;});
+  return !knownNames.includes(s.player_name)&&!s.linked_profile;
+}
 function updateSummary(){
   var p=allData.filter(function(x){return x.status==='pending';}).length;
   var a=allData.filter(function(x){return x.status==='approved';}).length;
   var r=allData.filter(function(x){return x.status==='rejected';}).length;
+  var u=allData.filter(function(x){return isUnlinked(x);}).length;
   document.getElementById('s_total').textContent=allData.length;
   document.getElementById('s_pending').textContent=p;
   document.getElementById('s_approved').textContent=a;
   document.getElementById('s_rejected').textContent=r;
+  document.getElementById('s_unlinked').textContent=u;
   ['b_all','b_all2'].forEach(function(id){document.getElementById(id).textContent=allData.length;});
   document.getElementById('b_pending').textContent=p;
   document.getElementById('b_approved').textContent=a;
   document.getElementById('b_rejected').textContent=r;
+  document.getElementById('b_unlinked').textContent=u;
 }
 
 function renderTable(){
@@ -383,7 +522,8 @@ function renderTable(){
   var weekF=document.getElementById('weekSel').value;
   var teamF=document.getElementById('teamSel').value;
   var filtered=allData.filter(function(s){
-    if(currentFilter!=='all'&&s.status!==currentFilter) return false;
+    if(currentFilter==='unlinked'){if(!isUnlinked(s)) return false;}
+    else if(currentFilter!=='all'&&s.status!==currentFilter) return false;
     if(weekF&&String(s.week)!==weekF) return false;
     if(teamF&&s.team!==teamF) return false;
     if(search&&!(s.player_name||'').toLowerCase().includes(search)&&!(s.team||'').toLowerCase().includes(search)) return false;
@@ -406,7 +546,7 @@ function renderTable(){
       s.safeties?'Saf: <strong>'+s.safeties+'</strong>':'',
     ].filter(Boolean).map(function(c){return '<span class="stat-chip">'+c+'</span>';}).join('');
     return '<tr>'
-      +'<td><div class="player-name">'+(s.player_name||'Unknown')+(dup?'<span class="dup-warning">⚠ Duplicate</span>':'')+'</div>'
+      +'<td><div class="player-name">'+(s.linked_profile?s.linked_profile:s.player_name||'Unknown')+(s.linked_profile?'<span class="gcs-tag">→ '+s.linked_profile+'</span>':'')+(dup?'<span class="dup-warning">⚠ Duplicate</span>':'')+(isUnlinked(s)?'<span class="dup-warning">⚠ Unlinked</span>':'')++'</div>'
       +'<div class="player-meta">'+s.team+' · Wk '+s.week+' · '+s.home+' vs '+s.away+'</div>'
       +'<div class="player-meta">'+date+'</div></td>'
       +'<td>'+(chips||'<span class="stat-chip">No stats</span>')+'</td>'
@@ -428,6 +568,7 @@ function openEdit(fbkey){
   document.getElementById('editTeam').value=s.team||'Minnesota';
   document.getElementById('editWeek').value=s.week||1;
   document.getElementById('editStatus').value=s.status||'pending';
+  document.getElementById('editLinkedProfile').value=s.linked_profile||'';
   STAT_FIELDS.forEach(function(f){var el=document.getElementById('e_'+f);if(el)el.value=s[f]||0;});
   document.getElementById('editModal').classList.add('open');
 }
@@ -435,7 +576,8 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 async function saveEdit(){
   var fbkey=document.getElementById('editId').value;
   var s=allData.find(function(x){return x._fbkey===fbkey;});if(!s) return;
-  var updated={league:LEAGUE,status:document.getElementById('editStatus').value,submitted:s.submitted,player_name:document.getElementById('editName').value,team:document.getElementById('editTeam').value,week:parseInt(document.getElementById('editWeek').value),home:s.home,away:s.away};
+  var linked=document.getElementById('editLinkedProfile').value;
+  var updated={league:LEAGUE,status:document.getElementById('editStatus').value,submitted:s.submitted,player_name:document.getElementById('editName').value,team:document.getElementById('editTeam').value,week:parseInt(document.getElementById('editWeek').value),home:s.home,away:s.away,linked_profile:linked||null};
   STAT_FIELDS.forEach(function(f){var el=document.getElementById('e_'+f);updated[f]=el?parseInt(el.value)||0:0;});
   updated.gcs=Math.round(calcGCS(updated));
   await fetch(DB+'/stats/'+fbkey+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(updated)});
@@ -446,24 +588,29 @@ document.getElementById('editModal').addEventListener('click',function(e){if(e.t
 async function renderScores(){
   var res=await fetch(DB+'/cefl_c2_scores.json');
   var scores=await res.json()||{};
-  var html=SCHEDULE.map(function(wk){
-    var games=wk.games.map(function(g){
+  var container=document.getElementById('scoresContainer');
+  var html='';
+  SCHEDULE.forEach(function(wk){
+    html+='<div><div class="score-week-title">Week '+wk.week+'</div>';
+    wk.games.forEach(function(g){
       var key='w'+wk.week+'_'+[g.home,g.away].sort().join('_');
       var sc=scores[key]||{home:'',away:''};
-      var saved=sc.home!==''&&sc.away!==''?'<span class="score-saved">✓ SAVED</span>':'';
-      return '<div class="score-game-row">'
-        +'<div class="score-game-label">'+g.home+' vs '+g.away+'</div>'
-        +'<div class="score-inputs">'
-        +'<span class="score-team-label">'+g.home.split(' ').pop()+'</span>'
-        +'<input class="score-input" type="number" min="0" value="'+(sc.home||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'home\',this.value)"/>'
-        +'<span style="color:var(--muted);font-weight:700;font-family:Bebas Neue">—</span>'
-        +'<input class="score-input" type="number" min="0" value="'+(sc.away||'')+'" placeholder="0" onchange="saveScore(\''+key+'\',\'away\',this.value)"/>'
-        +'<span class="score-team-label">'+g.away.split(' ').pop()+'</span>'
-        +'</div>'+saved+'</div>';
-    }).join('');
-    return '<div><div class="score-week-title">Week '+wk.week+'</div>'+games+'</div>';
-  }).join('');
-  document.getElementById('scoresContainer').innerHTML=html;
+      var saved=sc.home!==''&&sc.away!==''?'<span class="score-saved">SAVED</span>':'';
+      var homeShort=g.home.split(' ').pop();
+      var awayShort=g.away.split(' ').pop();
+      html+='<div class="score-game-row">';
+      html+='<div class="score-game-label">'+g.home+' vs '+g.away+'</div>';
+      html+='<div class="score-inputs">';
+      html+='<span class="score-team-label">'+homeShort+'</span>';
+      html+='<input class="score-input" type="number" min="0" value="'+(sc.home||'')+'" placeholder="0" onchange="saveScore(''+key+'','home',this.value)"/>';
+      html+='<span style="color:var(--muted);font-weight:700;">—</span>';
+      html+='<input class="score-input" type="number" min="0" value="'+(sc.away||'')+'" placeholder="0" onchange="saveScore(''+key+'','away',this.value)"/>';
+      html+='<span class="score-team-label">'+awayShort+'</span>';
+      html+='</div>'+saved+'</div>';
+    });
+    html+='</div>';
+  });
+  container.innerHTML=html;
 }
 
 async function saveScore(key,side,value){
