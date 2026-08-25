@@ -282,9 +282,20 @@ STAT_FIELDS.forEach(function(f){
 });
 
 // Profile autofill
-window.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('DOMContentLoaded',async function(){
   var prof;try{prof=JSON.parse(localStorage.getItem('cefl_c2_profile')||'null');}catch(e){}
+  // If no local profile, nothing to do
   if(prof){
+    // Try to refresh from Firebase to get latest coins/bets
+    try{
+      var key=prof.username.replace(/\s/g,'_');
+      var res=await fetch(DB+'/cefl_c2_profiles/'+key+'.json');
+      var fresh=await res.json();
+      if(fresh&&fresh.username){
+        prof=fresh;
+        localStorage.setItem('cefl_c2_profile',JSON.stringify(prof));
+      }
+    }catch(e){}
     document.getElementById('profileBanner').style.display='flex';
     document.getElementById('pafName').textContent='👤 '+prof.username;
     document.getElementById('pafTeam').textContent=prof.team+' · '+prof.position;
