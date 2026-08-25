@@ -751,10 +751,12 @@ function openProfileModal(){
   var prof=getProfile();
   if(prof){showProfileView(prof);}
   else{
-    document.getElementById('profileForm').style.display='block';
+    document.getElementById('profileStep1').style.display='block';
+    document.getElementById('profileStep2').style.display='none';
     document.getElementById('profileView').style.display='none';
-    document.getElementById('profModalTitle').textContent='Create Profile';
-    document.getElementById('profModalSub').textContent='Join CEFL Chapter 2 Season 1';
+    document.getElementById('profLookupStatus').style.display='none';
+    document.getElementById('profModalTitle').textContent='Player Login';
+    document.getElementById('profModalSub').textContent='Enter your username to log in or create a profile';
   }
   document.getElementById('profileModal').classList.add('open');
 }
@@ -765,18 +767,15 @@ function saveProfile(){
   if(!u||!t||!p){alert('Please fill in all fields.');return;}
   var avatar=getSelectedAvatar();
   var prof={username:u,team:t,position:p,coins:1000,bets:[],avatar:avatar};
-  // Check if existing profile in Firebase
-  var existing=Object.values(_profiles).find(function(x){return x.username===u;});
-  if(existing) prof.coins=existing.coins||1000;
   localStorage.setItem('cefl_c2_profile',JSON.stringify(prof));
-  // Save to Firebase
   fetch(DB+'/cefl_c2_profiles/'+u.replace(/\s/g,'_')+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(prof)});
   showProfileView(prof);
 }
 function showProfileView(prof){
   document.getElementById('profModalTitle').textContent=prof.username;
   document.getElementById('profModalSub').textContent=prof.team+' · '+prof.position;
-  document.getElementById('profileForm').style.display='none';
+  document.getElementById('profileStep1').style.display='none';
+  document.getElementById('profileStep2').style.display='none';
   document.getElementById('profileView').style.display='block';
   document.getElementById('profCoinsDisplay').textContent=prof.coins||1000;
   var approved=getApproved();
@@ -789,10 +788,15 @@ function showProfileView(prof){
     '<div class="profile-stat-box"><div class="profile-stat-val">'+Math.round(totalGCS)+'</div><div class="profile-stat-label">Total GCS</div></div>';
 }
 function editProfile(){
-  var prof=getProfile();
-  if(prof){document.getElementById('profUsername').value=prof.username;document.getElementById('profTeam').value=prof.team;document.getElementById('profPos').value=prof.position;}
-  document.getElementById('profileForm').style.display='block';
+  // Go back to step 1 so they can switch accounts or update
+  localStorage.removeItem('cefl_c2_profile');
+  document.getElementById('profileStep1').style.display='block';
+  document.getElementById('profileStep2').style.display='none';
   document.getElementById('profileView').style.display='none';
+  document.getElementById('profLookupStatus').style.display='none';
+  document.getElementById('profUsername').value='';
+  document.getElementById('profModalTitle').textContent='Player Login';
+  document.getElementById('profModalSub').textContent='Enter your username to log in or create a profile';
 }
 
 // GAME OF THE WEEK
@@ -1043,6 +1047,44 @@ function getSelectedAvatar(){
   var el=document.querySelector('.avatar-opt.selected');
   if(!el) return {bg:'linear-gradient(135deg,var(--crimson),var(--gold))',icon:'🎬'};
   return {bg:el.dataset.bg,icon:el.textContent};
+}
+function resetProfileSteps(){
+  document.getElementById('profileStep1').style.display='block';
+  document.getElementById('profileStep2').style.display='none';
+  document.getElementById('profLookupStatus').style.display='none';
+  document.getElementById('profUsername').value='';
+}
+async function lookupProfile(){
+  var u=document.getElementById('profUsername').value.trim();
+  if(!u){alert('Please enter a username.');return;}
+  var btn=document.getElementById('profLookupBtn');
+  var status=document.getElementById('profLookupStatus');
+  btn.disabled=true;btn.textContent='Looking up...';
+  status.style.display='block';status.style.color='var(--muted)';status.textContent='Checking Firebase...';
+  try{
+    var key=u.replace(/\s/g,'_');
+    var res=await fetch(DB+'/cefl_c2_profiles/'+key+'.json');
+    var data=await res.json();
+    if(data&&data.username){
+      // Profile found — log them in
+      status.style.color='var(--green)';status.textContent='Profile found! Logging you in...';
+      localStorage.setItem('cefl_c2_profile',JSON.stringify(data));
+      setTimeout(function(){
+        btn.disabled=false;btn.textContent='Continue →';
+        showProfileView(data);
+        fetchAll();
+      },800);
+    } else {
+      // No profile — show creation form
+      status.style.color='var(--gold)';status.textContent='Username available!';
+      btn.disabled=false;btn.textContent='Continue →';
+      document.getElementById('profileStep1').style.display='none';
+      document.getElementById('profileStep2').style.display='block';
+    }
+  }catch(e){
+    status.style.color='var(--red)';status.textContent='Error: '+e.message;
+    btn.disabled=false;btn.textContent='Continue →';
+  }
 }
 function openGameModalForPlayer(name){openPlayerModal(name);}
 function openPlayerModal(name){
